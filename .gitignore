@@ -1,0 +1,67 @@
+node_modules/
+.pnpm-store/
+
+.env
+.env.*
+!.env.example
+
+.next/
+dist/
+coverage/
+.expo/
+
+apps/api/dist/
+apps/mobile/dist/
+apps/mobile/web-build/
+
+*.log
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+
+uploads/
+tmp/
+temp/
+
+# Turborepo
+.turbo/
+**/.turbo/
+
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Next.js
+.next/
+**/.next/
+
+# Expo
+.expo/
+**/.expo/
+
+# Build outputs
+dist/
+**/dist/
+build/
+**/build/
+
+# Test outputs
+coverage/
+playwright-report/
+test-results/
+
+# Environment secrets
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+npm-debug.log*
+pnpm-debug.log*
+
+# OS / editor
+.DS_Store
+.idea/

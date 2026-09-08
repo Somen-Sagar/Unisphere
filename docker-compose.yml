@@ -1,0 +1,42 @@
+services:
+  postgres:
+    image: postgres:18-alpine
+    container_name: unisphere-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: unisphere
+      POSTGRES_PASSWORD: unisphere_dev_password
+      POSTGRES_DB: unisphere
+    ports:
+      - '127.0.0.1:5433:5432'
+    volumes:
+      - unisphere_postgres_data:/var/lib/postgresql
+    healthcheck:
+      test:
+        [
+          'CMD-SHELL',
+          'pg_isready -U unisphere -d unisphere',
+        ]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  redis:
+    image: redis:8-alpine
+    container_name: unisphere-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    ports:
+      - '6380:6379'
+    volumes:
+      - unisphere_redis_data:/data
+    healthcheck:
+      test: ['CMD', 'redis-cli', 'ping']
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  unisphere_postgres_data:
+  unisphere_redis_data:

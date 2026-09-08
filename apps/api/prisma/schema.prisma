@@ -1,0 +1,206 @@
+generator client {
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserStatus {
+  ACTIVE
+  SUSPENDED
+  DELETED
+}
+
+enum CollegeStatus {
+  PENDING
+  VERIFIED
+  REJECTED
+  SUSPENDED
+}
+
+enum MembershipRole {
+  STUDENT
+  FACULTY
+  CLUB_ADMIN
+  DEPARTMENT_ADMIN
+  COLLEGE_ADMIN
+  PLATFORM_ADMIN
+}
+
+enum MembershipStatus {
+  PENDING
+  ACTIVE
+  REJECTED
+  SUSPENDED
+}
+
+enum EventStatus {
+  DRAFT
+  PENDING_APPROVAL
+  PUBLISHED
+  REGISTRATION_OPEN
+  REGISTRATION_CLOSED
+  ONGOING
+  COMPLETED
+  CANCELLED
+}
+
+enum RegistrationStatus {
+  REGISTERED
+  WAITLISTED
+  CANCELLED
+}
+
+model User {
+  id              String              @id @default(cuid())
+  email           String              @unique
+  passwordHash    String
+  firstName       String
+  lastName        String
+  avatarUrl       String?
+  phone           String?             @unique
+  emailVerifiedAt DateTime?
+  phoneVerifiedAt DateTime?
+  status          UserStatus          @default(ACTIVE)
+  lastLoginAt     DateTime?
+  memberships     CollegeMembership[]
+  refreshSessions RefreshSession[]
+  organizedEvents Event[]             @relation("EventOrganizer")
+  registrations   EventRegistration[]
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+
+  @@index([status])
+  @@map("users")
+}
+
+model College {
+  id                  String              @id @default(cuid())
+  name                String
+  slug                String              @unique
+  officialEmailDomain String?
+  website             String?
+  logoUrl             String?
+  coverUrl            String?
+  description         String?
+  address             String?
+  city                String?
+  state               String?
+  country             String              @default("India")
+  status              CollegeStatus       @default(PENDING)
+  memberships         CollegeMembership[]
+  clubs               Club[]
+  events              Event[]
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  @@index([status])
+  @@map("colleges")
+}
+
+model CollegeMembership {
+  id        String           @id @default(cuid())
+  userId    String
+  collegeId String
+  role      MembershipRole
+  status    MembershipStatus @default(PENDING)
+  studentId String?
+  joinedAt  DateTime?
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, collegeId, role])
+  @@index([collegeId, status])
+  @@index([userId, status])
+  @@map("college_memberships")
+}
+
+model RefreshSession {
+  id        String    @id @default(cuid())
+  userId    String
+  tokenHash String    @unique
+  userAgent String?
+  expiresAt DateTime
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, expiresAt])
+  @@map("refresh_sessions")
+}
+
+model Club {
+  id          String  @id @default(cuid())
+  collegeId   String
+  name        String
+  slug        String
+  description String?
+  logoUrl     String?
+  isActive    Boolean @default(true)
+
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  events  Event[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([collegeId, slug])
+  @@index([collegeId, isActive])
+  @@map("clubs")
+}
+
+model Event {
+  id                   String      @id @default(cuid())
+  collegeId            String
+  clubId               String?
+  organizerId          String
+  title                String
+  description          String
+  venue                String
+  imageUrl             String?
+  startsAt             DateTime
+  endsAt               DateTime
+  registrationOpensAt  DateTime?
+  registrationClosesAt DateTime?
+  capacity             Int?
+  status               EventStatus @default(DRAFT)
+
+  college       College             @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  club          Club?               @relation(fields: [clubId], references: [id], onDelete: SetNull)
+  organizer     User                @relation("EventOrganizer", fields: [organizerId], references: [id], onDelete: Restrict)
+  registrations EventRegistration[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([collegeId, status, startsAt])
+  @@index([clubId, startsAt])
+  @@map("events")
+}
+
+model EventRegistration {
+  id          String             @id @default(cuid())
+  eventId     String
+  userId      String
+  status      RegistrationStatus @default(REGISTERED)
+  qrToken     String             @unique @default(cuid())
+  checkedInAt DateTime?
+  checkedInBy String?
+  createdAt   DateTime           @default(now())
+  updatedAt   DateTime           @updatedAt
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId])
+  @@index([userId, status])
+  @@index([eventId, status])
+  @@map("event_registrations")
+}

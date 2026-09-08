@@ -1,0 +1,33 @@
+{
+  "name": "unisphere",
+  "version": "0.1.0",
+  "private": true,
+  "type":"module",
+  "packageManager": "pnpm@11.16.0",
+  "engines": {
+    "node": ">=24 <25",
+    "pnpm": ">=11"
+  },
+  "scripts": {
+    "dev": "turbo dev --filter=web --filter=api",
+    "dev:web": "pnpm --filter web dev",
+    "dev:api": "pnpm --filter api dev",
+    "dev:mobile": "pnpm --filter mobile start",
+    "build": "turbo build",
+    "lint": "turbo lint",
+    "typecheck": "turbo typecheck",
+    "test": "turbo test",
+    "format": "prettier --write \"**/*.{ts,tsx,js,mjs,cjs,json,md,yml,yaml}\"",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:logs": "docker compose logs -f",
+    "db:migrate": "pnpm --filter api exec prisma migrate dev",
+    "db:deploy": "pnpm --filter api db:deploy",
+    "db:seed": "pnpm --filter api db:seed"
+  },
+  "devDependencies": {
+    "prettier": "3.9.6",
+    "turbo": "2.10.5",
+    "typescript": "7.0.2"
+  }
+}

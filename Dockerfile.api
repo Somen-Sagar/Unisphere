@@ -1,0 +1,22 @@
+FROM node:24-alpine AS build
+
+RUN corepack enable && corepack prepare pnpm@11.16.0 --activate
+WORKDIR /workspace
+
+COPY . .
+RUN pnpm install --frozen-lockfile
+RUN DATABASE_URL=postgresql://build:build@127.0.0.1:5432/build \
+    pnpm exec turbo run build --filter=api... --env-mode=loose
+RUN pnpm --filter api deploy --prod --legacy /production/api
+
+FROM node:24-alpine AS runtime
+
+ENV NODE_ENV=production
+RUN corepack enable && corepack prepare pnpm@11.16.0 --activate
+WORKDIR /app
+
+COPY --from=build --chown=node:node /production/api ./
+
+USER node
+EXPOSE 4000
+CMD ["node", "dist/main.js"]

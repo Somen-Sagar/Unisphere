@@ -1,0 +1,17 @@
+.git
+.agents
+.codex
+.expo
+.turbo
+**/.next
+**/dist
+**/node_modules
+**/*.log
+**/*.tsbuildinfo
+**/.env
+**/.env.*
+!**/.env.example
+coverage
+playwright-report
+test-results
+uploads
