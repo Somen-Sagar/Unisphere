@@ -33,6 +33,11 @@ export type College = Prisma.CollegeModel
  */
 export type CollegeMembership = Prisma.CollegeMembershipModel
 /**
+ * Model Department
+ * 
+ */
+export type Department = Prisma.DepartmentModel
+/**
  * Model RefreshSession
  * 
  */
@@ -43,6 +48,11 @@ export type RefreshSession = Prisma.RefreshSessionModel
  */
 export type Club = Prisma.ClubModel
 /**
+ * Model ClubMembership
+ * 
+ */
+export type ClubMembership = Prisma.ClubMembershipModel
+/**
  * Model Event
  * 
  */
@@ -52,3 +62,8 @@ export type Event = Prisma.EventModel
  * 
  */
 export type EventRegistration = Prisma.EventRegistrationModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

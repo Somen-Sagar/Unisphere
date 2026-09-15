@@ -19,10 +19,12 @@ type CollegeFormErrors = {
   collegeId?: { message?: string };
   studentId?: { message?: string };
   name?: { message?: string };
+  slug?: { message?: string };
   website?: { message?: string };
-  emailDomain?: { message?: string };
+  officialEmailDomain?: { message?: string };
   city?: { message?: string };
   state?: { message?: string };
+  country?: { message?: string };
 };
 
 function errorMessage(error: unknown): string {
@@ -106,10 +108,12 @@ export function RegisterForm() {
       setValue("college", {
         mode: "create",
         name: "",
+        slug: "",
         website: undefined,
-        emailDomain: "",
+        officialEmailDomain: "",
         city: "",
         state: "",
+        country: "India",
       });
     }
   }
@@ -238,18 +242,27 @@ export function RegisterForm() {
                 ) : null}
               </label>
               <label>
-                Official website
-                <input type="url" placeholder="https://college.edu" {...register("college.website")} />
+                College slug
+                <input placeholder="north-campus-college" {...register("college.slug")} />
+                {mode === "create" && collegeErrors?.slug?.message ? (
+                  <span className="field-error">{collegeErrors.slug.message}</span>
+                ) : null}
               </label>
             </div>
             <div className="form-row">
               <label>
+                Official website
+                <input type="url" placeholder="https://college.edu" {...register("college.website")} />
+              </label>
+              <label>
                 Email domain
-                <input placeholder="college.edu" {...register("college.emailDomain")} />
-                {mode === "create" && collegeErrors?.emailDomain?.message ? (
-                  <span className="field-error">{collegeErrors.emailDomain.message}</span>
+                <input placeholder="college.edu" {...register("college.officialEmailDomain")} />
+                {mode === "create" && collegeErrors?.officialEmailDomain?.message ? (
+                  <span className="field-error">{collegeErrors.officialEmailDomain.message}</span>
                 ) : null}
               </label>
+            </div>
+            <div className="form-row">
               <label>
                 City
                 <input {...register("college.city")} />
@@ -258,6 +271,10 @@ export function RegisterForm() {
             <label>
               State
               <input {...register("college.state")} />
+            </label>
+            <label>
+              Country
+              <input {...register("college.country")} />
             </label>
           </>
         )}

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UseGuards,
+} from '@nestjs/common';
 import type { EventRegistration } from '@unisphere/types';
 import { z } from 'zod';
 
@@ -22,6 +30,30 @@ export class RegistrationsController {
     @Param('eventId') eventId: string,
   ): Promise<EventRegistration> {
     return this.registrations.register(tenant, eventId);
+  }
+
+  @Post('events/:eventId/register')
+  registerEvent(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('eventId') eventId: string,
+  ): Promise<EventRegistration> {
+    return this.registrations.register(tenant, eventId);
+  }
+
+  @Delete('events/:eventId/register')
+  cancelEvent(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('eventId') eventId: string,
+  ): Promise<EventRegistration> {
+    return this.registrations.cancel(tenant, eventId);
+  }
+
+  @Get('events/:eventId/registrations')
+  findForEvent(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('eventId') eventId: string,
+  ): Promise<EventRegistration[]> {
+    return this.registrations.findForEvent(tenant, eventId);
   }
 
   @Get('registrations/me')

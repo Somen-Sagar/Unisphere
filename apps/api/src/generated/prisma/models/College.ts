@@ -263,8 +263,11 @@ export type CollegeWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"College"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"College"> | Date | string
   memberships?: Prisma.CollegeMembershipListRelationFilter
+  departments?: Prisma.DepartmentListRelationFilter
   clubs?: Prisma.ClubListRelationFilter
   events?: Prisma.EventListRelationFilter
+  registrations?: Prisma.EventRegistrationListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }
 
 export type CollegeOrderByWithRelationInput = {
@@ -284,8 +287,11 @@ export type CollegeOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   memberships?: Prisma.CollegeMembershipOrderByRelationAggregateInput
+  departments?: Prisma.DepartmentOrderByRelationAggregateInput
   clubs?: Prisma.ClubOrderByRelationAggregateInput
   events?: Prisma.EventOrderByRelationAggregateInput
+  registrations?: Prisma.EventRegistrationOrderByRelationAggregateInput
+  notifications?: Prisma.NotificationOrderByRelationAggregateInput
 }
 
 export type CollegeWhereUniqueInput = Prisma.AtLeast<{
@@ -308,8 +314,11 @@ export type CollegeWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"College"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"College"> | Date | string
   memberships?: Prisma.CollegeMembershipListRelationFilter
+  departments?: Prisma.DepartmentListRelationFilter
   clubs?: Prisma.ClubListRelationFilter
   events?: Prisma.EventListRelationFilter
+  registrations?: Prisma.EventRegistrationListRelationFilter
+  notifications?: Prisma.NotificationListRelationFilter
 }, "id" | "slug">
 
 export type CollegeOrderByWithAggregationInput = {
@@ -371,8 +380,11 @@ export type CollegeCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutCollegeInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutCollegeInput
   clubs?: Prisma.ClubCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeUncheckedCreateInput = {
@@ -392,8 +404,11 @@ export type CollegeUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutCollegeInput
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutCollegeInput
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeUpdateInput = {
@@ -413,8 +428,11 @@ export type CollegeUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.CollegeMembershipUpdateManyWithoutCollegeNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutCollegeNestedInput
   clubs?: Prisma.ClubUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeUncheckedUpdateInput = {
@@ -434,8 +452,11 @@ export type CollegeUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeNestedInput
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutCollegeNestedInput
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeCreateManyInput = {
@@ -569,6 +590,20 @@ export type CollegeUpdateOneRequiredWithoutMembershipsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CollegeUpdateToOneWithWhereWithoutMembershipsInput, Prisma.CollegeUpdateWithoutMembershipsInput>, Prisma.CollegeUncheckedUpdateWithoutMembershipsInput>
 }
 
+export type CollegeCreateNestedOneWithoutDepartmentsInput = {
+  create?: Prisma.XOR<Prisma.CollegeCreateWithoutDepartmentsInput, Prisma.CollegeUncheckedCreateWithoutDepartmentsInput>
+  connectOrCreate?: Prisma.CollegeCreateOrConnectWithoutDepartmentsInput
+  connect?: Prisma.CollegeWhereUniqueInput
+}
+
+export type CollegeUpdateOneRequiredWithoutDepartmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.CollegeCreateWithoutDepartmentsInput, Prisma.CollegeUncheckedCreateWithoutDepartmentsInput>
+  connectOrCreate?: Prisma.CollegeCreateOrConnectWithoutDepartmentsInput
+  upsert?: Prisma.CollegeUpsertWithoutDepartmentsInput
+  connect?: Prisma.CollegeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CollegeUpdateToOneWithWhereWithoutDepartmentsInput, Prisma.CollegeUpdateWithoutDepartmentsInput>, Prisma.CollegeUncheckedUpdateWithoutDepartmentsInput>
+}
+
 export type CollegeCreateNestedOneWithoutClubsInput = {
   create?: Prisma.XOR<Prisma.CollegeCreateWithoutClubsInput, Prisma.CollegeUncheckedCreateWithoutClubsInput>
   connectOrCreate?: Prisma.CollegeCreateOrConnectWithoutClubsInput
@@ -597,6 +632,34 @@ export type CollegeUpdateOneRequiredWithoutEventsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CollegeUpdateToOneWithWhereWithoutEventsInput, Prisma.CollegeUpdateWithoutEventsInput>, Prisma.CollegeUncheckedUpdateWithoutEventsInput>
 }
 
+export type CollegeCreateNestedOneWithoutRegistrationsInput = {
+  create?: Prisma.XOR<Prisma.CollegeCreateWithoutRegistrationsInput, Prisma.CollegeUncheckedCreateWithoutRegistrationsInput>
+  connectOrCreate?: Prisma.CollegeCreateOrConnectWithoutRegistrationsInput
+  connect?: Prisma.CollegeWhereUniqueInput
+}
+
+export type CollegeUpdateOneRequiredWithoutRegistrationsNestedInput = {
+  create?: Prisma.XOR<Prisma.CollegeCreateWithoutRegistrationsInput, Prisma.CollegeUncheckedCreateWithoutRegistrationsInput>
+  connectOrCreate?: Prisma.CollegeCreateOrConnectWithoutRegistrationsInput
+  upsert?: Prisma.CollegeUpsertWithoutRegistrationsInput
+  connect?: Prisma.CollegeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CollegeUpdateToOneWithWhereWithoutRegistrationsInput, Prisma.CollegeUpdateWithoutRegistrationsInput>, Prisma.CollegeUncheckedUpdateWithoutRegistrationsInput>
+}
+
+export type CollegeCreateNestedOneWithoutNotificationsInput = {
+  create?: Prisma.XOR<Prisma.CollegeCreateWithoutNotificationsInput, Prisma.CollegeUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.CollegeCreateOrConnectWithoutNotificationsInput
+  connect?: Prisma.CollegeWhereUniqueInput
+}
+
+export type CollegeUpdateOneRequiredWithoutNotificationsNestedInput = {
+  create?: Prisma.XOR<Prisma.CollegeCreateWithoutNotificationsInput, Prisma.CollegeUncheckedCreateWithoutNotificationsInput>
+  connectOrCreate?: Prisma.CollegeCreateOrConnectWithoutNotificationsInput
+  upsert?: Prisma.CollegeUpsertWithoutNotificationsInput
+  connect?: Prisma.CollegeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CollegeUpdateToOneWithWhereWithoutNotificationsInput, Prisma.CollegeUpdateWithoutNotificationsInput>, Prisma.CollegeUncheckedUpdateWithoutNotificationsInput>
+}
+
 export type CollegeCreateWithoutMembershipsInput = {
   id?: string
   name: string
@@ -613,8 +676,11 @@ export type CollegeCreateWithoutMembershipsInput = {
   status?: $Enums.CollegeStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  departments?: Prisma.DepartmentCreateNestedManyWithoutCollegeInput
   clubs?: Prisma.ClubCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeUncheckedCreateWithoutMembershipsInput = {
@@ -633,8 +699,11 @@ export type CollegeUncheckedCreateWithoutMembershipsInput = {
   status?: $Enums.CollegeStatus
   createdAt?: Date | string
   updatedAt?: Date | string
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutCollegeInput
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeCreateOrConnectWithoutMembershipsInput = {
@@ -669,8 +738,11 @@ export type CollegeUpdateWithoutMembershipsInput = {
   status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  departments?: Prisma.DepartmentUpdateManyWithoutCollegeNestedInput
   clubs?: Prisma.ClubUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeUncheckedUpdateWithoutMembershipsInput = {
@@ -689,8 +761,119 @@ export type CollegeUncheckedUpdateWithoutMembershipsInput = {
   status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutCollegeNestedInput
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCollegeNestedInput
+}
+
+export type CollegeCreateWithoutDepartmentsInput = {
+  id?: string
+  name: string
+  slug: string
+  officialEmailDomain?: string | null
+  website?: string | null
+  logoUrl?: string | null
+  coverUrl?: string | null
+  description?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string
+  status?: $Enums.CollegeStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutCollegeInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutCollegeInput
+  events?: Prisma.EventCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCollegeInput
+}
+
+export type CollegeUncheckedCreateWithoutDepartmentsInput = {
+  id?: string
+  name: string
+  slug: string
+  officialEmailDomain?: string | null
+  website?: string | null
+  logoUrl?: string | null
+  coverUrl?: string | null
+  description?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string
+  status?: $Enums.CollegeStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutCollegeInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCollegeInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCollegeInput
+}
+
+export type CollegeCreateOrConnectWithoutDepartmentsInput = {
+  where: Prisma.CollegeWhereUniqueInput
+  create: Prisma.XOR<Prisma.CollegeCreateWithoutDepartmentsInput, Prisma.CollegeUncheckedCreateWithoutDepartmentsInput>
+}
+
+export type CollegeUpsertWithoutDepartmentsInput = {
+  update: Prisma.XOR<Prisma.CollegeUpdateWithoutDepartmentsInput, Prisma.CollegeUncheckedUpdateWithoutDepartmentsInput>
+  create: Prisma.XOR<Prisma.CollegeCreateWithoutDepartmentsInput, Prisma.CollegeUncheckedCreateWithoutDepartmentsInput>
+  where?: Prisma.CollegeWhereInput
+}
+
+export type CollegeUpdateToOneWithWhereWithoutDepartmentsInput = {
+  where?: Prisma.CollegeWhereInput
+  data: Prisma.XOR<Prisma.CollegeUpdateWithoutDepartmentsInput, Prisma.CollegeUncheckedUpdateWithoutDepartmentsInput>
+}
+
+export type CollegeUpdateWithoutDepartmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  officialEmailDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutCollegeNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutCollegeNestedInput
+  events?: Prisma.EventUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCollegeNestedInput
+}
+
+export type CollegeUncheckedUpdateWithoutDepartmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  officialEmailDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutCollegeNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeCreateWithoutClubsInput = {
@@ -710,7 +893,10 @@ export type CollegeCreateWithoutClubsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutCollegeInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeUncheckedCreateWithoutClubsInput = {
@@ -730,7 +916,10 @@ export type CollegeUncheckedCreateWithoutClubsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutCollegeInput
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeCreateOrConnectWithoutClubsInput = {
@@ -766,7 +955,10 @@ export type CollegeUpdateWithoutClubsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.CollegeMembershipUpdateManyWithoutCollegeNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeUncheckedUpdateWithoutClubsInput = {
@@ -786,7 +978,10 @@ export type CollegeUncheckedUpdateWithoutClubsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeNestedInput
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeCreateWithoutEventsInput = {
@@ -806,7 +1001,10 @@ export type CollegeCreateWithoutEventsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutCollegeInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutCollegeInput
   clubs?: Prisma.ClubCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeUncheckedCreateWithoutEventsInput = {
@@ -826,7 +1024,10 @@ export type CollegeUncheckedCreateWithoutEventsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutCollegeInput
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutCollegeInput
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeCreateOrConnectWithoutEventsInput = {
@@ -862,7 +1063,10 @@ export type CollegeUpdateWithoutEventsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.CollegeMembershipUpdateManyWithoutCollegeNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutCollegeNestedInput
   clubs?: Prisma.ClubUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeUncheckedUpdateWithoutEventsInput = {
@@ -882,7 +1086,226 @@ export type CollegeUncheckedUpdateWithoutEventsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeNestedInput
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutCollegeNestedInput
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCollegeNestedInput
+}
+
+export type CollegeCreateWithoutRegistrationsInput = {
+  id?: string
+  name: string
+  slug: string
+  officialEmailDomain?: string | null
+  website?: string | null
+  logoUrl?: string | null
+  coverUrl?: string | null
+  description?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string
+  status?: $Enums.CollegeStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutCollegeInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutCollegeInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutCollegeInput
+  events?: Prisma.EventCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutCollegeInput
+}
+
+export type CollegeUncheckedCreateWithoutRegistrationsInput = {
+  id?: string
+  name: string
+  slug: string
+  officialEmailDomain?: string | null
+  website?: string | null
+  logoUrl?: string | null
+  coverUrl?: string | null
+  description?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string
+  status?: $Enums.CollegeStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutCollegeInput
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutCollegeInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCollegeInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutCollegeInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutCollegeInput
+}
+
+export type CollegeCreateOrConnectWithoutRegistrationsInput = {
+  where: Prisma.CollegeWhereUniqueInput
+  create: Prisma.XOR<Prisma.CollegeCreateWithoutRegistrationsInput, Prisma.CollegeUncheckedCreateWithoutRegistrationsInput>
+}
+
+export type CollegeUpsertWithoutRegistrationsInput = {
+  update: Prisma.XOR<Prisma.CollegeUpdateWithoutRegistrationsInput, Prisma.CollegeUncheckedUpdateWithoutRegistrationsInput>
+  create: Prisma.XOR<Prisma.CollegeCreateWithoutRegistrationsInput, Prisma.CollegeUncheckedCreateWithoutRegistrationsInput>
+  where?: Prisma.CollegeWhereInput
+}
+
+export type CollegeUpdateToOneWithWhereWithoutRegistrationsInput = {
+  where?: Prisma.CollegeWhereInput
+  data: Prisma.XOR<Prisma.CollegeUpdateWithoutRegistrationsInput, Prisma.CollegeUncheckedUpdateWithoutRegistrationsInput>
+}
+
+export type CollegeUpdateWithoutRegistrationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  officialEmailDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutCollegeNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutCollegeNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutCollegeNestedInput
+  events?: Prisma.EventUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutCollegeNestedInput
+}
+
+export type CollegeUncheckedUpdateWithoutRegistrationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  officialEmailDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeNestedInput
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutCollegeNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutCollegeNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutCollegeNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutCollegeNestedInput
+}
+
+export type CollegeCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  slug: string
+  officialEmailDomain?: string | null
+  website?: string | null
+  logoUrl?: string | null
+  coverUrl?: string | null
+  description?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string
+  status?: $Enums.CollegeStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutCollegeInput
+  departments?: Prisma.DepartmentCreateNestedManyWithoutCollegeInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutCollegeInput
+  events?: Prisma.EventCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutCollegeInput
+}
+
+export type CollegeUncheckedCreateWithoutNotificationsInput = {
+  id?: string
+  name: string
+  slug: string
+  officialEmailDomain?: string | null
+  website?: string | null
+  logoUrl?: string | null
+  coverUrl?: string | null
+  description?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string
+  status?: $Enums.CollegeStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutCollegeInput
+  departments?: Prisma.DepartmentUncheckedCreateNestedManyWithoutCollegeInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCollegeInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutCollegeInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutCollegeInput
+}
+
+export type CollegeCreateOrConnectWithoutNotificationsInput = {
+  where: Prisma.CollegeWhereUniqueInput
+  create: Prisma.XOR<Prisma.CollegeCreateWithoutNotificationsInput, Prisma.CollegeUncheckedCreateWithoutNotificationsInput>
+}
+
+export type CollegeUpsertWithoutNotificationsInput = {
+  update: Prisma.XOR<Prisma.CollegeUpdateWithoutNotificationsInput, Prisma.CollegeUncheckedUpdateWithoutNotificationsInput>
+  create: Prisma.XOR<Prisma.CollegeCreateWithoutNotificationsInput, Prisma.CollegeUncheckedCreateWithoutNotificationsInput>
+  where?: Prisma.CollegeWhereInput
+}
+
+export type CollegeUpdateToOneWithWhereWithoutNotificationsInput = {
+  where?: Prisma.CollegeWhereInput
+  data: Prisma.XOR<Prisma.CollegeUpdateWithoutNotificationsInput, Prisma.CollegeUncheckedUpdateWithoutNotificationsInput>
+}
+
+export type CollegeUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  officialEmailDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutCollegeNestedInput
+  departments?: Prisma.DepartmentUpdateManyWithoutCollegeNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutCollegeNestedInput
+  events?: Prisma.EventUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutCollegeNestedInput
+}
+
+export type CollegeUncheckedUpdateWithoutNotificationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  officialEmailDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeNestedInput
+  departments?: Prisma.DepartmentUncheckedUpdateManyWithoutCollegeNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutCollegeNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutCollegeNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutCollegeNestedInput
 }
 
 
@@ -892,14 +1315,20 @@ export type CollegeUncheckedUpdateWithoutEventsInput = {
 
 export type CollegeCountOutputType = {
   memberships: number
+  departments: number
   clubs: number
   events: number
+  registrations: number
+  notifications: number
 }
 
 export type CollegeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | CollegeCountOutputTypeCountMembershipsArgs
+  departments?: boolean | CollegeCountOutputTypeCountDepartmentsArgs
   clubs?: boolean | CollegeCountOutputTypeCountClubsArgs
   events?: boolean | CollegeCountOutputTypeCountEventsArgs
+  registrations?: boolean | CollegeCountOutputTypeCountRegistrationsArgs
+  notifications?: boolean | CollegeCountOutputTypeCountNotificationsArgs
 }
 
 /**
@@ -922,6 +1351,13 @@ export type CollegeCountOutputTypeCountMembershipsArgs<ExtArgs extends runtime.T
 /**
  * CollegeCountOutputType without action
  */
+export type CollegeCountOutputTypeCountDepartmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DepartmentWhereInput
+}
+
+/**
+ * CollegeCountOutputType without action
+ */
 export type CollegeCountOutputTypeCountClubsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.ClubWhereInput
 }
@@ -931,6 +1367,20 @@ export type CollegeCountOutputTypeCountClubsArgs<ExtArgs extends runtime.Types.E
  */
 export type CollegeCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.EventWhereInput
+}
+
+/**
+ * CollegeCountOutputType without action
+ */
+export type CollegeCountOutputTypeCountRegistrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EventRegistrationWhereInput
+}
+
+/**
+ * CollegeCountOutputType without action
+ */
+export type CollegeCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.NotificationWhereInput
 }
 
 
@@ -951,8 +1401,11 @@ export type CollegeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   memberships?: boolean | Prisma.College$membershipsArgs<ExtArgs>
+  departments?: boolean | Prisma.College$departmentsArgs<ExtArgs>
   clubs?: boolean | Prisma.College$clubsArgs<ExtArgs>
   events?: boolean | Prisma.College$eventsArgs<ExtArgs>
+  registrations?: boolean | Prisma.College$registrationsArgs<ExtArgs>
+  notifications?: boolean | Prisma.College$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.CollegeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["college"]>
 
@@ -1013,8 +1466,11 @@ export type CollegeSelectScalar = {
 export type CollegeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "officialEmailDomain" | "website" | "logoUrl" | "coverUrl" | "description" | "address" | "city" | "state" | "country" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["college"]>
 export type CollegeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | Prisma.College$membershipsArgs<ExtArgs>
+  departments?: boolean | Prisma.College$departmentsArgs<ExtArgs>
   clubs?: boolean | Prisma.College$clubsArgs<ExtArgs>
   events?: boolean | Prisma.College$eventsArgs<ExtArgs>
+  registrations?: boolean | Prisma.College$registrationsArgs<ExtArgs>
+  notifications?: boolean | Prisma.College$notificationsArgs<ExtArgs>
   _count?: boolean | Prisma.CollegeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CollegeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1024,8 +1480,11 @@ export type $CollegePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "College"
   objects: {
     memberships: Prisma.$CollegeMembershipPayload<ExtArgs>[]
+    departments: Prisma.$DepartmentPayload<ExtArgs>[]
     clubs: Prisma.$ClubPayload<ExtArgs>[]
     events: Prisma.$EventPayload<ExtArgs>[]
+    registrations: Prisma.$EventRegistrationPayload<ExtArgs>[]
+    notifications: Prisma.$NotificationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1438,8 +1897,11 @@ readonly fields: CollegeFieldRefs;
 export interface Prisma__CollegeClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   memberships<T extends Prisma.College$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.College$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CollegeMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  departments<T extends Prisma.College$departmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.College$departmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   clubs<T extends Prisma.College$clubsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.College$clubsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   events<T extends Prisma.College$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.College$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  registrations<T extends Prisma.College$registrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.College$registrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  notifications<T extends Prisma.College$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.College$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1901,6 +2363,30 @@ export type College$membershipsArgs<ExtArgs extends runtime.Types.Extensions.Int
 }
 
 /**
+ * College.departments
+ */
+export type College$departmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Department
+   */
+  select?: Prisma.DepartmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Department
+   */
+  omit?: Prisma.DepartmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DepartmentInclude<ExtArgs> | null
+  where?: Prisma.DepartmentWhereInput
+  orderBy?: Prisma.DepartmentOrderByWithRelationInput | Prisma.DepartmentOrderByWithRelationInput[]
+  cursor?: Prisma.DepartmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DepartmentScalarFieldEnum | Prisma.DepartmentScalarFieldEnum[]
+}
+
+/**
  * College.clubs
  */
 export type College$clubsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1946,6 +2432,54 @@ export type College$eventsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.EventScalarFieldEnum | Prisma.EventScalarFieldEnum[]
+}
+
+/**
+ * College.registrations
+ */
+export type College$registrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EventRegistration
+   */
+  select?: Prisma.EventRegistrationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EventRegistration
+   */
+  omit?: Prisma.EventRegistrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EventRegistrationInclude<ExtArgs> | null
+  where?: Prisma.EventRegistrationWhereInput
+  orderBy?: Prisma.EventRegistrationOrderByWithRelationInput | Prisma.EventRegistrationOrderByWithRelationInput[]
+  cursor?: Prisma.EventRegistrationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EventRegistrationScalarFieldEnum | Prisma.EventRegistrationScalarFieldEnum[]
+}
+
+/**
+ * College.notifications
+ */
+export type College$notificationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Notification
+   */
+  select?: Prisma.NotificationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Notification
+   */
+  omit?: Prisma.NotificationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.NotificationInclude<ExtArgs> | null
+  where?: Prisma.NotificationWhereInput
+  orderBy?: Prisma.NotificationOrderByWithRelationInput | Prisma.NotificationOrderByWithRelationInput[]
+  cursor?: Prisma.NotificationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
 }
 
 /**

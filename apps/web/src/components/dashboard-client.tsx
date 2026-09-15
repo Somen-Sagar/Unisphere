@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import {
   Bell,
+  BadgeCheck,
   Bot,
   Building2,
   CalendarDays,
@@ -11,14 +12,16 @@ import {
   CircleGauge,
   Clock3,
   FileBadge,
+  MapPin,
   Search,
   ShieldAlert,
   Sparkles,
   Ticket,
+  Timer,
   UsersRound,
 } from "lucide-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import QRCode from "react-qr-code";
 import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
@@ -26,8 +29,11 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { UniSphereApiError, type UniSphereHealth } from "@unisphere/api-client";
 import type {
   CampusClub,
+  CampusClubDetails,
   CampusEvent,
+  CampusNotification,
   CampusUser,
+  DashboardSummary,
   EventRegistration,
   Membership,
   MembershipRole,
@@ -56,6 +62,8 @@ type DashboardData = {
   events: CampusEvent[];
   clubs: CampusClub[];
   registrations: EventRegistration[];
+  summary: DashboardSummary;
+  notifications: CampusNotification[];
 };
 
 type DashboardClientProps = {
@@ -68,6 +76,13 @@ type DashboardClientProps = {
 const emptyEvents: CampusEvent[] = [];
 const emptyClubs: CampusClub[] = [];
 const emptyRegistrations: EventRegistration[] = [];
+const emptySummary: DashboardSummary = {
+  upcomingEvents: 0,
+  activeClubs: 0,
+  registrations: 0,
+  unreadNotifications: 0,
+};
+const emptyNotifications: CampusNotification[] = [];
 
 function fullName(user: CampusUser): string {
   return `${user.firstName} ${user.lastName}`;
@@ -99,6 +114,66 @@ function seatsLabel(event: CampusEvent): string {
   if (event.capacity === null) return "Open capacity";
   const remaining = Math.max(event.capacity - event.registeredCount, 0);
   return `${remaining} of ${event.capacity} seats left`;
+}
+
+function eventRegistrationOpen(event: CampusEvent): boolean {
+  const now = Date.now();
+  const opensAt = event.registrationOpensAt
+    ? new Date(event.registrationOpensAt).getTime()
+    : null;
+  const closesAt = event.registrationClosesAt
+    ? new Date(event.registrationClosesAt).getTime()
+    : null;
+  const startsAt = new Date(event.startsAt).getTime();
+  const hasCapacity =
+    event.capacity === null || event.registeredCount < event.capacity;
+
+  return (
+    ["PUBLISHED", "REGISTRATION_OPEN"].includes(event.status) &&
+    (!opensAt || now >= opensAt) &&
+    (!closesAt || now <= closesAt) &&
+    now < startsAt &&
+    hasCapacity
+  );
+}
+
+function registrationActionLabel({
+  event,
+  registered,
+  registering,
+}: {
+  event: CampusEvent;
+  registered: boolean;
+  registering: boolean;
+}): string {
+  if (registering) return "Working...";
+  if (registered) return "Cancel registration";
+  if (event.capacity !== null && event.registeredCount >= event.capacity) {
+    return "Event full";
+  }
+  if (!["PUBLISHED", "REGISTRATION_OPEN"].includes(event.status)) {
+    return "Registration closed";
+  }
+  if (
+    event.registrationClosesAt &&
+    Date.now() > new Date(event.registrationClosesAt).getTime()
+  ) {
+    return "Deadline passed";
+  }
+  return "Register";
+}
+
+function nextRegisteredEvent(
+  registrations: EventRegistration[],
+): EventRegistration | null {
+  const now = Date.now();
+  return (
+    registrations
+      .filter((registration) => new Date(registration.event.startsAt).getTime() >= now)
+      .sort((left, right) =>
+        left.event.startsAt.localeCompare(right.event.startsAt),
+      )[0] ?? null
+  );
 }
 
 function resolveMembership(user: CampusUser): Membership | null {
@@ -150,13 +225,17 @@ async function loadDashboardData(): Promise<DashboardData | null> {
         events: emptyEvents,
         clubs: emptyClubs,
         registrations: emptyRegistrations,
+        summary: emptySummary,
+        notifications: emptyNotifications,
       };
     }
 
-    const [eventResult, clubResult, registrationResult] = await Promise.all([
+    const [eventResult, clubResult, registrationResult, summary, notifications] = await Promise.all([
       api.events({ upcoming: true, pageSize: 50 }),
       api.clubs(),
       api.myRegistrations(),
+      api.dashboardSummary(),
+      api.notifications(),
     ]);
 
     return {
@@ -164,6 +243,8 @@ async function loadDashboardData(): Promise<DashboardData | null> {
       events: eventResult.items,
       clubs: clubResult,
       registrations: registrationResult,
+      summary,
+      notifications,
     };
   } catch (error) {
     if (error instanceof UniSphereApiError && error.status === 401) return null;
@@ -292,35 +373,37 @@ function KpiGrid({
   events,
   clubs,
   registrations,
+  summary,
 }: {
   events: CampusEvent[];
   clubs: CampusClub[];
   registrations: EventRegistration[];
+  summary: DashboardSummary;
 }) {
   const items = [
     {
       label: "Upcoming events",
-      value: events.length,
+      value: summary.upcomingEvents,
       copy: events.length ? "Open for discovery in your tenant" : "No published events yet",
       icon: CalendarDays,
     },
     {
       label: "Active clubs",
-      value: clubs.length,
+      value: summary.activeClubs,
       copy: clubs.length ? "Communities available in your college" : "No active clubs yet",
       icon: UsersRound,
     },
     {
       label: "My registrations",
-      value: registrations.length,
+      value: summary.registrations,
       copy: registrations.length ? "Passes issued from real registrations" : "No passes issued yet",
       icon: Ticket,
     },
     {
-      label: "Certificates",
-      value: 0,
-      copy: "Certificate issuing is not connected yet",
-      icon: FileBadge,
+      label: "Unread notifications",
+      value: summary.unreadNotifications,
+      copy: summary.unreadNotifications ? "Campus notices waiting" : "No unread notifications",
+      icon: Bell,
     },
   ];
 
@@ -352,13 +435,18 @@ function EventCard({
   canRegister,
   registering,
   onRegister,
+  onCancel,
 }: {
   event: CampusEvent;
   registered: boolean;
   canRegister: boolean;
   registering: boolean;
   onRegister: () => void;
+  onCancel: () => void;
 }) {
+  const available = eventRegistrationOpen(event);
+  const actionEnabled = registered || (canRegister && available);
+
   return (
     <motion.article className="premium-event-card" whileHover={{ y: -3 }}>
       <div className="event-poster">
@@ -366,8 +454,9 @@ function EventCard({
           // eslint-disable-next-line @next/next/no-img-element
           <img src={event.imageUrl} alt="" />
         ) : (
-          <CalendarDays aria-hidden="true" size={28} />
+          <CalendarDays aria-hidden="true" size={32} />
         )}
+        <span className="event-type-pill">{event.eventType}</span>
       </div>
       <div className="event-card-body">
         <div className="event-card-meta">
@@ -392,15 +481,16 @@ function EventCard({
         </dl>
         <div className="card-actions">
           <Link className="button button-secondary button-sm" href={`/dashboard/events/${event.id}`}>
+            <ChevronRight aria-hidden="true" size={15} />
             View details
           </Link>
           <button
             className="button button-primary button-sm"
-            disabled={!canRegister || registered || registering}
-            onClick={onRegister}
+            disabled={!actionEnabled || registering}
+            onClick={registered ? onCancel : onRegister}
             type="button"
           >
-            {registered ? "Registered" : registering ? "Registering..." : "Register"}
+            {registrationActionLabel({ event, registered, registering })}
           </button>
         </div>
       </div>
@@ -423,9 +513,15 @@ function ClubCard({ club }: { club: CampusClub }) {
         <p className="eyebrow">Campus community</p>
         <h3>{club.name}</h3>
         <p>{club.description ?? "A student community in your college tenant."}</p>
-        <span>{club.upcomingEventCount} upcoming {club.upcomingEventCount === 1 ? "event" : "events"}</span>
+        <div className="club-meta-row">
+          <span>{club.category}</span>
+          <span>{titleCase(club.recruitmentStatus)}</span>
+          {typeof club.memberCount === "number" ? <span>{club.memberCount} members</span> : null}
+        </div>
+        <small>{club.upcomingEventCount} upcoming {club.upcomingEventCount === 1 ? "event" : "events"}</small>
       </div>
       <Link className="button button-secondary button-sm" href={`/dashboard/clubs/${club.id}`}>
+        <ChevronRight aria-hidden="true" size={15} />
         View club
       </Link>
     </motion.article>
@@ -440,6 +536,7 @@ function PassCard({ registration }: { registration: EventRegistration }) {
         <h3>{registration.event.title}</h3>
         <p>{eventDate(registration.event.startsAt)}</p>
         <p>{registration.event.venue}</p>
+        <strong>{registration.registrationCode}</strong>
         <Link href={`/dashboard/events/${registration.eventId}`}>View event</Link>
       </div>
       <div className="pass-qr" aria-label={`QR pass for ${registration.event.title}`}>
@@ -460,35 +557,45 @@ function Overview({
   events,
   clubs,
   registrations,
+  summary,
   registeredEventIds,
   canRegister,
   registeringId,
   onRegister,
+  onCancel,
 }: {
   user: CampusUser;
   membership: Membership | null;
   events: CampusEvent[];
   clubs: CampusClub[];
   registrations: EventRegistration[];
+  summary: DashboardSummary;
   registeredEventIds: Set<string>;
   canRegister: boolean;
   registeringId: string | null;
   onRegister: (eventId: string) => void;
+  onCancel: (eventId: string) => void;
 }) {
   const nextEvent = events[0];
+  const registrationCount = registrations.length;
 
   return (
     <>
       <section className="dashboard-hero">
         <div>
           <p className="eyebrow">{membership?.college.name ?? "UNISPHERE"}</p>
-          <h1>Good to see you, {user.firstName}.</h1>
-          <p>Here is what is happening across your campus today, powered by real tenant-scoped UniSphere data.</p>
+          <h1>Your campus is moving, {user.firstName}.</h1>
+          <p>Here&apos;s what is happening across your campus, drawn live from the UniSphere backend and scoped to your active college.</p>
+          <div className="hero-metric-row">
+            <span><strong>{summary.upcomingEvents}</strong> upcoming events</span>
+            <span><strong>{summary.activeClubs}</strong> active clubs</span>
+            <span><strong>{registrationCount}</strong> active passes</span>
+          </div>
           <div className="quick-actions">
-            <Link className="button button-primary" href="/dashboard/events">Browse Events</Link>
-            <Link className="button button-secondary" href="/dashboard/clubs">Explore Clubs</Link>
-            <Link className="button button-secondary" href="/dashboard/ai">Ask UniSphere AI</Link>
-            <Link className="button button-secondary" href="/dashboard/passes">View Passes</Link>
+            <Link className="button button-primary" href="/dashboard/events"><CalendarDays size={16} />Explore Events</Link>
+            <Link className="button button-secondary" href="/dashboard/clubs"><UsersRound size={16} />Find Clubs</Link>
+            <Link className="button button-secondary" href="/dashboard/passes"><Ticket size={16} />View Passes</Link>
+            <Link className="button button-secondary preview-action" href="/dashboard/ai"><Bot size={16} />AI Preview</Link>
           </div>
         </div>
         <aside className="hero-context-panel">
@@ -496,7 +603,8 @@ function Overview({
           {nextEvent ? (
             <>
               <h2>{nextEvent.title}</h2>
-              <p>{eventDate(nextEvent.startsAt)} · {nextEvent.venue}</p>
+              <p><CalendarDays size={14} /> {eventDate(nextEvent.startsAt)}</p>
+              <p><MapPin size={14} /> {nextEvent.venue}</p>
               <Link className="button button-secondary button-sm" href={`/dashboard/events/${nextEvent.id}`}>
                 Open event
               </Link>
@@ -509,7 +617,7 @@ function Overview({
           )}
         </aside>
       </section>
-      <KpiGrid events={events} clubs={clubs} registrations={registrations} />
+      <KpiGrid events={events} clubs={clubs} registrations={registrations} summary={summary} />
       <section className="portal-two-column">
         <div className="dashboard-panel">
           <div className="panel-heading">
@@ -528,6 +636,7 @@ function Overview({
                 canRegister={canRegister}
                 registering={registeringId === event.id}
                 onRegister={() => onRegister(event.id)}
+                onCancel={() => onCancel(event.id)}
               />
             ))}
             {!events.length ? (
@@ -572,14 +681,17 @@ function EventsView({
   canRegister,
   registeringId,
   onRegister,
+  onCancel,
 }: {
   events: CampusEvent[];
   registeredEventIds: Set<string>;
   canRegister: boolean;
   registeringId: string | null;
   onRegister: (eventId: string) => void;
+  onCancel: (eventId: string) => void;
 }) {
-  const [search, setSearch] = useState("");
+  const searchParams = useSearchParams();
+  const [search, setSearch] = useState(searchParams.get("search") ?? "");
   const [status, setStatus] = useState("all");
   const filtered = events.filter((event) => {
     const term = search.trim().toLowerCase();
@@ -619,6 +731,7 @@ function EventsView({
             canRegister={canRegister}
             registering={registeringId === event.id}
             onRegister={() => onRegister(event.id)}
+            onCancel={() => onCancel(event.id)}
           />
         ))}
       </div>
@@ -639,12 +752,14 @@ function EventDetailView({
   canRegister,
   registering,
   onRegister,
+  onCancel,
 }: {
   event?: CampusEvent;
   registered: boolean;
   canRegister: boolean;
   registering: boolean;
   onRegister: () => void;
+  onCancel: () => void;
 }) {
   if (!event) {
     return (
@@ -656,9 +771,20 @@ function EventDetailView({
       />
     );
   }
+  const registeredLabel = registered ? "Registered" : titleCase(event.status);
+  const actionEnabled = registered || (canRegister && eventRegistrationOpen(event));
 
   return (
     <section className="detail-layout">
+      <div className="detail-poster">
+        {event.imageUrl ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img src={event.imageUrl} alt="" />
+        ) : (
+          <CalendarDays aria-hidden="true" size={42} />
+        )}
+        <span>{registeredLabel}</span>
+      </div>
       <div className="detail-main">
         <p className="eyebrow">{titleCase(event.status)}</p>
         <h1>{event.title}</h1>
@@ -668,11 +794,13 @@ function EventDetailView({
           <div><dt>Time</dt><dd>{eventTimeRange(event)}</dd></div>
           <div><dt>Venue</dt><dd>{event.venue}</dd></div>
           <div><dt>Capacity</dt><dd>{seatsLabel(event)}</dd></div>
+          <div><dt>Registration deadline</dt><dd>{event.registrationClosesAt ? eventDate(event.registrationClosesAt) : "Open until event start"}</dd></div>
+          <div><dt>Type</dt><dd>{event.eventType}</dd></div>
         </dl>
         <div className="card-actions">
           <Link className="button button-secondary" href="/dashboard/events">Back to events</Link>
-          <button className="button button-primary" disabled={!canRegister || registered || registering} onClick={onRegister} type="button">
-            {registered ? "Registered" : registering ? "Registering..." : "Register for event"}
+          <button className="button button-primary" disabled={!actionEnabled || registering} onClick={registered ? onCancel : onRegister} type="button">
+            {registrationActionLabel({ event, registered, registering })}
           </button>
         </div>
       </div>
@@ -709,7 +837,7 @@ function ClubsView({ clubs }: { clubs: CampusClub[] }) {
   );
 }
 
-function ClubDetailView({ club }: { club?: CampusClub }) {
+function ClubDetailView({ club }: { club?: CampusClub | CampusClubDetails }) {
   if (!club) {
     return (
       <EmptyState
@@ -723,14 +851,38 @@ function ClubDetailView({ club }: { club?: CampusClub }) {
 
   return (
     <section className="detail-layout">
+      <div className="club-detail-cover">
+        <span className="club-logo large">
+          {club.logoUrl ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={club.logoUrl} alt="" />
+          ) : (
+            club.name.charAt(0)
+          )}
+        </span>
+      </div>
       <div className="detail-main">
         <p className="eyebrow">Campus community</p>
         <h1>{club.name}</h1>
         <p>{club.description ?? "A student community in your college tenant."}</p>
         <dl className="detail-grid">
-          <div><dt>Slug</dt><dd>{club.slug}</dd></div>
+          <div><dt>Category</dt><dd>{club.category}</dd></div>
+          <div><dt>Recruitment</dt><dd>{titleCase(club.recruitmentStatus)}</dd></div>
+          <div><dt>Verification</dt><dd>{titleCase(club.verificationStatus)}</dd></div>
+          {typeof club.memberCount === "number" ? <div><dt>Members</dt><dd>{club.memberCount}</dd></div> : null}
           <div><dt>Upcoming events</dt><dd>{club.upcomingEventCount}</dd></div>
         </dl>
+        {"upcomingEvents" in club && club.upcomingEvents.length ? (
+          <div className="embedded-list">
+            <p className="eyebrow">Upcoming</p>
+            {club.upcomingEvents.map((event) => (
+              <Link href={`/dashboard/events/${event.id}`} key={event.id}>
+                <span>{event.title}</span>
+                <small>{eventDate(event.startsAt)}</small>
+              </Link>
+            ))}
+          </div>
+        ) : null}
         <Link className="button button-secondary" href="/dashboard/clubs">Back to clubs</Link>
       </div>
     </section>
@@ -756,6 +908,51 @@ function PassesView({ registrations }: { registrations: EventRegistration[] }) {
           title="No registration passes yet"
           copy="Register for an event to create your first QR pass."
           action={<Link className="button button-primary button-sm" href="/dashboard/events">Browse events</Link>}
+        />
+      ) : null}
+    </>
+  );
+}
+
+function NotificationsView({
+  notifications,
+  onMarkRead,
+}: {
+  notifications: CampusNotification[];
+  onMarkRead: (notificationId: string) => void;
+}) {
+  return (
+    <>
+      <PageIntro
+        eyebrow="Notifications"
+        title="Campus notifications"
+        copy="In-app notifications are loaded from the tenant-scoped backend."
+      />
+      <div className="notification-list">
+        {notifications.map((notification) => (
+          <article key={notification.id} className={notification.readAt ? "" : "unread"}>
+            <div>
+              <span>{titleCase(notification.type)}</span>
+              <h3>{notification.title}</h3>
+              <p>{notification.message}</p>
+            </div>
+            {!notification.readAt ? (
+              <button
+                className="button button-secondary button-sm"
+                type="button"
+                onClick={() => onMarkRead(notification.id)}
+              >
+                Mark read
+              </button>
+            ) : null}
+          </article>
+        ))}
+      </div>
+      {!notifications.length ? (
+        <EmptyState
+          icon={Bell}
+          title="No notifications"
+          copy="Event reminders, club notices, and campus alerts will appear here."
         />
       ) : null}
     </>
@@ -855,7 +1052,7 @@ function FutureState({ view }: { view: DashboardView }) {
       action: (
         <div className="service-route-grid">
           {["Mess", "Hostel", "Notices", "Complaints", "Lost & Found", "Campus Map"].map((item) => (
-            <Link href="/dashboard/services" key={item}>{item}<ChevronRight size={14} /></Link>
+            <button disabled key={item} type="button">{item}<span>Planned</span></button>
           ))}
         </div>
       ),
@@ -884,20 +1081,30 @@ function WorkspaceContext({
   membership,
   events,
   registrations,
+  health,
+  notifications,
 }: {
   membership: Membership | null;
   events: CampusEvent[];
   registrations: EventRegistration[];
+  health: UniSphereHealth | null;
+  notifications: CampusNotification[];
 }) {
+  const nextRegistration = nextRegisteredEvent(registrations);
+  const unreadCount = notifications.filter((item) => !item.readAt).length;
+  const healthy = health?.status === "ok" && health.database === "connected";
+
   return (
     <aside className="right-context-panel">
       <p className="eyebrow">Tenant Context</p>
       <h2>{membership?.college.name ?? "No active college"}</h2>
       <p>{membership ? `${titleCase(membership.role)} · ${titleCase(membership.status)}` : "Complete onboarding to activate campus data."}</p>
       <div className="context-stat-list">
-        <div><span>Next event</span><strong>{events[0]?.title ?? "None"}</strong></div>
-        <div><span>Passes</span><strong>{registrations.length}</strong></div>
-        <div><span>Isolation</span><strong>Membership scoped</strong></div>
+        <div><span><Timer size={14} /> Next registered</span><strong>{nextRegistration?.event.title ?? "None"}</strong></div>
+        <div><span><Bell size={14} /> Unread notices</span><strong>{unreadCount}</strong></div>
+        <div><span><CalendarDays size={14} /> Next campus event</span><strong>{events[0]?.title ?? "None"}</strong></div>
+        <div><span><BadgeCheck size={14} /> System</span><strong>{healthy ? "Connected" : "Checking"}</strong></div>
+        <div><span><ShieldAlert size={14} /> Isolation</span><strong>Membership scoped</strong></div>
       </div>
     </aside>
   );
@@ -921,6 +1128,18 @@ export function DashboardClient({
     queryFn: () => api.health(),
     retry: 1,
     refetchInterval: 60_000,
+  });
+  const eventDetail = useQuery({
+    queryKey: ["event", tenantVersion, eventId],
+    queryFn: () => api.event(eventId ?? ""),
+    enabled: view === "event-detail" && Boolean(eventId),
+    retry: false,
+  });
+  const clubDetail = useQuery({
+    queryKey: ["club", tenantVersion, clubId],
+    queryFn: () => api.club(clubId ?? ""),
+    enabled: view === "club-detail" && Boolean(clubId),
+    retry: false,
   });
   const [actionMessage, setActionMessage] = useState<string | null>(null);
   const [registeringId, setRegisteringId] = useState<string | null>(null);
@@ -953,7 +1172,14 @@ export function DashboardClient({
     );
   }
 
-  const { user, events = emptyEvents, clubs = emptyClubs, registrations = emptyRegistrations } = dashboard.data;
+  const {
+    user,
+    events = emptyEvents,
+    clubs = emptyClubs,
+    registrations = emptyRegistrations,
+    summary = emptySummary,
+    notifications = emptyNotifications,
+  } = dashboard.data;
   const membership = resolveMembership(user);
   const activeRoles = user.memberships
     .filter((item) => item.status === "ACTIVE")
@@ -978,13 +1204,72 @@ export function DashboardClient({
           registrations: [...other, registration].sort((left, right) =>
             left.event.startsAt.localeCompare(right.event.startsAt),
           ),
+          summary: {
+            ...current.summary,
+            registrations: current.summary.registrations + 1,
+          },
         };
       });
+      void queryClient.invalidateQueries({ queryKey: ["event", tenantVersion, eventIdToRegister] });
+      void queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
       setActionMessage("Registration confirmed. Your QR pass is ready.");
     } catch (registrationError) {
       setActionMessage(apiErrorMessage(registrationError));
     } finally {
       setRegisteringId(null);
+    }
+  }
+
+  async function cancelRegistration(eventIdToCancel: string) {
+    setRegisteringId(eventIdToCancel);
+    setActionMessage(null);
+    try {
+      await api.cancelEventRegistration(eventIdToCancel);
+      queryClient.setQueryData<DashboardData | null>(["dashboard-data", tenantVersion], (current) => {
+        if (!current) return current;
+        return {
+          ...current,
+          registrations: current.registrations.filter((item) => item.eventId !== eventIdToCancel),
+          summary: {
+            ...current.summary,
+            registrations: Math.max(current.summary.registrations - 1, 0),
+          },
+        };
+      });
+      void queryClient.invalidateQueries({ queryKey: ["event", tenantVersion, eventIdToCancel] });
+      void queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
+      setActionMessage("Registration cancelled.");
+    } catch (registrationError) {
+      setActionMessage(apiErrorMessage(registrationError));
+    } finally {
+      setRegisteringId(null);
+    }
+  }
+
+  async function markNotificationRead(notificationId: string) {
+    try {
+      const updated = await api.markNotificationRead(notificationId);
+      queryClient.setQueryData<DashboardData | null>(["dashboard-data", tenantVersion], (current) => {
+        if (!current) return current;
+        const wasUnread = current.notifications.some(
+          (item) => item.id === notificationId && !item.readAt,
+        );
+        return {
+          ...current,
+          notifications: current.notifications.map((item) =>
+            item.id === notificationId ? updated : item,
+          ),
+          summary: {
+            ...current.summary,
+            unreadNotifications: wasUnread
+              ? Math.max(current.summary.unreadNotifications - 1, 0)
+              : current.summary.unreadNotifications,
+          },
+        };
+      });
+      void queryClient.invalidateQueries({ queryKey: ["dashboard-summary"] });
+    } catch (notificationError) {
+      setActionMessage(apiErrorMessage(notificationError));
     }
   }
 
@@ -1000,8 +1285,13 @@ export function DashboardClient({
     );
   }
 
-  const selectedEvent = events.find((event) => event.id === eventId);
-  const selectedClub = clubs.find((club) => club.id === clubId);
+  const selectedEvent =
+    eventDetail.data ?? events.find((event) => event.id === eventId);
+  const selectedClub =
+    clubDetail.data ?? clubs.find((club) => club.id === clubId);
+  const detailLoading =
+    (view === "event-detail" && eventDetail.isPending && !selectedEvent) ||
+    (view === "club-detail" && clubDetail.isPending && !selectedClub);
 
   return (
     <main className="portal-content">
@@ -1021,6 +1311,13 @@ export function DashboardClient({
 
       <div className="workspace-grid">
         <section className="workspace-main">
+          {detailLoading ? (
+            <EmptyState
+              icon={Clock3}
+              title="Loading details"
+              copy="Fetching the latest tenant-scoped record."
+            />
+          ) : null}
           {view === "overview" ? (
             <Overview
               user={user}
@@ -1028,10 +1325,12 @@ export function DashboardClient({
               events={events}
               clubs={clubs}
               registrations={registrations}
+              summary={summary}
               registeredEventIds={registeredEventIds}
               canRegister={canRegister}
               registeringId={registeringId}
               onRegister={register}
+              onCancel={cancelRegistration}
             />
           ) : null}
           {view === "events" ? (
@@ -1041,27 +1340,38 @@ export function DashboardClient({
               canRegister={canRegister}
               registeringId={registeringId}
               onRegister={register}
+              onCancel={cancelRegistration}
             />
           ) : null}
-          {view === "event-detail" ? (
+          {view === "event-detail" && !detailLoading ? (
             <EventDetailView
               event={selectedEvent}
               registered={selectedEvent ? registeredEventIds.has(selectedEvent.id) : false}
               canRegister={canRegister}
               registering={selectedEvent ? registeringId === selectedEvent.id : false}
               onRegister={() => selectedEvent && register(selectedEvent.id)}
+              onCancel={() => selectedEvent && cancelRegistration(selectedEvent.id)}
             />
           ) : null}
           {view === "clubs" ? <ClubsView clubs={clubs} /> : null}
-          {view === "club-detail" ? <ClubDetailView club={selectedClub} /> : null}
+          {view === "club-detail" && !detailLoading ? <ClubDetailView club={selectedClub} /> : null}
           {view === "passes" ? <PassesView registrations={registrations} /> : null}
+          {view === "notifications" ? (
+            <NotificationsView notifications={notifications} onMarkRead={markNotificationRead} />
+          ) : null}
           {view === "calendar" ? <CalendarView events={events} registrations={registrations} /> : null}
           {view === "profile" ? <ProfileView user={user} membership={membership} registrations={registrations} /> : null}
-          {["opportunities", "certificates", "ai", "services", "notifications", "settings"].includes(view) ? (
+          {["opportunities", "certificates", "ai", "services", "settings"].includes(view) ? (
             <FutureState view={view} />
           ) : null}
         </section>
-        <WorkspaceContext membership={membership} events={events} registrations={registrations} />
+        <WorkspaceContext
+          membership={membership}
+          events={events}
+          registrations={registrations}
+          health={health.data ?? null}
+          notifications={notifications}
+        />
       </div>
     </main>
   );

@@ -26,10 +26,14 @@ export type AggregateEventRegistration = {
 
 export type EventRegistrationMinAggregateOutputType = {
   id: string | null
+  collegeId: string | null
   eventId: string | null
   userId: string | null
   status: $Enums.RegistrationStatus | null
+  registrationCode: string | null
   qrToken: string | null
+  registeredAt: Date | null
+  cancelledAt: Date | null
   checkedInAt: Date | null
   checkedInBy: string | null
   createdAt: Date | null
@@ -38,10 +42,14 @@ export type EventRegistrationMinAggregateOutputType = {
 
 export type EventRegistrationMaxAggregateOutputType = {
   id: string | null
+  collegeId: string | null
   eventId: string | null
   userId: string | null
   status: $Enums.RegistrationStatus | null
+  registrationCode: string | null
   qrToken: string | null
+  registeredAt: Date | null
+  cancelledAt: Date | null
   checkedInAt: Date | null
   checkedInBy: string | null
   createdAt: Date | null
@@ -50,10 +58,14 @@ export type EventRegistrationMaxAggregateOutputType = {
 
 export type EventRegistrationCountAggregateOutputType = {
   id: number
+  collegeId: number
   eventId: number
   userId: number
   status: number
+  registrationCode: number
   qrToken: number
+  registeredAt: number
+  cancelledAt: number
   checkedInAt: number
   checkedInBy: number
   createdAt: number
@@ -64,10 +76,14 @@ export type EventRegistrationCountAggregateOutputType = {
 
 export type EventRegistrationMinAggregateInputType = {
   id?: true
+  collegeId?: true
   eventId?: true
   userId?: true
   status?: true
+  registrationCode?: true
   qrToken?: true
+  registeredAt?: true
+  cancelledAt?: true
   checkedInAt?: true
   checkedInBy?: true
   createdAt?: true
@@ -76,10 +92,14 @@ export type EventRegistrationMinAggregateInputType = {
 
 export type EventRegistrationMaxAggregateInputType = {
   id?: true
+  collegeId?: true
   eventId?: true
   userId?: true
   status?: true
+  registrationCode?: true
   qrToken?: true
+  registeredAt?: true
+  cancelledAt?: true
   checkedInAt?: true
   checkedInBy?: true
   createdAt?: true
@@ -88,10 +108,14 @@ export type EventRegistrationMaxAggregateInputType = {
 
 export type EventRegistrationCountAggregateInputType = {
   id?: true
+  collegeId?: true
   eventId?: true
   userId?: true
   status?: true
+  registrationCode?: true
   qrToken?: true
+  registeredAt?: true
+  cancelledAt?: true
   checkedInAt?: true
   checkedInBy?: true
   createdAt?: true
@@ -173,10 +197,14 @@ export type EventRegistrationGroupByArgs<ExtArgs extends runtime.Types.Extension
 
 export type EventRegistrationGroupByOutputType = {
   id: string
+  collegeId: string
   eventId: string
   userId: string
   status: $Enums.RegistrationStatus
+  registrationCode: string
   qrToken: string
+  registeredAt: Date
+  cancelledAt: Date | null
   checkedInAt: Date | null
   checkedInBy: string | null
   createdAt: Date
@@ -206,56 +234,75 @@ export type EventRegistrationWhereInput = {
   OR?: Prisma.EventRegistrationWhereInput[]
   NOT?: Prisma.EventRegistrationWhereInput | Prisma.EventRegistrationWhereInput[]
   id?: Prisma.StringFilter<"EventRegistration"> | string
+  collegeId?: Prisma.StringFilter<"EventRegistration"> | string
   eventId?: Prisma.StringFilter<"EventRegistration"> | string
   userId?: Prisma.StringFilter<"EventRegistration"> | string
   status?: Prisma.EnumRegistrationStatusFilter<"EventRegistration"> | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFilter<"EventRegistration"> | string
   qrToken?: Prisma.StringFilter<"EventRegistration"> | string
+  registeredAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
+  cancelledAt?: Prisma.DateTimeNullableFilter<"EventRegistration"> | Date | string | null
   checkedInAt?: Prisma.DateTimeNullableFilter<"EventRegistration"> | Date | string | null
   checkedInBy?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
   createdAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
+  college?: Prisma.XOR<Prisma.CollegeScalarRelationFilter, Prisma.CollegeWhereInput>
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
 }
 
 export type EventRegistrationOrderByWithRelationInput = {
   id?: Prisma.SortOrder
+  collegeId?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  registrationCode?: Prisma.SortOrder
   qrToken?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   checkedInAt?: Prisma.SortOrderInput | Prisma.SortOrder
   checkedInBy?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+  college?: Prisma.CollegeOrderByWithRelationInput
   event?: Prisma.EventOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
 }
 
 export type EventRegistrationWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  registrationCode?: string
   qrToken?: string
   eventId_userId?: Prisma.EventRegistrationEventIdUserIdCompoundUniqueInput
   AND?: Prisma.EventRegistrationWhereInput | Prisma.EventRegistrationWhereInput[]
   OR?: Prisma.EventRegistrationWhereInput[]
   NOT?: Prisma.EventRegistrationWhereInput | Prisma.EventRegistrationWhereInput[]
+  collegeId?: Prisma.StringFilter<"EventRegistration"> | string
   eventId?: Prisma.StringFilter<"EventRegistration"> | string
   userId?: Prisma.StringFilter<"EventRegistration"> | string
   status?: Prisma.EnumRegistrationStatusFilter<"EventRegistration"> | $Enums.RegistrationStatus
+  registeredAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
+  cancelledAt?: Prisma.DateTimeNullableFilter<"EventRegistration"> | Date | string | null
   checkedInAt?: Prisma.DateTimeNullableFilter<"EventRegistration"> | Date | string | null
   checkedInBy?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
   createdAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
+  college?: Prisma.XOR<Prisma.CollegeScalarRelationFilter, Prisma.CollegeWhereInput>
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
-}, "id" | "qrToken" | "eventId_userId">
+}, "id" | "registrationCode" | "qrToken" | "eventId_userId">
 
 export type EventRegistrationOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
+  collegeId?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  registrationCode?: Prisma.SortOrder
   qrToken?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrderInput | Prisma.SortOrder
   checkedInAt?: Prisma.SortOrderInput | Prisma.SortOrder
   checkedInBy?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -270,10 +317,14 @@ export type EventRegistrationScalarWhereWithAggregatesInput = {
   OR?: Prisma.EventRegistrationScalarWhereWithAggregatesInput[]
   NOT?: Prisma.EventRegistrationScalarWhereWithAggregatesInput | Prisma.EventRegistrationScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"EventRegistration"> | string
+  collegeId?: Prisma.StringWithAggregatesFilter<"EventRegistration"> | string
   eventId?: Prisma.StringWithAggregatesFilter<"EventRegistration"> | string
   userId?: Prisma.StringWithAggregatesFilter<"EventRegistration"> | string
   status?: Prisma.EnumRegistrationStatusWithAggregatesFilter<"EventRegistration"> | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringWithAggregatesFilter<"EventRegistration"> | string
   qrToken?: Prisma.StringWithAggregatesFilter<"EventRegistration"> | string
+  registeredAt?: Prisma.DateTimeWithAggregatesFilter<"EventRegistration"> | Date | string
+  cancelledAt?: Prisma.DateTimeNullableWithAggregatesFilter<"EventRegistration"> | Date | string | null
   checkedInAt?: Prisma.DateTimeNullableWithAggregatesFilter<"EventRegistration"> | Date | string | null
   checkedInBy?: Prisma.StringNullableWithAggregatesFilter<"EventRegistration"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"EventRegistration"> | Date | string
@@ -283,21 +334,29 @@ export type EventRegistrationScalarWhereWithAggregatesInput = {
 export type EventRegistrationCreateInput = {
   id?: string
   status?: $Enums.RegistrationStatus
+  registrationCode: string
   qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
   checkedInAt?: Date | string | null
   checkedInBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  college: Prisma.CollegeCreateNestedOneWithoutRegistrationsInput
   event: Prisma.EventCreateNestedOneWithoutRegistrationsInput
   user: Prisma.UserCreateNestedOneWithoutRegistrationsInput
 }
 
 export type EventRegistrationUncheckedCreateInput = {
   id?: string
+  collegeId: string
   eventId: string
   userId: string
   status?: $Enums.RegistrationStatus
+  registrationCode: string
   qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
   checkedInAt?: Date | string | null
   checkedInBy?: string | null
   createdAt?: Date | string
@@ -307,21 +366,29 @@ export type EventRegistrationUncheckedCreateInput = {
 export type EventRegistrationUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
   qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  college?: Prisma.CollegeUpdateOneRequiredWithoutRegistrationsNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutRegistrationsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutRegistrationsNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
   qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -330,10 +397,14 @@ export type EventRegistrationUncheckedUpdateInput = {
 
 export type EventRegistrationCreateManyInput = {
   id?: string
+  collegeId: string
   eventId: string
   userId: string
   status?: $Enums.RegistrationStatus
+  registrationCode: string
   qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
   checkedInAt?: Date | string | null
   checkedInBy?: string | null
   createdAt?: Date | string
@@ -343,7 +414,10 @@ export type EventRegistrationCreateManyInput = {
 export type EventRegistrationUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
   qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -352,10 +426,14 @@ export type EventRegistrationUpdateManyMutationInput = {
 
 export type EventRegistrationUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
   qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -379,10 +457,14 @@ export type EventRegistrationEventIdUserIdCompoundUniqueInput = {
 
 export type EventRegistrationCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  collegeId?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  registrationCode?: Prisma.SortOrder
   qrToken?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
   checkedInAt?: Prisma.SortOrder
   checkedInBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -391,10 +473,14 @@ export type EventRegistrationCountOrderByAggregateInput = {
 
 export type EventRegistrationMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  collegeId?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  registrationCode?: Prisma.SortOrder
   qrToken?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
   checkedInAt?: Prisma.SortOrder
   checkedInBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -403,10 +489,14 @@ export type EventRegistrationMaxOrderByAggregateInput = {
 
 export type EventRegistrationMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
+  collegeId?: Prisma.SortOrder
   eventId?: Prisma.SortOrder
   userId?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  registrationCode?: Prisma.SortOrder
   qrToken?: Prisma.SortOrder
+  registeredAt?: Prisma.SortOrder
+  cancelledAt?: Prisma.SortOrder
   checkedInAt?: Prisma.SortOrder
   checkedInBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -452,6 +542,48 @@ export type EventRegistrationUncheckedUpdateManyWithoutUserNestedInput = {
   connect?: Prisma.EventRegistrationWhereUniqueInput | Prisma.EventRegistrationWhereUniqueInput[]
   update?: Prisma.EventRegistrationUpdateWithWhereUniqueWithoutUserInput | Prisma.EventRegistrationUpdateWithWhereUniqueWithoutUserInput[]
   updateMany?: Prisma.EventRegistrationUpdateManyWithWhereWithoutUserInput | Prisma.EventRegistrationUpdateManyWithWhereWithoutUserInput[]
+  deleteMany?: Prisma.EventRegistrationScalarWhereInput | Prisma.EventRegistrationScalarWhereInput[]
+}
+
+export type EventRegistrationCreateNestedManyWithoutCollegeInput = {
+  create?: Prisma.XOR<Prisma.EventRegistrationCreateWithoutCollegeInput, Prisma.EventRegistrationUncheckedCreateWithoutCollegeInput> | Prisma.EventRegistrationCreateWithoutCollegeInput[] | Prisma.EventRegistrationUncheckedCreateWithoutCollegeInput[]
+  connectOrCreate?: Prisma.EventRegistrationCreateOrConnectWithoutCollegeInput | Prisma.EventRegistrationCreateOrConnectWithoutCollegeInput[]
+  createMany?: Prisma.EventRegistrationCreateManyCollegeInputEnvelope
+  connect?: Prisma.EventRegistrationWhereUniqueInput | Prisma.EventRegistrationWhereUniqueInput[]
+}
+
+export type EventRegistrationUncheckedCreateNestedManyWithoutCollegeInput = {
+  create?: Prisma.XOR<Prisma.EventRegistrationCreateWithoutCollegeInput, Prisma.EventRegistrationUncheckedCreateWithoutCollegeInput> | Prisma.EventRegistrationCreateWithoutCollegeInput[] | Prisma.EventRegistrationUncheckedCreateWithoutCollegeInput[]
+  connectOrCreate?: Prisma.EventRegistrationCreateOrConnectWithoutCollegeInput | Prisma.EventRegistrationCreateOrConnectWithoutCollegeInput[]
+  createMany?: Prisma.EventRegistrationCreateManyCollegeInputEnvelope
+  connect?: Prisma.EventRegistrationWhereUniqueInput | Prisma.EventRegistrationWhereUniqueInput[]
+}
+
+export type EventRegistrationUpdateManyWithoutCollegeNestedInput = {
+  create?: Prisma.XOR<Prisma.EventRegistrationCreateWithoutCollegeInput, Prisma.EventRegistrationUncheckedCreateWithoutCollegeInput> | Prisma.EventRegistrationCreateWithoutCollegeInput[] | Prisma.EventRegistrationUncheckedCreateWithoutCollegeInput[]
+  connectOrCreate?: Prisma.EventRegistrationCreateOrConnectWithoutCollegeInput | Prisma.EventRegistrationCreateOrConnectWithoutCollegeInput[]
+  upsert?: Prisma.EventRegistrationUpsertWithWhereUniqueWithoutCollegeInput | Prisma.EventRegistrationUpsertWithWhereUniqueWithoutCollegeInput[]
+  createMany?: Prisma.EventRegistrationCreateManyCollegeInputEnvelope
+  set?: Prisma.EventRegistrationWhereUniqueInput | Prisma.EventRegistrationWhereUniqueInput[]
+  disconnect?: Prisma.EventRegistrationWhereUniqueInput | Prisma.EventRegistrationWhereUniqueInput[]
+  delete?: Prisma.EventRegistrationWhereUniqueInput | Prisma.EventRegistrationWhereUniqueInput[]
+  connect?: Prisma.EventRegistrationWhereUniqueInput | Prisma.EventRegistrationWhereUniqueInput[]
+  update?: Prisma.EventRegistrationUpdateWithWhereUniqueWithoutCollegeInput | Prisma.EventRegistrationUpdateWithWhereUniqueWithoutCollegeInput[]
+  updateMany?: Prisma.EventRegistrationUpdateManyWithWhereWithoutCollegeInput | Prisma.EventRegistrationUpdateManyWithWhereWithoutCollegeInput[]
+  deleteMany?: Prisma.EventRegistrationScalarWhereInput | Prisma.EventRegistrationScalarWhereInput[]
+}
+
+export type EventRegistrationUncheckedUpdateManyWithoutCollegeNestedInput = {
+  create?: Prisma.XOR<Prisma.EventRegistrationCreateWithoutCollegeInput, Prisma.EventRegistrationUncheckedCreateWithoutCollegeInput> | Prisma.EventRegistrationCreateWithoutCollegeInput[] | Prisma.EventRegistrationUncheckedCreateWithoutCollegeInput[]
+  connectOrCreate?: Prisma.EventRegistrationCreateOrConnectWithoutCollegeInput | Prisma.EventRegistrationCreateOrConnectWithoutCollegeInput[]
+  upsert?: Prisma.EventRegistrationUpsertWithWhereUniqueWithoutCollegeInput | Prisma.EventRegistrationUpsertWithWhereUniqueWithoutCollegeInput[]
+  createMany?: Prisma.EventRegistrationCreateManyCollegeInputEnvelope
+  set?: Prisma.EventRegistrationWhereUniqueInput | Prisma.EventRegistrationWhereUniqueInput[]
+  disconnect?: Prisma.EventRegistrationWhereUniqueInput | Prisma.EventRegistrationWhereUniqueInput[]
+  delete?: Prisma.EventRegistrationWhereUniqueInput | Prisma.EventRegistrationWhereUniqueInput[]
+  connect?: Prisma.EventRegistrationWhereUniqueInput | Prisma.EventRegistrationWhereUniqueInput[]
+  update?: Prisma.EventRegistrationUpdateWithWhereUniqueWithoutCollegeInput | Prisma.EventRegistrationUpdateWithWhereUniqueWithoutCollegeInput[]
+  updateMany?: Prisma.EventRegistrationUpdateManyWithWhereWithoutCollegeInput | Prisma.EventRegistrationUpdateManyWithWhereWithoutCollegeInput[]
   deleteMany?: Prisma.EventRegistrationScalarWhereInput | Prisma.EventRegistrationScalarWhereInput[]
 }
 
@@ -504,19 +636,27 @@ export type EnumRegistrationStatusFieldUpdateOperationsInput = {
 export type EventRegistrationCreateWithoutUserInput = {
   id?: string
   status?: $Enums.RegistrationStatus
+  registrationCode: string
   qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
   checkedInAt?: Date | string | null
   checkedInBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  college: Prisma.CollegeCreateNestedOneWithoutRegistrationsInput
   event: Prisma.EventCreateNestedOneWithoutRegistrationsInput
 }
 
 export type EventRegistrationUncheckedCreateWithoutUserInput = {
   id?: string
+  collegeId: string
   eventId: string
   status?: $Enums.RegistrationStatus
+  registrationCode: string
   qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
   checkedInAt?: Date | string | null
   checkedInBy?: string | null
   createdAt?: Date | string
@@ -554,32 +694,100 @@ export type EventRegistrationScalarWhereInput = {
   OR?: Prisma.EventRegistrationScalarWhereInput[]
   NOT?: Prisma.EventRegistrationScalarWhereInput | Prisma.EventRegistrationScalarWhereInput[]
   id?: Prisma.StringFilter<"EventRegistration"> | string
+  collegeId?: Prisma.StringFilter<"EventRegistration"> | string
   eventId?: Prisma.StringFilter<"EventRegistration"> | string
   userId?: Prisma.StringFilter<"EventRegistration"> | string
   status?: Prisma.EnumRegistrationStatusFilter<"EventRegistration"> | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFilter<"EventRegistration"> | string
   qrToken?: Prisma.StringFilter<"EventRegistration"> | string
+  registeredAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
+  cancelledAt?: Prisma.DateTimeNullableFilter<"EventRegistration"> | Date | string | null
   checkedInAt?: Prisma.DateTimeNullableFilter<"EventRegistration"> | Date | string | null
   checkedInBy?: Prisma.StringNullableFilter<"EventRegistration"> | string | null
   createdAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"EventRegistration"> | Date | string
 }
 
-export type EventRegistrationCreateWithoutEventInput = {
+export type EventRegistrationCreateWithoutCollegeInput = {
   id?: string
   status?: $Enums.RegistrationStatus
+  registrationCode: string
   qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
   checkedInAt?: Date | string | null
   checkedInBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  event: Prisma.EventCreateNestedOneWithoutRegistrationsInput
+  user: Prisma.UserCreateNestedOneWithoutRegistrationsInput
+}
+
+export type EventRegistrationUncheckedCreateWithoutCollegeInput = {
+  id?: string
+  eventId: string
+  userId: string
+  status?: $Enums.RegistrationStatus
+  registrationCode: string
+  qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
+  checkedInAt?: Date | string | null
+  checkedInBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type EventRegistrationCreateOrConnectWithoutCollegeInput = {
+  where: Prisma.EventRegistrationWhereUniqueInput
+  create: Prisma.XOR<Prisma.EventRegistrationCreateWithoutCollegeInput, Prisma.EventRegistrationUncheckedCreateWithoutCollegeInput>
+}
+
+export type EventRegistrationCreateManyCollegeInputEnvelope = {
+  data: Prisma.EventRegistrationCreateManyCollegeInput | Prisma.EventRegistrationCreateManyCollegeInput[]
+  skipDuplicates?: boolean
+}
+
+export type EventRegistrationUpsertWithWhereUniqueWithoutCollegeInput = {
+  where: Prisma.EventRegistrationWhereUniqueInput
+  update: Prisma.XOR<Prisma.EventRegistrationUpdateWithoutCollegeInput, Prisma.EventRegistrationUncheckedUpdateWithoutCollegeInput>
+  create: Prisma.XOR<Prisma.EventRegistrationCreateWithoutCollegeInput, Prisma.EventRegistrationUncheckedCreateWithoutCollegeInput>
+}
+
+export type EventRegistrationUpdateWithWhereUniqueWithoutCollegeInput = {
+  where: Prisma.EventRegistrationWhereUniqueInput
+  data: Prisma.XOR<Prisma.EventRegistrationUpdateWithoutCollegeInput, Prisma.EventRegistrationUncheckedUpdateWithoutCollegeInput>
+}
+
+export type EventRegistrationUpdateManyWithWhereWithoutCollegeInput = {
+  where: Prisma.EventRegistrationScalarWhereInput
+  data: Prisma.XOR<Prisma.EventRegistrationUpdateManyMutationInput, Prisma.EventRegistrationUncheckedUpdateManyWithoutCollegeInput>
+}
+
+export type EventRegistrationCreateWithoutEventInput = {
+  id?: string
+  status?: $Enums.RegistrationStatus
+  registrationCode: string
+  qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
+  checkedInAt?: Date | string | null
+  checkedInBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  college: Prisma.CollegeCreateNestedOneWithoutRegistrationsInput
   user: Prisma.UserCreateNestedOneWithoutRegistrationsInput
 }
 
 export type EventRegistrationUncheckedCreateWithoutEventInput = {
   id?: string
+  collegeId: string
   userId: string
   status?: $Enums.RegistrationStatus
+  registrationCode: string
   qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
   checkedInAt?: Date | string | null
   checkedInBy?: string | null
   createdAt?: Date | string
@@ -614,9 +822,13 @@ export type EventRegistrationUpdateManyWithWhereWithoutEventInput = {
 
 export type EventRegistrationCreateManyUserInput = {
   id?: string
+  collegeId: string
   eventId: string
   status?: $Enums.RegistrationStatus
+  registrationCode: string
   qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
   checkedInAt?: Date | string | null
   checkedInBy?: string | null
   createdAt?: Date | string
@@ -626,19 +838,27 @@ export type EventRegistrationCreateManyUserInput = {
 export type EventRegistrationUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
   qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  college?: Prisma.CollegeUpdateOneRequiredWithoutRegistrationsNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutRegistrationsNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
   qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -647,9 +867,73 @@ export type EventRegistrationUncheckedUpdateWithoutUserInput = {
 
 export type EventRegistrationUncheckedUpdateManyWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
   eventId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
   qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type EventRegistrationCreateManyCollegeInput = {
+  id?: string
+  eventId: string
+  userId: string
+  status?: $Enums.RegistrationStatus
+  registrationCode: string
+  qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
+  checkedInAt?: Date | string | null
+  checkedInBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type EventRegistrationUpdateWithoutCollegeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  event?: Prisma.EventUpdateOneRequiredWithoutRegistrationsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutRegistrationsNestedInput
+}
+
+export type EventRegistrationUncheckedUpdateWithoutCollegeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type EventRegistrationUncheckedUpdateManyWithoutCollegeInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -658,9 +942,13 @@ export type EventRegistrationUncheckedUpdateManyWithoutUserInput = {
 
 export type EventRegistrationCreateManyEventInput = {
   id?: string
+  collegeId: string
   userId: string
   status?: $Enums.RegistrationStatus
+  registrationCode: string
   qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
   checkedInAt?: Date | string | null
   checkedInBy?: string | null
   createdAt?: Date | string
@@ -670,19 +958,27 @@ export type EventRegistrationCreateManyEventInput = {
 export type EventRegistrationUpdateWithoutEventInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
   qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  college?: Prisma.CollegeUpdateOneRequiredWithoutRegistrationsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutRegistrationsNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateWithoutEventInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
   qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -691,9 +987,13 @@ export type EventRegistrationUncheckedUpdateWithoutEventInput = {
 
 export type EventRegistrationUncheckedUpdateManyWithoutEventInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
   qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -704,68 +1004,90 @@ export type EventRegistrationUncheckedUpdateManyWithoutEventInput = {
 
 export type EventRegistrationSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  collegeId?: boolean
   eventId?: boolean
   userId?: boolean
   status?: boolean
+  registrationCode?: boolean
   qrToken?: boolean
+  registeredAt?: boolean
+  cancelledAt?: boolean
   checkedInAt?: boolean
   checkedInBy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["eventRegistration"]>
 
 export type EventRegistrationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  collegeId?: boolean
   eventId?: boolean
   userId?: boolean
   status?: boolean
+  registrationCode?: boolean
   qrToken?: boolean
+  registeredAt?: boolean
+  cancelledAt?: boolean
   checkedInAt?: boolean
   checkedInBy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["eventRegistration"]>
 
 export type EventRegistrationSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
+  collegeId?: boolean
   eventId?: boolean
   userId?: boolean
   status?: boolean
+  registrationCode?: boolean
   qrToken?: boolean
+  registeredAt?: boolean
+  cancelledAt?: boolean
   checkedInAt?: boolean
   checkedInBy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
+  college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["eventRegistration"]>
 
 export type EventRegistrationSelectScalar = {
   id?: boolean
+  collegeId?: boolean
   eventId?: boolean
   userId?: boolean
   status?: boolean
+  registrationCode?: boolean
   qrToken?: boolean
+  registeredAt?: boolean
+  cancelledAt?: boolean
   checkedInAt?: boolean
   checkedInBy?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type EventRegistrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "eventId" | "userId" | "status" | "qrToken" | "checkedInAt" | "checkedInBy" | "createdAt" | "updatedAt", ExtArgs["result"]["eventRegistration"]>
+export type EventRegistrationOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "collegeId" | "eventId" | "userId" | "status" | "registrationCode" | "qrToken" | "registeredAt" | "cancelledAt" | "checkedInAt" | "checkedInBy" | "createdAt" | "updatedAt", ExtArgs["result"]["eventRegistration"]>
 export type EventRegistrationInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type EventRegistrationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type EventRegistrationIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
@@ -773,15 +1095,20 @@ export type EventRegistrationIncludeUpdateManyAndReturn<ExtArgs extends runtime.
 export type $EventRegistrationPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "EventRegistration"
   objects: {
+    college: Prisma.$CollegePayload<ExtArgs>
     event: Prisma.$EventPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
+    collegeId: string
     eventId: string
     userId: string
     status: $Enums.RegistrationStatus
+    registrationCode: string
     qrToken: string
+    registeredAt: Date
+    cancelledAt: Date | null
     checkedInAt: Date | null
     checkedInBy: string | null
     createdAt: Date
@@ -1180,6 +1507,7 @@ readonly fields: EventRegistrationFieldRefs;
  */
 export interface Prisma__EventRegistrationClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
+  college<T extends Prisma.CollegeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CollegeDefaultArgs<ExtArgs>>): Prisma.Prisma__CollegeClient<runtime.Types.Result.GetResult<Prisma.$CollegePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
@@ -1212,10 +1540,14 @@ export interface Prisma__EventRegistrationClient<T, Null = never, ExtArgs extend
  */
 export interface EventRegistrationFieldRefs {
   readonly id: Prisma.FieldRef<"EventRegistration", 'String'>
+  readonly collegeId: Prisma.FieldRef<"EventRegistration", 'String'>
   readonly eventId: Prisma.FieldRef<"EventRegistration", 'String'>
   readonly userId: Prisma.FieldRef<"EventRegistration", 'String'>
   readonly status: Prisma.FieldRef<"EventRegistration", 'RegistrationStatus'>
+  readonly registrationCode: Prisma.FieldRef<"EventRegistration", 'String'>
   readonly qrToken: Prisma.FieldRef<"EventRegistration", 'String'>
+  readonly registeredAt: Prisma.FieldRef<"EventRegistration", 'DateTime'>
+  readonly cancelledAt: Prisma.FieldRef<"EventRegistration", 'DateTime'>
   readonly checkedInAt: Prisma.FieldRef<"EventRegistration", 'DateTime'>
   readonly checkedInBy: Prisma.FieldRef<"EventRegistration", 'String'>
   readonly createdAt: Prisma.FieldRef<"EventRegistration", 'DateTime'>

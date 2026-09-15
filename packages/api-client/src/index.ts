@@ -4,9 +4,14 @@ import type {
   CampusClub,
   CampusClubDetails,
   CampusEvent,
+  CampusNotification,
   CampusUser,
+  CollegeDetails,
   CollegeSummary,
+  DashboardSummary,
+  Department,
   EventRegistration,
+  Membership,
   PaginatedResponse,
 } from '@unisphere/types';
 
@@ -55,17 +60,21 @@ export type RegisterPayload = {
   termsAccepted: true;
   college:
     | {
-        mode: 'join';
-        collegeId: string;
-        studentId?: string;
-      }
+      mode: 'join';
+      collegeId: string;
+      department?: string;
+      studentId?: string;
+    }
     | {
         mode: 'create';
         name: string;
+        slug?: string;
         website?: string;
-        emailDomain: string;
+        officialEmailDomain: string;
+        emailDomain?: string;
         city: string;
         state: string;
+        country?: string;
       };
 };
 
@@ -175,12 +184,62 @@ export class UniSphereApi {
     return this.request('colleges');
   }
 
+  college(slug: string): Promise<CollegeDetails> {
+    return this.request(`colleges/${slug}`);
+  }
+
+  createCollege(input: Record<string, unknown>): Promise<CollegeDetails> {
+    return this.request('colleges', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
+  }
+
+  updateCollege(
+    collegeId: string,
+    input: Record<string, unknown>,
+  ): Promise<CollegeDetails> {
+    return this.request(`colleges/${collegeId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(input),
+    });
+  }
+
+  collegeMembers(collegeId: string): Promise<Membership[]> {
+    return this.request(`colleges/${collegeId}/members`);
+  }
+
+  departments(): Promise<Department[]> {
+    return this.request('departments');
+  }
+
+  createDepartment(input: Record<string, unknown>): Promise<Department> {
+    return this.request('departments', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
+  }
+
   clubs(): Promise<CampusClub[]> {
     return this.request('clubs');
   }
 
   club(clubId: string): Promise<CampusClubDetails> {
     return this.request(`clubs/${clubId}`);
+  }
+
+  createClub(input: Record<string, unknown>): Promise<CampusClub> {
+    return this.request('clubs', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
+  }
+
+  updateClub(clubId: string, input: Record<string, unknown>): Promise<CampusClub> {
+    return this.request(`clubs/${clubId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(input),
+    });
   }
 
   events(params: Record<string, string | number | boolean | undefined> = {}) {
@@ -195,12 +254,52 @@ export class UniSphereApi {
     return this.request(`events/${eventId}`);
   }
 
+  createEvent(input: Record<string, unknown>): Promise<CampusEvent> {
+    return this.request('events', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
+  }
+
+  updateEvent(eventId: string, input: Record<string, unknown>): Promise<CampusEvent> {
+    return this.request(`events/${eventId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(input),
+    });
+  }
+
+  publishEvent(eventId: string): Promise<CampusEvent> {
+    return this.request(`events/${eventId}/publish`, { method: 'POST' });
+  }
+
   registerForEvent(eventId: string): Promise<EventRegistration> {
-    return this.request(`events/${eventId}/registrations`, { method: 'POST' });
+    return this.request(`events/${eventId}/register`, { method: 'POST' });
+  }
+
+  cancelEventRegistration(eventId: string): Promise<EventRegistration> {
+    return this.request(`events/${eventId}/register`, { method: 'DELETE' });
+  }
+
+  eventRegistrations(eventId: string): Promise<EventRegistration[]> {
+    return this.request(`events/${eventId}/registrations`);
   }
 
   myRegistrations(): Promise<EventRegistration[]> {
     return this.request('registrations/me');
+  }
+
+  dashboardSummary(): Promise<DashboardSummary> {
+    return this.request('dashboard/summary');
+  }
+
+  notifications(): Promise<CampusNotification[]> {
+    return this.request('notifications');
+  }
+
+  markNotificationRead(notificationId: string): Promise<CampusNotification> {
+    return this.request(`notifications/${notificationId}/read`, {
+      method: 'POST',
+    });
   }
 
   scanAttendance(qrToken: string): Promise<EventRegistration> {

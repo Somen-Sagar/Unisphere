@@ -6,13 +6,10 @@ import {
   Bell,
   BookOpenCheck,
   Bot,
-  Building2,
   CalendarDays,
   ChevronLeft,
   ChevronRight,
-  CircleGauge,
   DoorOpen,
-  FileBadge,
   GraduationCap,
   Home,
   IdCard,
@@ -20,16 +17,14 @@ import {
   Map,
   Menu,
   Search,
-  Settings,
   ShieldCheck,
-  Sparkles,
   Ticket,
   UsersRound,
   X,
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import type { PropsWithChildren } from "react";
+import type { FormEvent, PropsWithChildren } from "react";
 import { useEffect, useMemo, useState } from "react";
 
 import { ApiStatus } from "@/components/system/api-status";
@@ -48,30 +43,31 @@ const generalNav: NavItem[] = [
   { href: "/dashboard", label: "Overview", icon: LayoutDashboard },
   { href: "/dashboard/events", label: "Events", icon: CalendarDays },
   { href: "/dashboard/clubs", label: "Clubs", icon: UsersRound },
-  { href: "/dashboard/opportunities", label: "Opportunities", icon: Sparkles },
 ];
 
 const activityNav: NavItem[] = [
   { href: "/dashboard/passes", label: "My Passes", icon: Ticket },
-  { href: "/dashboard/certificates", label: "Certificates", icon: FileBadge },
   { href: "/dashboard/calendar", label: "Calendar", icon: BookOpenCheck },
+  {
+    href: "/dashboard/notifications",
+    label: "Notifications",
+    icon: Bell,
+  },
+  { href: "/dashboard/profile", label: "Profile", icon: IdCard },
 ];
+
+function activityNavWithBadge(unreadNotifications: number): NavItem[] {
+  return [
+    ...activityNav.map((item) =>
+      item.href === "/dashboard/notifications"
+        ? { ...item, badge: unreadNotifications ? String(unreadNotifications) : undefined }
+        : item,
+    ),
+  ];
+}
 
 const intelligenceNav: NavItem[] = [
-  { href: "/dashboard/ai", label: "UniSphere AI", icon: Bot },
-  {
-    href: "/college-admin/dashboard",
-    label: "Analytics",
-    icon: CircleGauge,
-    roles: ["COLLEGE_ADMIN", "PLATFORM_ADMIN"],
-  },
-];
-
-const campusNav: NavItem[] = [
-  { href: "/dashboard/services", label: "Campus Services", icon: Building2 },
-  { href: "/dashboard/notifications", label: "Notifications", icon: Bell, badge: "0" },
-  { href: "/dashboard/profile", label: "Profile", icon: IdCard },
-  { href: "/dashboard/settings", label: "Settings", icon: Settings },
+  { href: "/dashboard/ai", label: "AI Preview", icon: Bot },
 ];
 
 const roleNav: NavItem[] = [
@@ -101,6 +97,13 @@ function activeMembership(user: CampusUser | null): Membership | null {
 function roleLabel(role?: MembershipRole): string {
   if (!role) return "Member";
   return role.replaceAll("_", " ").toLowerCase().replace(/\b\w/g, (char) => char.toUpperCase());
+}
+
+function greeting(): string {
+  const hour = new Date().getHours();
+  if (hour < 12) return "Good morning";
+  if (hour < 17) return "Good afternoon";
+  return "Good evening";
 }
 
 function canShow(item: NavItem, roles: MembershipRole[]): boolean {
@@ -164,6 +167,7 @@ export function AppShell({ children }: PropsWithChildren) {
   const [signingOut, setSigningOut] = useState(false);
   const [collapsed, setCollapsed] = useState(false);
   const [drawerOpen, setDrawerOpen] = useState(false);
+  const [globalSearch, setGlobalSearch] = useState("");
 
   const session = useQuery({
     queryKey: ["session"],
@@ -174,6 +178,11 @@ export function AppShell({ children }: PropsWithChildren) {
     queryKey: ["backend-health"],
     queryFn: () => api.health(),
     refetchInterval: 60_000,
+  });
+  const summary = useQuery({
+    queryKey: ["dashboard-summary"],
+    queryFn: () => api.dashboardSummary(),
+    enabled: Boolean(session.data?.user.memberships.some((item) => item.status === "ACTIVE")),
   });
 
   const user = session.data?.user ?? null;
@@ -206,6 +215,12 @@ export function AppShell({ children }: PropsWithChildren) {
     window.localStorage.setItem("unisphere.activeCollegeId", collegeId);
     window.dispatchEvent(new Event("unisphere:tenant-change"));
     void queryClient.invalidateQueries();
+  }
+
+  function submitGlobalSearch(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    const query = globalSearch.trim();
+    router.push(query ? `/dashboard/events?search=${encodeURIComponent(query)}` : "/dashboard/events");
   }
 
   const shell = (
@@ -254,11 +269,10 @@ export function AppShell({ children }: PropsWithChildren) {
       ) : null}
 
       <div className="portal-nav-scroll">
-        <NavGroup title="General" items={generalNav} pathname={pathname} roles={activeRoles} collapsed={collapsed} />
-        <NavGroup title="Activity" items={activityNav} pathname={pathname} roles={activeRoles} collapsed={collapsed} />
+        <NavGroup title="Discover" items={generalNav} pathname={pathname} roles={activeRoles} collapsed={collapsed} />
+        <NavGroup title="My Campus" items={activityNavWithBadge(summary.data?.unreadNotifications ?? 0)} pathname={pathname} roles={activeRoles} collapsed={collapsed} />
         <NavGroup title="Intelligence" items={intelligenceNav} pathname={pathname} roles={activeRoles} collapsed={collapsed} />
-        <NavGroup title="Campus" items={campusNav} pathname={pathname} roles={activeRoles} collapsed={collapsed} />
-        <NavGroup title="Role" items={roleNav} pathname={pathname} roles={activeRoles} collapsed={collapsed} />
+        <NavGroup title="Management" items={roleNav} pathname={pathname} roles={activeRoles} collapsed={collapsed} />
       </div>
 
       <div className="portal-sidebar-bottom">
@@ -325,13 +339,18 @@ export function AppShell({ children }: PropsWithChildren) {
           </button>
           <div>
             <p className="eyebrow">{membership?.college.name ?? "UNISPHERE"}</p>
-            <h2>Campus command center</h2>
+            <h2>{user ? `${greeting()}, ${user.firstName}` : "Campus command center"}</h2>
           </div>
-          <label className="portal-search">
+          <form className="portal-search" onSubmit={submitGlobalSearch}>
             <Search aria-hidden="true" size={17} />
-            <input placeholder="Search events, clubs, services" />
+            <input
+              aria-label="Search events"
+              onChange={(event) => setGlobalSearch(event.target.value)}
+              placeholder="Search events"
+              value={globalSearch}
+            />
             <kbd>Ctrl K</kbd>
-          </label>
+          </form>
           <Link className="topbar-icon" href="/dashboard/notifications" aria-label="Notifications">
             <Bell size={18} />
           </Link>

@@ -7,12 +7,12 @@
   "license": "UNLICENSED",
   "scripts": {
     "build": "prisma generate && nest build",
-    "dev": "nest start --watch",
+    "dev": "nest start --watch --entryFile main.js",
     "typecheck": "tsc --noEmit",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start": "nest start",
-    "start:dev": "nest start --watch",
-    "start:debug": "nest start --debug --watch",
+    "start": "nest start --entryFile main.js",
+    "start:dev": "nest start --watch --entryFile main.js",
+    "start:debug": "nest start --debug --watch --entryFile main.js",
     "start:prod": "node dist/main.js",
     "db:seed": "pnpm build && node dist/database/seed.js",
     "db:deploy": "prisma migrate deploy",
@@ -88,7 +88,10 @@
       "^.+\\.(t|j)s$": "ts-jest"
     },
     "moduleNameMapper": {
-      "^(\\.{1,2}/.*)\\.js$": "$1"
+      "^(\\.{1,2}/.*)\\.js$": "$1",
+      "^@unisphere/types$": "<rootDir>/../../../packages/types/src/index.ts",
+      "^@unisphere/validation$": "<rootDir>/test-support/validation.stub.ts",
+      "^@unisphere/business-rules$": "<rootDir>/test-support/business-rules.stub.ts"
     },
     "collectCoverageFrom": [
       "**/*.(t|j)s"

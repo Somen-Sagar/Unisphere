@@ -53,6 +53,7 @@ export type MembershipStatus = (typeof MembershipStatus)[keyof typeof Membership
 export const EventStatus = {
   DRAFT: 'DRAFT',
   PENDING_APPROVAL: 'PENDING_APPROVAL',
+  APPROVED: 'APPROVED',
   PUBLISHED: 'PUBLISHED',
   REGISTRATION_OPEN: 'REGISTRATION_OPEN',
   REGISTRATION_CLOSED: 'REGISTRATION_CLOSED',
@@ -71,3 +72,54 @@ export const RegistrationStatus = {
 } as const
 
 export type RegistrationStatus = (typeof RegistrationStatus)[keyof typeof RegistrationStatus]
+
+
+export const ClubRecruitmentStatus = {
+  OPEN: 'OPEN',
+  PAUSED: 'PAUSED',
+  CLOSED: 'CLOSED'
+} as const
+
+export type ClubRecruitmentStatus = (typeof ClubRecruitmentStatus)[keyof typeof ClubRecruitmentStatus]
+
+
+export const ClubVerificationStatus = {
+  PENDING: 'PENDING',
+  VERIFIED: 'VERIFIED',
+  REJECTED: 'REJECTED',
+  SUSPENDED: 'SUSPENDED'
+} as const
+
+export type ClubVerificationStatus = (typeof ClubVerificationStatus)[keyof typeof ClubVerificationStatus]
+
+
+export const ClubMembershipRole = {
+  MEMBER: 'MEMBER',
+  LEAD: 'LEAD',
+  SECRETARY: 'SECRETARY',
+  PRESIDENT: 'PRESIDENT',
+  ADMIN: 'ADMIN'
+} as const
+
+export type ClubMembershipRole = (typeof ClubMembershipRole)[keyof typeof ClubMembershipRole]
+
+
+export const ClubMembershipStatus = {
+  PENDING: 'PENDING',
+  ACTIVE: 'ACTIVE',
+  REJECTED: 'REJECTED',
+  SUSPENDED: 'SUSPENDED'
+} as const
+
+export type ClubMembershipStatus = (typeof ClubMembershipStatus)[keyof typeof ClubMembershipStatus]
+
+
+export const NotificationType = {
+  SYSTEM: 'SYSTEM',
+  COLLEGE: 'COLLEGE',
+  CLUB: 'CLUB',
+  EVENT: 'EVENT',
+  REGISTRATION: 'REGISTRATION'
+} as const
+
+export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]

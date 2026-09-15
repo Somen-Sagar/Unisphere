@@ -54,10 +54,13 @@ export const ModelName = {
   User: 'User',
   College: 'College',
   CollegeMembership: 'CollegeMembership',
+  Department: 'Department',
   RefreshSession: 'RefreshSession',
   Club: 'Club',
+  ClubMembership: 'ClubMembership',
   Event: 'Event',
-  EventRegistration: 'EventRegistration'
+  EventRegistration: 'EventRegistration',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -131,6 +134,19 @@ export const CollegeMembershipScalarFieldEnum = {
 export type CollegeMembershipScalarFieldEnum = (typeof CollegeMembershipScalarFieldEnum)[keyof typeof CollegeMembershipScalarFieldEnum]
 
 
+export const DepartmentScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  name: 'name',
+  code: 'code',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
+
+
 export const RefreshSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -147,10 +163,15 @@ export type RefreshSessionScalarFieldEnum = (typeof RefreshSessionScalarFieldEnu
 export const ClubScalarFieldEnum = {
   id: 'id',
   collegeId: 'collegeId',
+  departmentId: 'departmentId',
   name: 'name',
   slug: 'slug',
   description: 'description',
+  category: 'category',
   logoUrl: 'logoUrl',
+  coverUrl: 'coverUrl',
+  recruitmentStatus: 'recruitmentStatus',
+  verificationStatus: 'verificationStatus',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -159,20 +180,40 @@ export const ClubScalarFieldEnum = {
 export type ClubScalarFieldEnum = (typeof ClubScalarFieldEnum)[keyof typeof ClubScalarFieldEnum]
 
 
+export const ClubMembershipScalarFieldEnum = {
+  id: 'id',
+  clubId: 'clubId',
+  userId: 'userId',
+  role: 'role',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClubMembershipScalarFieldEnum = (typeof ClubMembershipScalarFieldEnum)[keyof typeof ClubMembershipScalarFieldEnum]
+
+
 export const EventScalarFieldEnum = {
   id: 'id',
   collegeId: 'collegeId',
   clubId: 'clubId',
+  departmentId: 'departmentId',
   organizerId: 'organizerId',
+  slug: 'slug',
   title: 'title',
   description: 'description',
+  eventType: 'eventType',
   venue: 'venue',
+  onlineMeetingUrl: 'onlineMeetingUrl',
   imageUrl: 'imageUrl',
+  posterUrl: 'posterUrl',
   startsAt: 'startsAt',
   endsAt: 'endsAt',
   registrationOpensAt: 'registrationOpensAt',
   registrationClosesAt: 'registrationClosesAt',
   capacity: 'capacity',
+  feeAmount: 'feeAmount',
+  currency: 'currency',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -183,10 +224,14 @@ export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof Ev
 
 export const EventRegistrationScalarFieldEnum = {
   id: 'id',
+  collegeId: 'collegeId',
   eventId: 'eventId',
   userId: 'userId',
   status: 'status',
+  registrationCode: 'registrationCode',
   qrToken: 'qrToken',
+  registeredAt: 'registeredAt',
+  cancelledAt: 'cancelledAt',
   checkedInAt: 'checkedInAt',
   checkedInBy: 'checkedInBy',
   createdAt: 'createdAt',
@@ -194,6 +239,20 @@ export const EventRegistrationScalarFieldEnum = {
 } as const
 
 export type EventRegistrationScalarFieldEnum = (typeof EventRegistrationScalarFieldEnum)[keyof typeof EventRegistrationScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  userId: 'userId',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
 export const SortOrder = {

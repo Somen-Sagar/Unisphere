@@ -95,6 +95,7 @@ describe('EventsService tenant isolation', () => {
     const prisma = {
       event: {
         create: jest.fn().mockResolvedValue(eventRecord()),
+        findUnique: jest.fn().mockResolvedValue(null),
       },
     };
     const service = new EventsService(prisma as any);

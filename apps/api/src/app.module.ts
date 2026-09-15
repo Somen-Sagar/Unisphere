@@ -9,8 +9,11 @@ import { AuthModule } from './auth/auth.module';
 import { RedisModule } from './cache/redis.module';
 import { CollegesModule } from './colleges/colleges.module';
 import { ClubsModule } from './clubs/clubs.module';
+import { DashboardModule } from './dashboard/dashboard.module';
 import { PrismaModule } from './database/prisma/prisma.module';
+import { DepartmentsModule } from './departments/departments.module';
 import { EventsModule } from './events/events.module';
+import { NotificationsModule } from './notifications/notifications.module';
 import { validateEnvironment } from './config/environment';
 
 @Module({
@@ -30,8 +33,11 @@ import { validateEnvironment } from './config/environment';
     RedisModule,
     AuthModule,
     CollegesModule,
+    DashboardModule,
+    DepartmentsModule,
     ClubsModule,
     EventsModule,
+    NotificationsModule,
   ],
   controllers: [AppController],
   providers: [

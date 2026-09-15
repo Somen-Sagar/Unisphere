@@ -28,26 +28,35 @@ export type AggregateEvent = {
 
 export type EventAvgAggregateOutputType = {
   capacity: number | null
+  feeAmount: runtime.Decimal | null
 }
 
 export type EventSumAggregateOutputType = {
   capacity: number | null
+  feeAmount: runtime.Decimal | null
 }
 
 export type EventMinAggregateOutputType = {
   id: string | null
   collegeId: string | null
   clubId: string | null
+  departmentId: string | null
   organizerId: string | null
+  slug: string | null
   title: string | null
   description: string | null
+  eventType: string | null
   venue: string | null
+  onlineMeetingUrl: string | null
   imageUrl: string | null
+  posterUrl: string | null
   startsAt: Date | null
   endsAt: Date | null
   registrationOpensAt: Date | null
   registrationClosesAt: Date | null
   capacity: number | null
+  feeAmount: runtime.Decimal | null
+  currency: string | null
   status: $Enums.EventStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -57,16 +66,23 @@ export type EventMaxAggregateOutputType = {
   id: string | null
   collegeId: string | null
   clubId: string | null
+  departmentId: string | null
   organizerId: string | null
+  slug: string | null
   title: string | null
   description: string | null
+  eventType: string | null
   venue: string | null
+  onlineMeetingUrl: string | null
   imageUrl: string | null
+  posterUrl: string | null
   startsAt: Date | null
   endsAt: Date | null
   registrationOpensAt: Date | null
   registrationClosesAt: Date | null
   capacity: number | null
+  feeAmount: runtime.Decimal | null
+  currency: string | null
   status: $Enums.EventStatus | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -76,16 +92,23 @@ export type EventCountAggregateOutputType = {
   id: number
   collegeId: number
   clubId: number
+  departmentId: number
   organizerId: number
+  slug: number
   title: number
   description: number
+  eventType: number
   venue: number
+  onlineMeetingUrl: number
   imageUrl: number
+  posterUrl: number
   startsAt: number
   endsAt: number
   registrationOpensAt: number
   registrationClosesAt: number
   capacity: number
+  feeAmount: number
+  currency: number
   status: number
   createdAt: number
   updatedAt: number
@@ -95,26 +118,35 @@ export type EventCountAggregateOutputType = {
 
 export type EventAvgAggregateInputType = {
   capacity?: true
+  feeAmount?: true
 }
 
 export type EventSumAggregateInputType = {
   capacity?: true
+  feeAmount?: true
 }
 
 export type EventMinAggregateInputType = {
   id?: true
   collegeId?: true
   clubId?: true
+  departmentId?: true
   organizerId?: true
+  slug?: true
   title?: true
   description?: true
+  eventType?: true
   venue?: true
+  onlineMeetingUrl?: true
   imageUrl?: true
+  posterUrl?: true
   startsAt?: true
   endsAt?: true
   registrationOpensAt?: true
   registrationClosesAt?: true
   capacity?: true
+  feeAmount?: true
+  currency?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -124,16 +156,23 @@ export type EventMaxAggregateInputType = {
   id?: true
   collegeId?: true
   clubId?: true
+  departmentId?: true
   organizerId?: true
+  slug?: true
   title?: true
   description?: true
+  eventType?: true
   venue?: true
+  onlineMeetingUrl?: true
   imageUrl?: true
+  posterUrl?: true
   startsAt?: true
   endsAt?: true
   registrationOpensAt?: true
   registrationClosesAt?: true
   capacity?: true
+  feeAmount?: true
+  currency?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -143,16 +182,23 @@ export type EventCountAggregateInputType = {
   id?: true
   collegeId?: true
   clubId?: true
+  departmentId?: true
   organizerId?: true
+  slug?: true
   title?: true
   description?: true
+  eventType?: true
   venue?: true
+  onlineMeetingUrl?: true
   imageUrl?: true
+  posterUrl?: true
   startsAt?: true
   endsAt?: true
   registrationOpensAt?: true
   registrationClosesAt?: true
   capacity?: true
+  feeAmount?: true
+  currency?: true
   status?: true
   createdAt?: true
   updatedAt?: true
@@ -249,16 +295,23 @@ export type EventGroupByOutputType = {
   id: string
   collegeId: string
   clubId: string | null
+  departmentId: string | null
   organizerId: string
+  slug: string
   title: string
   description: string
+  eventType: string
   venue: string
+  onlineMeetingUrl: string | null
   imageUrl: string | null
+  posterUrl: string | null
   startsAt: Date
   endsAt: Date
   registrationOpensAt: Date | null
   registrationClosesAt: Date | null
   capacity: number | null
+  feeAmount: runtime.Decimal | null
+  currency: string
   status: $Enums.EventStatus
   createdAt: Date
   updatedAt: Date
@@ -291,21 +344,29 @@ export type EventWhereInput = {
   id?: Prisma.StringFilter<"Event"> | string
   collegeId?: Prisma.StringFilter<"Event"> | string
   clubId?: Prisma.StringNullableFilter<"Event"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"Event"> | string | null
   organizerId?: Prisma.StringFilter<"Event"> | string
+  slug?: Prisma.StringFilter<"Event"> | string
   title?: Prisma.StringFilter<"Event"> | string
   description?: Prisma.StringFilter<"Event"> | string
+  eventType?: Prisma.StringFilter<"Event"> | string
   venue?: Prisma.StringFilter<"Event"> | string
+  onlineMeetingUrl?: Prisma.StringNullableFilter<"Event"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Event"> | string | null
+  posterUrl?: Prisma.StringNullableFilter<"Event"> | string | null
   startsAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   endsAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   registrationOpensAt?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
   registrationClosesAt?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
   capacity?: Prisma.IntNullableFilter<"Event"> | number | null
+  feeAmount?: Prisma.DecimalNullableFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFilter<"Event"> | string
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   college?: Prisma.XOR<Prisma.CollegeScalarRelationFilter, Prisma.CollegeWhereInput>
   club?: Prisma.XOR<Prisma.ClubNullableScalarRelationFilter, Prisma.ClubWhereInput> | null
+  department?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
   organizer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   registrations?: Prisma.EventRegistrationListRelationFilter
 }
@@ -314,65 +375,89 @@ export type EventOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   collegeId?: Prisma.SortOrder
   clubId?: Prisma.SortOrderInput | Prisma.SortOrder
+  departmentId?: Prisma.SortOrderInput | Prisma.SortOrder
   organizerId?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  eventType?: Prisma.SortOrder
   venue?: Prisma.SortOrder
+  onlineMeetingUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  posterUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   registrationOpensAt?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationClosesAt?: Prisma.SortOrderInput | Prisma.SortOrder
   capacity?: Prisma.SortOrderInput | Prisma.SortOrder
+  feeAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   college?: Prisma.CollegeOrderByWithRelationInput
   club?: Prisma.ClubOrderByWithRelationInput
+  department?: Prisma.DepartmentOrderByWithRelationInput
   organizer?: Prisma.UserOrderByWithRelationInput
   registrations?: Prisma.EventRegistrationOrderByRelationAggregateInput
 }
 
 export type EventWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  collegeId_slug?: Prisma.EventCollegeIdSlugCompoundUniqueInput
   AND?: Prisma.EventWhereInput | Prisma.EventWhereInput[]
   OR?: Prisma.EventWhereInput[]
   NOT?: Prisma.EventWhereInput | Prisma.EventWhereInput[]
   collegeId?: Prisma.StringFilter<"Event"> | string
   clubId?: Prisma.StringNullableFilter<"Event"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"Event"> | string | null
   organizerId?: Prisma.StringFilter<"Event"> | string
+  slug?: Prisma.StringFilter<"Event"> | string
   title?: Prisma.StringFilter<"Event"> | string
   description?: Prisma.StringFilter<"Event"> | string
+  eventType?: Prisma.StringFilter<"Event"> | string
   venue?: Prisma.StringFilter<"Event"> | string
+  onlineMeetingUrl?: Prisma.StringNullableFilter<"Event"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Event"> | string | null
+  posterUrl?: Prisma.StringNullableFilter<"Event"> | string | null
   startsAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   endsAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   registrationOpensAt?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
   registrationClosesAt?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
   capacity?: Prisma.IntNullableFilter<"Event"> | number | null
+  feeAmount?: Prisma.DecimalNullableFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFilter<"Event"> | string
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   college?: Prisma.XOR<Prisma.CollegeScalarRelationFilter, Prisma.CollegeWhereInput>
   club?: Prisma.XOR<Prisma.ClubNullableScalarRelationFilter, Prisma.ClubWhereInput> | null
+  department?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
   organizer?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   registrations?: Prisma.EventRegistrationListRelationFilter
-}, "id">
+}, "id" | "collegeId_slug">
 
 export type EventOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   collegeId?: Prisma.SortOrder
   clubId?: Prisma.SortOrderInput | Prisma.SortOrder
+  departmentId?: Prisma.SortOrderInput | Prisma.SortOrder
   organizerId?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  eventType?: Prisma.SortOrder
   venue?: Prisma.SortOrder
+  onlineMeetingUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   imageUrl?: Prisma.SortOrderInput | Prisma.SortOrder
+  posterUrl?: Prisma.SortOrderInput | Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   registrationOpensAt?: Prisma.SortOrderInput | Prisma.SortOrder
   registrationClosesAt?: Prisma.SortOrderInput | Prisma.SortOrder
   capacity?: Prisma.SortOrderInput | Prisma.SortOrder
+  feeAmount?: Prisma.SortOrderInput | Prisma.SortOrder
+  currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -390,16 +475,23 @@ export type EventScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Event"> | string
   collegeId?: Prisma.StringWithAggregatesFilter<"Event"> | string
   clubId?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
+  departmentId?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
   organizerId?: Prisma.StringWithAggregatesFilter<"Event"> | string
+  slug?: Prisma.StringWithAggregatesFilter<"Event"> | string
   title?: Prisma.StringWithAggregatesFilter<"Event"> | string
   description?: Prisma.StringWithAggregatesFilter<"Event"> | string
+  eventType?: Prisma.StringWithAggregatesFilter<"Event"> | string
   venue?: Prisma.StringWithAggregatesFilter<"Event"> | string
+  onlineMeetingUrl?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
   imageUrl?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
+  posterUrl?: Prisma.StringNullableWithAggregatesFilter<"Event"> | string | null
   startsAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
   endsAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
   registrationOpensAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Event"> | Date | string | null
   registrationClosesAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Event"> | Date | string | null
   capacity?: Prisma.IntNullableWithAggregatesFilter<"Event"> | number | null
+  feeAmount?: Prisma.DecimalNullableWithAggregatesFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringWithAggregatesFilter<"Event"> | string
   status?: Prisma.EnumEventStatusWithAggregatesFilter<"Event"> | $Enums.EventStatus
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Event"> | Date | string
@@ -407,20 +499,27 @@ export type EventScalarWhereWithAggregatesInput = {
 
 export type EventCreateInput = {
   id?: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   college: Prisma.CollegeCreateNestedOneWithoutEventsInput
   club?: Prisma.ClubCreateNestedOneWithoutEventsInput
+  department?: Prisma.DepartmentCreateNestedOneWithoutEventsInput
   organizer: Prisma.UserCreateNestedOneWithoutOrganizedEventsInput
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutEventInput
 }
@@ -429,16 +528,23 @@ export type EventUncheckedCreateInput = {
   id?: string
   collegeId: string
   clubId?: string | null
+  departmentId?: string | null
   organizerId: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -447,20 +553,27 @@ export type EventUncheckedCreateInput = {
 
 export type EventUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   college?: Prisma.CollegeUpdateOneRequiredWithoutEventsNestedInput
   club?: Prisma.ClubUpdateOneWithoutEventsNestedInput
+  department?: Prisma.DepartmentUpdateOneWithoutEventsNestedInput
   organizer?: Prisma.UserUpdateOneRequiredWithoutOrganizedEventsNestedInput
   registrations?: Prisma.EventRegistrationUpdateManyWithoutEventNestedInput
 }
@@ -469,16 +582,23 @@ export type EventUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collegeId?: Prisma.StringFieldUpdateOperationsInput | string
   clubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizerId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -489,16 +609,23 @@ export type EventCreateManyInput = {
   id?: string
   collegeId: string
   clubId?: string | null
+  departmentId?: string | null
   organizerId: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -506,15 +633,21 @@ export type EventCreateManyInput = {
 
 export type EventUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -524,16 +657,23 @@ export type EventUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collegeId?: Prisma.StringFieldUpdateOperationsInput | string
   clubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizerId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -549,20 +689,32 @@ export type EventOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type EventCollegeIdSlugCompoundUniqueInput = {
+  collegeId: string
+  slug: string
+}
+
 export type EventCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   collegeId?: Prisma.SortOrder
   clubId?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
   organizerId?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  eventType?: Prisma.SortOrder
   venue?: Prisma.SortOrder
+  onlineMeetingUrl?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  posterUrl?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   registrationOpensAt?: Prisma.SortOrder
   registrationClosesAt?: Prisma.SortOrder
   capacity?: Prisma.SortOrder
+  feeAmount?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -570,22 +722,30 @@ export type EventCountOrderByAggregateInput = {
 
 export type EventAvgOrderByAggregateInput = {
   capacity?: Prisma.SortOrder
+  feeAmount?: Prisma.SortOrder
 }
 
 export type EventMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   collegeId?: Prisma.SortOrder
   clubId?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
   organizerId?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  eventType?: Prisma.SortOrder
   venue?: Prisma.SortOrder
+  onlineMeetingUrl?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  posterUrl?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   registrationOpensAt?: Prisma.SortOrder
   registrationClosesAt?: Prisma.SortOrder
   capacity?: Prisma.SortOrder
+  feeAmount?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -595,16 +755,23 @@ export type EventMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   collegeId?: Prisma.SortOrder
   clubId?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
   organizerId?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   title?: Prisma.SortOrder
   description?: Prisma.SortOrder
+  eventType?: Prisma.SortOrder
   venue?: Prisma.SortOrder
+  onlineMeetingUrl?: Prisma.SortOrder
   imageUrl?: Prisma.SortOrder
+  posterUrl?: Prisma.SortOrder
   startsAt?: Prisma.SortOrder
   endsAt?: Prisma.SortOrder
   registrationOpensAt?: Prisma.SortOrder
   registrationClosesAt?: Prisma.SortOrder
   capacity?: Prisma.SortOrder
+  feeAmount?: Prisma.SortOrder
+  currency?: Prisma.SortOrder
   status?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -612,6 +779,7 @@ export type EventMinOrderByAggregateInput = {
 
 export type EventSumOrderByAggregateInput = {
   capacity?: Prisma.SortOrder
+  feeAmount?: Prisma.SortOrder
 }
 
 export type EventScalarRelationFilter = {
@@ -703,6 +871,48 @@ export type EventUncheckedUpdateManyWithoutCollegeNestedInput = {
   deleteMany?: Prisma.EventScalarWhereInput | Prisma.EventScalarWhereInput[]
 }
 
+export type EventCreateNestedManyWithoutDepartmentInput = {
+  create?: Prisma.XOR<Prisma.EventCreateWithoutDepartmentInput, Prisma.EventUncheckedCreateWithoutDepartmentInput> | Prisma.EventCreateWithoutDepartmentInput[] | Prisma.EventUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.EventCreateOrConnectWithoutDepartmentInput | Prisma.EventCreateOrConnectWithoutDepartmentInput[]
+  createMany?: Prisma.EventCreateManyDepartmentInputEnvelope
+  connect?: Prisma.EventWhereUniqueInput | Prisma.EventWhereUniqueInput[]
+}
+
+export type EventUncheckedCreateNestedManyWithoutDepartmentInput = {
+  create?: Prisma.XOR<Prisma.EventCreateWithoutDepartmentInput, Prisma.EventUncheckedCreateWithoutDepartmentInput> | Prisma.EventCreateWithoutDepartmentInput[] | Prisma.EventUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.EventCreateOrConnectWithoutDepartmentInput | Prisma.EventCreateOrConnectWithoutDepartmentInput[]
+  createMany?: Prisma.EventCreateManyDepartmentInputEnvelope
+  connect?: Prisma.EventWhereUniqueInput | Prisma.EventWhereUniqueInput[]
+}
+
+export type EventUpdateManyWithoutDepartmentNestedInput = {
+  create?: Prisma.XOR<Prisma.EventCreateWithoutDepartmentInput, Prisma.EventUncheckedCreateWithoutDepartmentInput> | Prisma.EventCreateWithoutDepartmentInput[] | Prisma.EventUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.EventCreateOrConnectWithoutDepartmentInput | Prisma.EventCreateOrConnectWithoutDepartmentInput[]
+  upsert?: Prisma.EventUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.EventUpsertWithWhereUniqueWithoutDepartmentInput[]
+  createMany?: Prisma.EventCreateManyDepartmentInputEnvelope
+  set?: Prisma.EventWhereUniqueInput | Prisma.EventWhereUniqueInput[]
+  disconnect?: Prisma.EventWhereUniqueInput | Prisma.EventWhereUniqueInput[]
+  delete?: Prisma.EventWhereUniqueInput | Prisma.EventWhereUniqueInput[]
+  connect?: Prisma.EventWhereUniqueInput | Prisma.EventWhereUniqueInput[]
+  update?: Prisma.EventUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.EventUpdateWithWhereUniqueWithoutDepartmentInput[]
+  updateMany?: Prisma.EventUpdateManyWithWhereWithoutDepartmentInput | Prisma.EventUpdateManyWithWhereWithoutDepartmentInput[]
+  deleteMany?: Prisma.EventScalarWhereInput | Prisma.EventScalarWhereInput[]
+}
+
+export type EventUncheckedUpdateManyWithoutDepartmentNestedInput = {
+  create?: Prisma.XOR<Prisma.EventCreateWithoutDepartmentInput, Prisma.EventUncheckedCreateWithoutDepartmentInput> | Prisma.EventCreateWithoutDepartmentInput[] | Prisma.EventUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.EventCreateOrConnectWithoutDepartmentInput | Prisma.EventCreateOrConnectWithoutDepartmentInput[]
+  upsert?: Prisma.EventUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.EventUpsertWithWhereUniqueWithoutDepartmentInput[]
+  createMany?: Prisma.EventCreateManyDepartmentInputEnvelope
+  set?: Prisma.EventWhereUniqueInput | Prisma.EventWhereUniqueInput[]
+  disconnect?: Prisma.EventWhereUniqueInput | Prisma.EventWhereUniqueInput[]
+  delete?: Prisma.EventWhereUniqueInput | Prisma.EventWhereUniqueInput[]
+  connect?: Prisma.EventWhereUniqueInput | Prisma.EventWhereUniqueInput[]
+  update?: Prisma.EventUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.EventUpdateWithWhereUniqueWithoutDepartmentInput[]
+  updateMany?: Prisma.EventUpdateManyWithWhereWithoutDepartmentInput | Prisma.EventUpdateManyWithWhereWithoutDepartmentInput[]
+  deleteMany?: Prisma.EventScalarWhereInput | Prisma.EventScalarWhereInput[]
+}
+
 export type EventCreateNestedManyWithoutClubInput = {
   create?: Prisma.XOR<Prisma.EventCreateWithoutClubInput, Prisma.EventUncheckedCreateWithoutClubInput> | Prisma.EventCreateWithoutClubInput[] | Prisma.EventUncheckedCreateWithoutClubInput[]
   connectOrCreate?: Prisma.EventCreateOrConnectWithoutClubInput | Prisma.EventCreateOrConnectWithoutClubInput[]
@@ -753,6 +963,14 @@ export type NullableIntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type NullableDecimalFieldUpdateOperationsInput = {
+  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
+  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
+}
+
 export type EnumEventStatusFieldUpdateOperationsInput = {
   set?: $Enums.EventStatus
 }
@@ -773,20 +991,27 @@ export type EventUpdateOneRequiredWithoutRegistrationsNestedInput = {
 
 export type EventCreateWithoutOrganizerInput = {
   id?: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   college: Prisma.CollegeCreateNestedOneWithoutEventsInput
   club?: Prisma.ClubCreateNestedOneWithoutEventsInput
+  department?: Prisma.DepartmentCreateNestedOneWithoutEventsInput
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutEventInput
 }
 
@@ -794,15 +1019,22 @@ export type EventUncheckedCreateWithoutOrganizerInput = {
   id?: string
   collegeId: string
   clubId?: string | null
+  departmentId?: string | null
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -842,16 +1074,23 @@ export type EventScalarWhereInput = {
   id?: Prisma.StringFilter<"Event"> | string
   collegeId?: Prisma.StringFilter<"Event"> | string
   clubId?: Prisma.StringNullableFilter<"Event"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"Event"> | string | null
   organizerId?: Prisma.StringFilter<"Event"> | string
+  slug?: Prisma.StringFilter<"Event"> | string
   title?: Prisma.StringFilter<"Event"> | string
   description?: Prisma.StringFilter<"Event"> | string
+  eventType?: Prisma.StringFilter<"Event"> | string
   venue?: Prisma.StringFilter<"Event"> | string
+  onlineMeetingUrl?: Prisma.StringNullableFilter<"Event"> | string | null
   imageUrl?: Prisma.StringNullableFilter<"Event"> | string | null
+  posterUrl?: Prisma.StringNullableFilter<"Event"> | string | null
   startsAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   endsAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   registrationOpensAt?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
   registrationClosesAt?: Prisma.DateTimeNullableFilter<"Event"> | Date | string | null
   capacity?: Prisma.IntNullableFilter<"Event"> | number | null
+  feeAmount?: Prisma.DecimalNullableFilter<"Event"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFilter<"Event"> | string
   status?: Prisma.EnumEventStatusFilter<"Event"> | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFilter<"Event"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Event"> | Date | string
@@ -859,19 +1098,26 @@ export type EventScalarWhereInput = {
 
 export type EventCreateWithoutCollegeInput = {
   id?: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   club?: Prisma.ClubCreateNestedOneWithoutEventsInput
+  department?: Prisma.DepartmentCreateNestedOneWithoutEventsInput
   organizer: Prisma.UserCreateNestedOneWithoutOrganizedEventsInput
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutEventInput
 }
@@ -879,16 +1125,23 @@ export type EventCreateWithoutCollegeInput = {
 export type EventUncheckedCreateWithoutCollegeInput = {
   id?: string
   clubId?: string | null
+  departmentId?: string | null
   organizerId: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -921,21 +1174,106 @@ export type EventUpdateManyWithWhereWithoutCollegeInput = {
   data: Prisma.XOR<Prisma.EventUpdateManyMutationInput, Prisma.EventUncheckedUpdateManyWithoutCollegeInput>
 }
 
-export type EventCreateWithoutClubInput = {
+export type EventCreateWithoutDepartmentInput = {
   id?: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   college: Prisma.CollegeCreateNestedOneWithoutEventsInput
+  club?: Prisma.ClubCreateNestedOneWithoutEventsInput
+  organizer: Prisma.UserCreateNestedOneWithoutOrganizedEventsInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutEventInput
+}
+
+export type EventUncheckedCreateWithoutDepartmentInput = {
+  id?: string
+  collegeId: string
+  clubId?: string | null
+  organizerId: string
+  slug: string
+  title: string
+  description: string
+  eventType?: string
+  venue: string
+  onlineMeetingUrl?: string | null
+  imageUrl?: string | null
+  posterUrl?: string | null
+  startsAt: Date | string
+  endsAt: Date | string
+  registrationOpensAt?: Date | string | null
+  registrationClosesAt?: Date | string | null
+  capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
+  status?: $Enums.EventStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutEventInput
+}
+
+export type EventCreateOrConnectWithoutDepartmentInput = {
+  where: Prisma.EventWhereUniqueInput
+  create: Prisma.XOR<Prisma.EventCreateWithoutDepartmentInput, Prisma.EventUncheckedCreateWithoutDepartmentInput>
+}
+
+export type EventCreateManyDepartmentInputEnvelope = {
+  data: Prisma.EventCreateManyDepartmentInput | Prisma.EventCreateManyDepartmentInput[]
+  skipDuplicates?: boolean
+}
+
+export type EventUpsertWithWhereUniqueWithoutDepartmentInput = {
+  where: Prisma.EventWhereUniqueInput
+  update: Prisma.XOR<Prisma.EventUpdateWithoutDepartmentInput, Prisma.EventUncheckedUpdateWithoutDepartmentInput>
+  create: Prisma.XOR<Prisma.EventCreateWithoutDepartmentInput, Prisma.EventUncheckedCreateWithoutDepartmentInput>
+}
+
+export type EventUpdateWithWhereUniqueWithoutDepartmentInput = {
+  where: Prisma.EventWhereUniqueInput
+  data: Prisma.XOR<Prisma.EventUpdateWithoutDepartmentInput, Prisma.EventUncheckedUpdateWithoutDepartmentInput>
+}
+
+export type EventUpdateManyWithWhereWithoutDepartmentInput = {
+  where: Prisma.EventScalarWhereInput
+  data: Prisma.XOR<Prisma.EventUpdateManyMutationInput, Prisma.EventUncheckedUpdateManyWithoutDepartmentInput>
+}
+
+export type EventCreateWithoutClubInput = {
+  id?: string
+  slug: string
+  title: string
+  description: string
+  eventType?: string
+  venue: string
+  onlineMeetingUrl?: string | null
+  imageUrl?: string | null
+  posterUrl?: string | null
+  startsAt: Date | string
+  endsAt: Date | string
+  registrationOpensAt?: Date | string | null
+  registrationClosesAt?: Date | string | null
+  capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
+  status?: $Enums.EventStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  college: Prisma.CollegeCreateNestedOneWithoutEventsInput
+  department?: Prisma.DepartmentCreateNestedOneWithoutEventsInput
   organizer: Prisma.UserCreateNestedOneWithoutOrganizedEventsInput
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutEventInput
 }
@@ -943,16 +1281,23 @@ export type EventCreateWithoutClubInput = {
 export type EventUncheckedCreateWithoutClubInput = {
   id?: string
   collegeId: string
+  departmentId?: string | null
   organizerId: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -987,20 +1332,27 @@ export type EventUpdateManyWithWhereWithoutClubInput = {
 
 export type EventCreateWithoutRegistrationsInput = {
   id?: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
   college: Prisma.CollegeCreateNestedOneWithoutEventsInput
   club?: Prisma.ClubCreateNestedOneWithoutEventsInput
+  department?: Prisma.DepartmentCreateNestedOneWithoutEventsInput
   organizer: Prisma.UserCreateNestedOneWithoutOrganizedEventsInput
 }
 
@@ -1008,16 +1360,23 @@ export type EventUncheckedCreateWithoutRegistrationsInput = {
   id?: string
   collegeId: string
   clubId?: string | null
+  departmentId?: string | null
   organizerId: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1041,20 +1400,27 @@ export type EventUpdateToOneWithWhereWithoutRegistrationsInput = {
 
 export type EventUpdateWithoutRegistrationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   college?: Prisma.CollegeUpdateOneRequiredWithoutEventsNestedInput
   club?: Prisma.ClubUpdateOneWithoutEventsNestedInput
+  department?: Prisma.DepartmentUpdateOneWithoutEventsNestedInput
   organizer?: Prisma.UserUpdateOneRequiredWithoutOrganizedEventsNestedInput
 }
 
@@ -1062,16 +1428,23 @@ export type EventUncheckedUpdateWithoutRegistrationsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collegeId?: Prisma.StringFieldUpdateOperationsInput | string
   clubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizerId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1081,15 +1454,22 @@ export type EventCreateManyOrganizerInput = {
   id?: string
   collegeId: string
   clubId?: string | null
+  departmentId?: string | null
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1097,20 +1477,27 @@ export type EventCreateManyOrganizerInput = {
 
 export type EventUpdateWithoutOrganizerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   college?: Prisma.CollegeUpdateOneRequiredWithoutEventsNestedInput
   club?: Prisma.ClubUpdateOneWithoutEventsNestedInput
+  department?: Prisma.DepartmentUpdateOneWithoutEventsNestedInput
   registrations?: Prisma.EventRegistrationUpdateManyWithoutEventNestedInput
 }
 
@@ -1118,15 +1505,22 @@ export type EventUncheckedUpdateWithoutOrganizerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collegeId?: Prisma.StringFieldUpdateOperationsInput | string
   clubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1137,15 +1531,22 @@ export type EventUncheckedUpdateManyWithoutOrganizerInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collegeId?: Prisma.StringFieldUpdateOperationsInput | string
   clubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1154,16 +1555,23 @@ export type EventUncheckedUpdateManyWithoutOrganizerInput = {
 export type EventCreateManyCollegeInput = {
   id?: string
   clubId?: string | null
+  departmentId?: string | null
   organizerId: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1171,19 +1579,26 @@ export type EventCreateManyCollegeInput = {
 
 export type EventUpdateWithoutCollegeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   club?: Prisma.ClubUpdateOneWithoutEventsNestedInput
+  department?: Prisma.DepartmentUpdateOneWithoutEventsNestedInput
   organizer?: Prisma.UserUpdateOneRequiredWithoutOrganizedEventsNestedInput
   registrations?: Prisma.EventRegistrationUpdateManyWithoutEventNestedInput
 }
@@ -1191,16 +1606,23 @@ export type EventUpdateWithoutCollegeInput = {
 export type EventUncheckedUpdateWithoutCollegeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizerId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1210,16 +1632,125 @@ export type EventUncheckedUpdateWithoutCollegeInput = {
 export type EventUncheckedUpdateManyWithoutCollegeInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   clubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizerId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type EventCreateManyDepartmentInput = {
+  id?: string
+  collegeId: string
+  clubId?: string | null
+  organizerId: string
+  slug: string
+  title: string
+  description: string
+  eventType?: string
+  venue: string
+  onlineMeetingUrl?: string | null
+  imageUrl?: string | null
+  posterUrl?: string | null
+  startsAt: Date | string
+  endsAt: Date | string
+  registrationOpensAt?: Date | string | null
+  registrationClosesAt?: Date | string | null
+  capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
+  status?: $Enums.EventStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type EventUpdateWithoutDepartmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
+  venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  college?: Prisma.CollegeUpdateOneRequiredWithoutEventsNestedInput
+  club?: Prisma.ClubUpdateOneWithoutEventsNestedInput
+  organizer?: Prisma.UserUpdateOneRequiredWithoutOrganizedEventsNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutEventNestedInput
+}
+
+export type EventUncheckedUpdateWithoutDepartmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
+  clubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizerId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
+  venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutEventNestedInput
+}
+
+export type EventUncheckedUpdateManyWithoutDepartmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
+  clubId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  organizerId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  title?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
+  venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1228,16 +1759,23 @@ export type EventUncheckedUpdateManyWithoutCollegeInput = {
 export type EventCreateManyClubInput = {
   id?: string
   collegeId: string
+  departmentId?: string | null
   organizerId: string
+  slug: string
   title: string
   description: string
+  eventType?: string
   venue: string
+  onlineMeetingUrl?: string | null
   imageUrl?: string | null
+  posterUrl?: string | null
   startsAt: Date | string
   endsAt: Date | string
   registrationOpensAt?: Date | string | null
   registrationClosesAt?: Date | string | null
   capacity?: number | null
+  feeAmount?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: string
   status?: $Enums.EventStatus
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1245,19 +1783,26 @@ export type EventCreateManyClubInput = {
 
 export type EventUpdateWithoutClubInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   college?: Prisma.CollegeUpdateOneRequiredWithoutEventsNestedInput
+  department?: Prisma.DepartmentUpdateOneWithoutEventsNestedInput
   organizer?: Prisma.UserUpdateOneRequiredWithoutOrganizedEventsNestedInput
   registrations?: Prisma.EventRegistrationUpdateManyWithoutEventNestedInput
 }
@@ -1265,16 +1810,23 @@ export type EventUpdateWithoutClubInput = {
 export type EventUncheckedUpdateWithoutClubInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collegeId?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizerId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1284,16 +1836,23 @@ export type EventUncheckedUpdateWithoutClubInput = {
 export type EventUncheckedUpdateManyWithoutClubInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   collegeId?: Prisma.StringFieldUpdateOperationsInput | string
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   organizerId?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   title?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.StringFieldUpdateOperationsInput | string
+  eventType?: Prisma.StringFieldUpdateOperationsInput | string
   venue?: Prisma.StringFieldUpdateOperationsInput | string
+  onlineMeetingUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   imageUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  posterUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   startsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   endsAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   registrationOpensAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   registrationClosesAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   capacity?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  feeAmount?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumEventStatusFieldUpdateOperationsInput | $Enums.EventStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1334,21 +1893,29 @@ export type EventSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   id?: boolean
   collegeId?: boolean
   clubId?: boolean
+  departmentId?: boolean
   organizerId?: boolean
+  slug?: boolean
   title?: boolean
   description?: boolean
+  eventType?: boolean
   venue?: boolean
+  onlineMeetingUrl?: boolean
   imageUrl?: boolean
+  posterUrl?: boolean
   startsAt?: boolean
   endsAt?: boolean
   registrationOpensAt?: boolean
   registrationClosesAt?: boolean
   capacity?: boolean
+  feeAmount?: boolean
+  currency?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   club?: boolean | Prisma.Event$clubArgs<ExtArgs>
+  department?: boolean | Prisma.Event$departmentArgs<ExtArgs>
   organizer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   registrations?: boolean | Prisma.Event$registrationsArgs<ExtArgs>
   _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
@@ -1358,21 +1925,29 @@ export type EventSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   collegeId?: boolean
   clubId?: boolean
+  departmentId?: boolean
   organizerId?: boolean
+  slug?: boolean
   title?: boolean
   description?: boolean
+  eventType?: boolean
   venue?: boolean
+  onlineMeetingUrl?: boolean
   imageUrl?: boolean
+  posterUrl?: boolean
   startsAt?: boolean
   endsAt?: boolean
   registrationOpensAt?: boolean
   registrationClosesAt?: boolean
   capacity?: boolean
+  feeAmount?: boolean
+  currency?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   club?: boolean | Prisma.Event$clubArgs<ExtArgs>
+  department?: boolean | Prisma.Event$departmentArgs<ExtArgs>
   organizer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
@@ -1380,21 +1955,29 @@ export type EventSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensi
   id?: boolean
   collegeId?: boolean
   clubId?: boolean
+  departmentId?: boolean
   organizerId?: boolean
+  slug?: boolean
   title?: boolean
   description?: boolean
+  eventType?: boolean
   venue?: boolean
+  onlineMeetingUrl?: boolean
   imageUrl?: boolean
+  posterUrl?: boolean
   startsAt?: boolean
   endsAt?: boolean
   registrationOpensAt?: boolean
   registrationClosesAt?: boolean
   capacity?: boolean
+  feeAmount?: boolean
+  currency?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   club?: boolean | Prisma.Event$clubArgs<ExtArgs>
+  department?: boolean | Prisma.Event$departmentArgs<ExtArgs>
   organizer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["event"]>
 
@@ -1402,25 +1985,33 @@ export type EventSelectScalar = {
   id?: boolean
   collegeId?: boolean
   clubId?: boolean
+  departmentId?: boolean
   organizerId?: boolean
+  slug?: boolean
   title?: boolean
   description?: boolean
+  eventType?: boolean
   venue?: boolean
+  onlineMeetingUrl?: boolean
   imageUrl?: boolean
+  posterUrl?: boolean
   startsAt?: boolean
   endsAt?: boolean
   registrationOpensAt?: boolean
   registrationClosesAt?: boolean
   capacity?: boolean
+  feeAmount?: boolean
+  currency?: boolean
   status?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "collegeId" | "clubId" | "organizerId" | "title" | "description" | "venue" | "imageUrl" | "startsAt" | "endsAt" | "registrationOpensAt" | "registrationClosesAt" | "capacity" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
+export type EventOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "collegeId" | "clubId" | "departmentId" | "organizerId" | "slug" | "title" | "description" | "eventType" | "venue" | "onlineMeetingUrl" | "imageUrl" | "posterUrl" | "startsAt" | "endsAt" | "registrationOpensAt" | "registrationClosesAt" | "capacity" | "feeAmount" | "currency" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["event"]>
 export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   club?: boolean | Prisma.Event$clubArgs<ExtArgs>
+  department?: boolean | Prisma.Event$departmentArgs<ExtArgs>
   organizer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   registrations?: boolean | Prisma.Event$registrationsArgs<ExtArgs>
   _count?: boolean | Prisma.EventCountOutputTypeDefaultArgs<ExtArgs>
@@ -1428,11 +2019,13 @@ export type EventInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type EventIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   club?: boolean | Prisma.Event$clubArgs<ExtArgs>
+  department?: boolean | Prisma.Event$departmentArgs<ExtArgs>
   organizer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 export type EventIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   club?: boolean | Prisma.Event$clubArgs<ExtArgs>
+  department?: boolean | Prisma.Event$departmentArgs<ExtArgs>
   organizer?: boolean | Prisma.UserDefaultArgs<ExtArgs>
 }
 
@@ -1441,6 +2034,7 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   objects: {
     college: Prisma.$CollegePayload<ExtArgs>
     club: Prisma.$ClubPayload<ExtArgs> | null
+    department: Prisma.$DepartmentPayload<ExtArgs> | null
     organizer: Prisma.$UserPayload<ExtArgs>
     registrations: Prisma.$EventRegistrationPayload<ExtArgs>[]
   }
@@ -1448,16 +2042,23 @@ export type $EventPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs 
     id: string
     collegeId: string
     clubId: string | null
+    departmentId: string | null
     organizerId: string
+    slug: string
     title: string
     description: string
+    eventType: string
     venue: string
+    onlineMeetingUrl: string | null
     imageUrl: string | null
+    posterUrl: string | null
     startsAt: Date
     endsAt: Date
     registrationOpensAt: Date | null
     registrationClosesAt: Date | null
     capacity: number | null
+    feeAmount: runtime.Decimal | null
+    currency: string
     status: $Enums.EventStatus
     createdAt: Date
     updatedAt: Date
@@ -1857,6 +2458,7 @@ export interface Prisma__EventClient<T, Null = never, ExtArgs extends runtime.Ty
   readonly [Symbol.toStringTag]: "PrismaPromise"
   college<T extends Prisma.CollegeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CollegeDefaultArgs<ExtArgs>>): Prisma.Prisma__CollegeClient<runtime.Types.Result.GetResult<Prisma.$CollegePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   club<T extends Prisma.Event$clubArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$clubArgs<ExtArgs>>): Prisma.Prisma__ClubClient<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  department<T extends Prisma.Event$departmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$departmentArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   organizer<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   registrations<T extends Prisma.Event$registrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Event$registrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1891,16 +2493,23 @@ export interface EventFieldRefs {
   readonly id: Prisma.FieldRef<"Event", 'String'>
   readonly collegeId: Prisma.FieldRef<"Event", 'String'>
   readonly clubId: Prisma.FieldRef<"Event", 'String'>
+  readonly departmentId: Prisma.FieldRef<"Event", 'String'>
   readonly organizerId: Prisma.FieldRef<"Event", 'String'>
+  readonly slug: Prisma.FieldRef<"Event", 'String'>
   readonly title: Prisma.FieldRef<"Event", 'String'>
   readonly description: Prisma.FieldRef<"Event", 'String'>
+  readonly eventType: Prisma.FieldRef<"Event", 'String'>
   readonly venue: Prisma.FieldRef<"Event", 'String'>
+  readonly onlineMeetingUrl: Prisma.FieldRef<"Event", 'String'>
   readonly imageUrl: Prisma.FieldRef<"Event", 'String'>
+  readonly posterUrl: Prisma.FieldRef<"Event", 'String'>
   readonly startsAt: Prisma.FieldRef<"Event", 'DateTime'>
   readonly endsAt: Prisma.FieldRef<"Event", 'DateTime'>
   readonly registrationOpensAt: Prisma.FieldRef<"Event", 'DateTime'>
   readonly registrationClosesAt: Prisma.FieldRef<"Event", 'DateTime'>
   readonly capacity: Prisma.FieldRef<"Event", 'Int'>
+  readonly feeAmount: Prisma.FieldRef<"Event", 'Decimal'>
+  readonly currency: Prisma.FieldRef<"Event", 'String'>
   readonly status: Prisma.FieldRef<"Event", 'EventStatus'>
   readonly createdAt: Prisma.FieldRef<"Event", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Event", 'DateTime'>
@@ -2321,6 +2930,25 @@ export type Event$clubArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs
    */
   include?: Prisma.ClubInclude<ExtArgs> | null
   where?: Prisma.ClubWhereInput
+}
+
+/**
+ * Event.department
+ */
+export type Event$departmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Department
+   */
+  select?: Prisma.DepartmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Department
+   */
+  omit?: Prisma.DepartmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DepartmentInclude<ExtArgs> | null
+  where?: Prisma.DepartmentWhereInput
 }
 
 /**

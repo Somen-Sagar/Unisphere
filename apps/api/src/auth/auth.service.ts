@@ -57,7 +57,7 @@ export class AuthService {
     if (input.college.mode === 'join') {
       const college = await this.prisma.college.findUnique({
         where: { id: input.college.collegeId },
-        select: { id: true },
+        select: { id: true, status: true },
       });
       if (!college)
         throw new ConflictException('The selected college does not exist.');
@@ -68,19 +68,32 @@ export class AuthService {
     const user = await this.prisma.$transaction(async (tx) => {
       const college =
         input.college.mode === 'create'
-          ? await tx.college.create({
-              data: {
-                name: input.college.name,
-                slug: await this.uniqueCollegeSlug(input.college.name),
-                officialEmailDomain: input.college.emailDomain,
-                website: input.college.website,
-                city: input.college.city,
-                state: input.college.state,
-                status: 'PENDING',
-              },
-              select: { id: true },
-            })
-          : { id: input.college.collegeId };
+          ? {
+              ...(await tx.college.create({
+                data: {
+                  name: input.college.name,
+                  slug: await this.uniqueCollegeSlug(
+                    input.college.slug ?? input.college.name,
+                  ),
+                  officialEmailDomain:
+                    input.college.officialEmailDomain ??
+                    input.college.emailDomain,
+                  website: input.college.website,
+                  city: input.college.city,
+                  state: input.college.state,
+                  country: input.college.country,
+                  status: 'PENDING',
+                },
+                select: { id: true },
+              })),
+              status: 'PENDING' as const,
+            }
+          : await tx.college.findUniqueOrThrow({
+              where: { id: input.college.collegeId },
+              select: { id: true, status: true },
+            });
+      const activeOnCreateOrVerifiedJoin =
+        input.college.mode === 'create' || college.status === 'VERIFIED';
 
       return tx.user.create({
         data: {
@@ -92,7 +105,8 @@ export class AuthService {
             create: {
               collegeId: college.id,
               role: input.college.mode === 'create' ? 'COLLEGE_ADMIN' : role,
-              status: 'PENDING',
+              status: activeOnCreateOrVerifiedJoin ? 'ACTIVE' : 'PENDING',
+              joinedAt: activeOnCreateOrVerifiedJoin ? new Date() : undefined,
               studentId:
                 input.college.mode === 'join'
                   ? input.college.studentId
@@ -252,6 +266,7 @@ export class AuthService {
           city: membership.college.city,
           state: membership.college.state,
           logoUrl: membership.college.logoUrl,
+          status: membership.college.status,
         },
       })),
     };

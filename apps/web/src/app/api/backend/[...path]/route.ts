@@ -13,8 +13,11 @@ const allowedRoots = new Set([
   "attendance",
   "clubs",
   "colleges",
+  "dashboard",
+  "departments",
   "events",
   "health",
+  "notifications",
   "registrations",
 ]);
 

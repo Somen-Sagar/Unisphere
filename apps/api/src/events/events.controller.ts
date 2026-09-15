@@ -3,6 +3,7 @@ import {
   Controller,
   Get,
   Param,
+  Patch,
   Post,
   Query,
   UseGuards,
@@ -11,8 +12,10 @@ import type { CampusEvent, PaginatedResponse } from '@unisphere/types';
 import {
   createEventSchema,
   eventQuerySchema,
+  updateEventSchema,
   type CreateEventInput,
   type EventQueryInput,
+  type UpdateEventInput,
 } from '@unisphere/validation';
 
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -53,5 +56,26 @@ export class EventsController {
     @Body(new ZodValidationPipe(createEventSchema)) input: CreateEventInput,
   ): Promise<CampusEvent> {
     return this.events.create(tenant, input);
+  }
+
+  @UseGuards(RolesGuard)
+  @TenantRoles('CLUB_ADMIN', 'DEPARTMENT_ADMIN', 'COLLEGE_ADMIN')
+  @Patch(':eventId')
+  update(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('eventId') eventId: string,
+    @Body(new ZodValidationPipe(updateEventSchema)) input: UpdateEventInput,
+  ): Promise<CampusEvent> {
+    return this.events.update(tenant, eventId, input);
+  }
+
+  @UseGuards(RolesGuard)
+  @TenantRoles('CLUB_ADMIN', 'DEPARTMENT_ADMIN', 'COLLEGE_ADMIN')
+  @Post(':eventId/publish')
+  publish(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('eventId') eventId: string,
+  ): Promise<CampusEvent> {
+    return this.events.publish(tenant, eventId);
   }
 }

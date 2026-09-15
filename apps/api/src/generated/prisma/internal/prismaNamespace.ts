@@ -400,10 +400,13 @@ export const ModelName = {
   User: 'User',
   College: 'College',
   CollegeMembership: 'CollegeMembership',
+  Department: 'Department',
   RefreshSession: 'RefreshSession',
   Club: 'Club',
+  ClubMembership: 'ClubMembership',
   Event: 'Event',
-  EventRegistration: 'EventRegistration'
+  EventRegistration: 'EventRegistration',
+  Notification: 'Notification'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -419,7 +422,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "college" | "collegeMembership" | "refreshSession" | "club" | "event" | "eventRegistration"
+    modelProps: "user" | "college" | "collegeMembership" | "department" | "refreshSession" | "club" | "clubMembership" | "event" | "eventRegistration" | "notification"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -645,6 +648,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Department: {
+      payload: Prisma.$DepartmentPayload<ExtArgs>
+      fields: Prisma.DepartmentFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.DepartmentFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.DepartmentFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        findFirst: {
+          args: Prisma.DepartmentFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.DepartmentFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        findMany: {
+          args: Prisma.DepartmentFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>[]
+        }
+        create: {
+          args: Prisma.DepartmentCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        createMany: {
+          args: Prisma.DepartmentCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.DepartmentCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>[]
+        }
+        delete: {
+          args: Prisma.DepartmentDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        update: {
+          args: Prisma.DepartmentUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        deleteMany: {
+          args: Prisma.DepartmentDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.DepartmentUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.DepartmentUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>[]
+        }
+        upsert: {
+          args: Prisma.DepartmentUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$DepartmentPayload>
+        }
+        aggregate: {
+          args: Prisma.DepartmentAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateDepartment>
+        }
+        groupBy: {
+          args: Prisma.DepartmentGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DepartmentGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.DepartmentCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.DepartmentCountAggregateOutputType> | number
+        }
+      }
+    }
     RefreshSession: {
       payload: Prisma.$RefreshSessionPayload<ExtArgs>
       fields: Prisma.RefreshSessionFieldRefs
@@ -790,6 +867,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ClubCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ClubCountAggregateOutputType> | number
+        }
+      }
+    }
+    ClubMembership: {
+      payload: Prisma.$ClubMembershipPayload<ExtArgs>
+      fields: Prisma.ClubMembershipFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClubMembershipFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubMembershipPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClubMembershipFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubMembershipPayload>
+        }
+        findFirst: {
+          args: Prisma.ClubMembershipFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubMembershipPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClubMembershipFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubMembershipPayload>
+        }
+        findMany: {
+          args: Prisma.ClubMembershipFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubMembershipPayload>[]
+        }
+        create: {
+          args: Prisma.ClubMembershipCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubMembershipPayload>
+        }
+        createMany: {
+          args: Prisma.ClubMembershipCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClubMembershipCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubMembershipPayload>[]
+        }
+        delete: {
+          args: Prisma.ClubMembershipDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubMembershipPayload>
+        }
+        update: {
+          args: Prisma.ClubMembershipUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubMembershipPayload>
+        }
+        deleteMany: {
+          args: Prisma.ClubMembershipDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClubMembershipUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClubMembershipUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubMembershipPayload>[]
+        }
+        upsert: {
+          args: Prisma.ClubMembershipUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubMembershipPayload>
+        }
+        aggregate: {
+          args: Prisma.ClubMembershipAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClubMembership>
+        }
+        groupBy: {
+          args: Prisma.ClubMembershipGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubMembershipGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClubMembershipCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubMembershipCountAggregateOutputType> | number
         }
       }
     }
@@ -941,6 +1092,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    Notification: {
+      payload: Prisma.$NotificationPayload<ExtArgs>
+      fields: Prisma.NotificationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.NotificationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.NotificationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        findFirst: {
+          args: Prisma.NotificationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.NotificationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        findMany: {
+          args: Prisma.NotificationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        create: {
+          args: Prisma.NotificationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        createMany: {
+          args: Prisma.NotificationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.NotificationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        delete: {
+          args: Prisma.NotificationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        update: {
+          args: Prisma.NotificationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        deleteMany: {
+          args: Prisma.NotificationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.NotificationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.NotificationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>[]
+        }
+        upsert: {
+          args: Prisma.NotificationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$NotificationPayload>
+        }
+        aggregate: {
+          args: Prisma.NotificationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateNotification>
+        }
+        groupBy: {
+          args: Prisma.NotificationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.NotificationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.NotificationCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1035,6 +1260,19 @@ export const CollegeMembershipScalarFieldEnum = {
 export type CollegeMembershipScalarFieldEnum = (typeof CollegeMembershipScalarFieldEnum)[keyof typeof CollegeMembershipScalarFieldEnum]
 
 
+export const DepartmentScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  name: 'name',
+  code: 'code',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DepartmentScalarFieldEnum = (typeof DepartmentScalarFieldEnum)[keyof typeof DepartmentScalarFieldEnum]
+
+
 export const RefreshSessionScalarFieldEnum = {
   id: 'id',
   userId: 'userId',
@@ -1051,10 +1289,15 @@ export type RefreshSessionScalarFieldEnum = (typeof RefreshSessionScalarFieldEnu
 export const ClubScalarFieldEnum = {
   id: 'id',
   collegeId: 'collegeId',
+  departmentId: 'departmentId',
   name: 'name',
   slug: 'slug',
   description: 'description',
+  category: 'category',
   logoUrl: 'logoUrl',
+  coverUrl: 'coverUrl',
+  recruitmentStatus: 'recruitmentStatus',
+  verificationStatus: 'verificationStatus',
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1063,20 +1306,40 @@ export const ClubScalarFieldEnum = {
 export type ClubScalarFieldEnum = (typeof ClubScalarFieldEnum)[keyof typeof ClubScalarFieldEnum]
 
 
+export const ClubMembershipScalarFieldEnum = {
+  id: 'id',
+  clubId: 'clubId',
+  userId: 'userId',
+  role: 'role',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClubMembershipScalarFieldEnum = (typeof ClubMembershipScalarFieldEnum)[keyof typeof ClubMembershipScalarFieldEnum]
+
+
 export const EventScalarFieldEnum = {
   id: 'id',
   collegeId: 'collegeId',
   clubId: 'clubId',
+  departmentId: 'departmentId',
   organizerId: 'organizerId',
+  slug: 'slug',
   title: 'title',
   description: 'description',
+  eventType: 'eventType',
   venue: 'venue',
+  onlineMeetingUrl: 'onlineMeetingUrl',
   imageUrl: 'imageUrl',
+  posterUrl: 'posterUrl',
   startsAt: 'startsAt',
   endsAt: 'endsAt',
   registrationOpensAt: 'registrationOpensAt',
   registrationClosesAt: 'registrationClosesAt',
   capacity: 'capacity',
+  feeAmount: 'feeAmount',
+  currency: 'currency',
   status: 'status',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1087,10 +1350,14 @@ export type EventScalarFieldEnum = (typeof EventScalarFieldEnum)[keyof typeof Ev
 
 export const EventRegistrationScalarFieldEnum = {
   id: 'id',
+  collegeId: 'collegeId',
   eventId: 'eventId',
   userId: 'userId',
   status: 'status',
+  registrationCode: 'registrationCode',
   qrToken: 'qrToken',
+  registeredAt: 'registeredAt',
+  cancelledAt: 'cancelledAt',
   checkedInAt: 'checkedInAt',
   checkedInBy: 'checkedInBy',
   createdAt: 'createdAt',
@@ -1098,6 +1365,20 @@ export const EventRegistrationScalarFieldEnum = {
 } as const
 
 export type EventRegistrationScalarFieldEnum = (typeof EventRegistrationScalarFieldEnum)[keyof typeof EventRegistrationScalarFieldEnum]
+
+
+export const NotificationScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  userId: 'userId',
+  type: 'type',
+  title: 'title',
+  message: 'message',
+  readAt: 'readAt',
+  createdAt: 'createdAt'
+} as const
+
+export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
 export const SortOrder = {
@@ -1215,9 +1496,65 @@ export type ListEnumMembershipStatusFieldRefInput<$PrismaModel> = FieldRefInputT
 
 
 /**
+ * Reference to a field of type 'ClubRecruitmentStatus'
+ */
+export type EnumClubRecruitmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubRecruitmentStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ClubRecruitmentStatus[]'
+ */
+export type ListEnumClubRecruitmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubRecruitmentStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ClubVerificationStatus'
+ */
+export type EnumClubVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubVerificationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ClubVerificationStatus[]'
+ */
+export type ListEnumClubVerificationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubVerificationStatus[]'>
+    
+
+
+/**
  * Reference to a field of type 'Boolean'
  */
 export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'ClubMembershipRole'
+ */
+export type EnumClubMembershipRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubMembershipRole'>
+    
+
+
+/**
+ * Reference to a field of type 'ClubMembershipRole[]'
+ */
+export type ListEnumClubMembershipRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubMembershipRole[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ClubMembershipStatus'
+ */
+export type EnumClubMembershipStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubMembershipStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ClubMembershipStatus[]'
+ */
+export type ListEnumClubMembershipStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubMembershipStatus[]'>
     
 
 
@@ -1232,6 +1569,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -1260,6 +1611,20 @@ export type EnumRegistrationStatusFieldRefInput<$PrismaModel> = FieldRefInputTyp
  * Reference to a field of type 'RegistrationStatus[]'
  */
 export type ListEnumRegistrationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RegistrationStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationType'
+ */
+export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType'>
+    
+
+
+/**
+ * Reference to a field of type 'NotificationType[]'
+ */
+export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
     
 
 
@@ -1430,10 +1795,13 @@ export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   college?: Prisma.CollegeOmit
   collegeMembership?: Prisma.CollegeMembershipOmit
+  department?: Prisma.DepartmentOmit
   refreshSession?: Prisma.RefreshSessionOmit
   club?: Prisma.ClubOmit
+  clubMembership?: Prisma.ClubMembershipOmit
   event?: Prisma.EventOmit
   eventRegistration?: Prisma.EventRegistrationOmit
+  notification?: Prisma.NotificationOmit
 }
 
 /* Types for Logging */
