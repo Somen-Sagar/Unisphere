@@ -5,6 +5,7 @@ import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AiModule } from './ai/ai.module';
 import { AuthModule } from './auth/auth.module';
 import { RedisModule } from './cache/redis.module';
 import { CollegesModule } from './colleges/colleges.module';
@@ -28,6 +29,7 @@ import { validateEnvironment } from './config/environment';
     ]),
     PrismaModule,
     RedisModule,
+    AiModule,
     AuthModule,
     CollegesModule,
     ClubsModule,

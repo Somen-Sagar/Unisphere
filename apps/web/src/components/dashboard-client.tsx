@@ -34,6 +34,7 @@ import type {
 } from "@unisphere/types";
 
 import { api } from "@/lib/api/client";
+import { AiChat } from "@/components/ai/ai-chat";
 
 export type DashboardView =
   | "overview"
@@ -1057,7 +1058,8 @@ export function DashboardClient({
           {view === "passes" ? <PassesView registrations={registrations} /> : null}
           {view === "calendar" ? <CalendarView events={events} registrations={registrations} /> : null}
           {view === "profile" ? <ProfileView user={user} membership={membership} registrations={registrations} /> : null}
-          {["opportunities", "certificates", "ai", "services", "notifications", "settings"].includes(view) ? (
+          {view === "ai" ? <AiChat membership={membership} /> : null}
+          {["opportunities", "certificates", "services", "notifications", "settings"].includes(view) ? (
             <FutureState view={view} />
           ) : null}
         </section>

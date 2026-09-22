@@ -70,6 +70,7 @@ model User {
   refreshSessions RefreshSession[]
   organizedEvents Event[]             @relation("EventOrganizer")
   registrations   EventRegistration[]
+  aiChatMessages  AiChatMessage[]
   createdAt       DateTime            @default(now())
   updatedAt       DateTime            @updatedAt
 
@@ -94,6 +95,8 @@ model College {
   memberships         CollegeMembership[]
   clubs               Club[]
   events              Event[]
+  embeddings          DocumentEmbedding[]
+  aiChatMessages      AiChatMessage[]
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @updatedAt
 
@@ -204,3 +207,41 @@ model EventRegistration {
   @@index([eventId, status])
   @@map("event_registrations")
 }
+
+model DocumentEmbedding {
+  id         String   @id @default(cuid())
+  collegeId  String
+  sourceType String
+  sourceId   String?
+  title      String
+  content    String
+  embedding  Unsupported("vector(384)")
+  metadata   Json     @default("{}")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+
+  @@index([collegeId])
+  @@index([sourceType, sourceId])
+  @@map("document_embeddings")
+}
+
+model AiChatMessage {
+  id        String   @id @default(cuid())
+  sessionId String
+  collegeId String
+  userId    String
+  role      String
+  content   String
+  sources   Json     @default("[]")
+  createdAt DateTime @default(now())
+
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([sessionId, createdAt])
+  @@index([userId, createdAt])
+  @@map("ai_chat_messages")
+}
+

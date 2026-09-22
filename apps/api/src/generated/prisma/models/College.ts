@@ -265,6 +265,8 @@ export type CollegeWhereInput = {
   memberships?: Prisma.CollegeMembershipListRelationFilter
   clubs?: Prisma.ClubListRelationFilter
   events?: Prisma.EventListRelationFilter
+  embeddings?: Prisma.DocumentEmbeddingListRelationFilter
+  aiChatMessages?: Prisma.AiChatMessageListRelationFilter
 }
 
 export type CollegeOrderByWithRelationInput = {
@@ -286,6 +288,8 @@ export type CollegeOrderByWithRelationInput = {
   memberships?: Prisma.CollegeMembershipOrderByRelationAggregateInput
   clubs?: Prisma.ClubOrderByRelationAggregateInput
   events?: Prisma.EventOrderByRelationAggregateInput
+  embeddings?: Prisma.DocumentEmbeddingOrderByRelationAggregateInput
+  aiChatMessages?: Prisma.AiChatMessageOrderByRelationAggregateInput
 }
 
 export type CollegeWhereUniqueInput = Prisma.AtLeast<{
@@ -310,6 +314,8 @@ export type CollegeWhereUniqueInput = Prisma.AtLeast<{
   memberships?: Prisma.CollegeMembershipListRelationFilter
   clubs?: Prisma.ClubListRelationFilter
   events?: Prisma.EventListRelationFilter
+  embeddings?: Prisma.DocumentEmbeddingListRelationFilter
+  aiChatMessages?: Prisma.AiChatMessageListRelationFilter
 }, "id" | "slug">
 
 export type CollegeOrderByWithAggregationInput = {
@@ -373,6 +379,8 @@ export type CollegeCreateInput = {
   memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutCollegeInput
   clubs?: Prisma.ClubCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventCreateNestedManyWithoutCollegeInput
+  embeddings?: Prisma.DocumentEmbeddingCreateNestedManyWithoutCollegeInput
+  aiChatMessages?: Prisma.AiChatMessageCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeUncheckedCreateInput = {
@@ -394,6 +402,8 @@ export type CollegeUncheckedCreateInput = {
   memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutCollegeInput
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCollegeInput
+  embeddings?: Prisma.DocumentEmbeddingUncheckedCreateNestedManyWithoutCollegeInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeUpdateInput = {
@@ -415,6 +425,8 @@ export type CollegeUpdateInput = {
   memberships?: Prisma.CollegeMembershipUpdateManyWithoutCollegeNestedInput
   clubs?: Prisma.ClubUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUpdateManyWithoutCollegeNestedInput
+  embeddings?: Prisma.DocumentEmbeddingUpdateManyWithoutCollegeNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeUncheckedUpdateInput = {
@@ -436,6 +448,8 @@ export type CollegeUncheckedUpdateInput = {
   memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeNestedInput
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutCollegeNestedInput
+  embeddings?: Prisma.DocumentEmbeddingUncheckedUpdateManyWithoutCollegeNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeCreateManyInput = {
@@ -597,6 +611,28 @@ export type CollegeUpdateOneRequiredWithoutEventsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CollegeUpdateToOneWithWhereWithoutEventsInput, Prisma.CollegeUpdateWithoutEventsInput>, Prisma.CollegeUncheckedUpdateWithoutEventsInput>
 }
 
+export type CollegeUpdateOneRequiredWithoutEmbeddingsNestedInput = {
+  create?: Prisma.XOR<Prisma.CollegeCreateWithoutEmbeddingsInput, Prisma.CollegeUncheckedCreateWithoutEmbeddingsInput>
+  connectOrCreate?: Prisma.CollegeCreateOrConnectWithoutEmbeddingsInput
+  upsert?: Prisma.CollegeUpsertWithoutEmbeddingsInput
+  connect?: Prisma.CollegeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CollegeUpdateToOneWithWhereWithoutEmbeddingsInput, Prisma.CollegeUpdateWithoutEmbeddingsInput>, Prisma.CollegeUncheckedUpdateWithoutEmbeddingsInput>
+}
+
+export type CollegeCreateNestedOneWithoutAiChatMessagesInput = {
+  create?: Prisma.XOR<Prisma.CollegeCreateWithoutAiChatMessagesInput, Prisma.CollegeUncheckedCreateWithoutAiChatMessagesInput>
+  connectOrCreate?: Prisma.CollegeCreateOrConnectWithoutAiChatMessagesInput
+  connect?: Prisma.CollegeWhereUniqueInput
+}
+
+export type CollegeUpdateOneRequiredWithoutAiChatMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.CollegeCreateWithoutAiChatMessagesInput, Prisma.CollegeUncheckedCreateWithoutAiChatMessagesInput>
+  connectOrCreate?: Prisma.CollegeCreateOrConnectWithoutAiChatMessagesInput
+  upsert?: Prisma.CollegeUpsertWithoutAiChatMessagesInput
+  connect?: Prisma.CollegeWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CollegeUpdateToOneWithWhereWithoutAiChatMessagesInput, Prisma.CollegeUpdateWithoutAiChatMessagesInput>, Prisma.CollegeUncheckedUpdateWithoutAiChatMessagesInput>
+}
+
 export type CollegeCreateWithoutMembershipsInput = {
   id?: string
   name: string
@@ -615,6 +651,8 @@ export type CollegeCreateWithoutMembershipsInput = {
   updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventCreateNestedManyWithoutCollegeInput
+  embeddings?: Prisma.DocumentEmbeddingCreateNestedManyWithoutCollegeInput
+  aiChatMessages?: Prisma.AiChatMessageCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeUncheckedCreateWithoutMembershipsInput = {
@@ -635,6 +673,8 @@ export type CollegeUncheckedCreateWithoutMembershipsInput = {
   updatedAt?: Date | string
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCollegeInput
+  embeddings?: Prisma.DocumentEmbeddingUncheckedCreateNestedManyWithoutCollegeInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeCreateOrConnectWithoutMembershipsInput = {
@@ -671,6 +711,8 @@ export type CollegeUpdateWithoutMembershipsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUpdateManyWithoutCollegeNestedInput
+  embeddings?: Prisma.DocumentEmbeddingUpdateManyWithoutCollegeNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeUncheckedUpdateWithoutMembershipsInput = {
@@ -691,6 +733,8 @@ export type CollegeUncheckedUpdateWithoutMembershipsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutCollegeNestedInput
+  embeddings?: Prisma.DocumentEmbeddingUncheckedUpdateManyWithoutCollegeNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeCreateWithoutClubsInput = {
@@ -711,6 +755,8 @@ export type CollegeCreateWithoutClubsInput = {
   updatedAt?: Date | string
   memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventCreateNestedManyWithoutCollegeInput
+  embeddings?: Prisma.DocumentEmbeddingCreateNestedManyWithoutCollegeInput
+  aiChatMessages?: Prisma.AiChatMessageCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeUncheckedCreateWithoutClubsInput = {
@@ -731,6 +777,8 @@ export type CollegeUncheckedCreateWithoutClubsInput = {
   updatedAt?: Date | string
   memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutCollegeInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutCollegeInput
+  embeddings?: Prisma.DocumentEmbeddingUncheckedCreateNestedManyWithoutCollegeInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeCreateOrConnectWithoutClubsInput = {
@@ -767,6 +815,8 @@ export type CollegeUpdateWithoutClubsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.CollegeMembershipUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUpdateManyWithoutCollegeNestedInput
+  embeddings?: Prisma.DocumentEmbeddingUpdateManyWithoutCollegeNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeUncheckedUpdateWithoutClubsInput = {
@@ -787,6 +837,8 @@ export type CollegeUncheckedUpdateWithoutClubsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutCollegeNestedInput
+  embeddings?: Prisma.DocumentEmbeddingUncheckedUpdateManyWithoutCollegeNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeCreateWithoutEventsInput = {
@@ -807,6 +859,8 @@ export type CollegeCreateWithoutEventsInput = {
   updatedAt?: Date | string
   memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutCollegeInput
   clubs?: Prisma.ClubCreateNestedManyWithoutCollegeInput
+  embeddings?: Prisma.DocumentEmbeddingCreateNestedManyWithoutCollegeInput
+  aiChatMessages?: Prisma.AiChatMessageCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeUncheckedCreateWithoutEventsInput = {
@@ -827,6 +881,8 @@ export type CollegeUncheckedCreateWithoutEventsInput = {
   updatedAt?: Date | string
   memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutCollegeInput
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCollegeInput
+  embeddings?: Prisma.DocumentEmbeddingUncheckedCreateNestedManyWithoutCollegeInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedCreateNestedManyWithoutCollegeInput
 }
 
 export type CollegeCreateOrConnectWithoutEventsInput = {
@@ -863,6 +919,8 @@ export type CollegeUpdateWithoutEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.CollegeMembershipUpdateManyWithoutCollegeNestedInput
   clubs?: Prisma.ClubUpdateManyWithoutCollegeNestedInput
+  embeddings?: Prisma.DocumentEmbeddingUpdateManyWithoutCollegeNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUpdateManyWithoutCollegeNestedInput
 }
 
 export type CollegeUncheckedUpdateWithoutEventsInput = {
@@ -883,6 +941,216 @@ export type CollegeUncheckedUpdateWithoutEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeNestedInput
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutCollegeNestedInput
+  embeddings?: Prisma.DocumentEmbeddingUncheckedUpdateManyWithoutCollegeNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedUpdateManyWithoutCollegeNestedInput
+}
+
+export type CollegeCreateWithoutEmbeddingsInput = {
+  id?: string
+  name: string
+  slug: string
+  officialEmailDomain?: string | null
+  website?: string | null
+  logoUrl?: string | null
+  coverUrl?: string | null
+  description?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string
+  status?: $Enums.CollegeStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutCollegeInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutCollegeInput
+  events?: Prisma.EventCreateNestedManyWithoutCollegeInput
+  aiChatMessages?: Prisma.AiChatMessageCreateNestedManyWithoutCollegeInput
+}
+
+export type CollegeUncheckedCreateWithoutEmbeddingsInput = {
+  id?: string
+  name: string
+  slug: string
+  officialEmailDomain?: string | null
+  website?: string | null
+  logoUrl?: string | null
+  coverUrl?: string | null
+  description?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string
+  status?: $Enums.CollegeStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutCollegeInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCollegeInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutCollegeInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedCreateNestedManyWithoutCollegeInput
+}
+
+export type CollegeCreateOrConnectWithoutEmbeddingsInput = {
+  where: Prisma.CollegeWhereUniqueInput
+  create: Prisma.XOR<Prisma.CollegeCreateWithoutEmbeddingsInput, Prisma.CollegeUncheckedCreateWithoutEmbeddingsInput>
+}
+
+export type CollegeUpsertWithoutEmbeddingsInput = {
+  update: Prisma.XOR<Prisma.CollegeUpdateWithoutEmbeddingsInput, Prisma.CollegeUncheckedUpdateWithoutEmbeddingsInput>
+  create: Prisma.XOR<Prisma.CollegeCreateWithoutEmbeddingsInput, Prisma.CollegeUncheckedCreateWithoutEmbeddingsInput>
+  where?: Prisma.CollegeWhereInput
+}
+
+export type CollegeUpdateToOneWithWhereWithoutEmbeddingsInput = {
+  where?: Prisma.CollegeWhereInput
+  data: Prisma.XOR<Prisma.CollegeUpdateWithoutEmbeddingsInput, Prisma.CollegeUncheckedUpdateWithoutEmbeddingsInput>
+}
+
+export type CollegeUpdateWithoutEmbeddingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  officialEmailDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutCollegeNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutCollegeNestedInput
+  events?: Prisma.EventUpdateManyWithoutCollegeNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUpdateManyWithoutCollegeNestedInput
+}
+
+export type CollegeUncheckedUpdateWithoutEmbeddingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  officialEmailDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutCollegeNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutCollegeNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedUpdateManyWithoutCollegeNestedInput
+}
+
+export type CollegeCreateWithoutAiChatMessagesInput = {
+  id?: string
+  name: string
+  slug: string
+  officialEmailDomain?: string | null
+  website?: string | null
+  logoUrl?: string | null
+  coverUrl?: string | null
+  description?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string
+  status?: $Enums.CollegeStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutCollegeInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutCollegeInput
+  events?: Prisma.EventCreateNestedManyWithoutCollegeInput
+  embeddings?: Prisma.DocumentEmbeddingCreateNestedManyWithoutCollegeInput
+}
+
+export type CollegeUncheckedCreateWithoutAiChatMessagesInput = {
+  id?: string
+  name: string
+  slug: string
+  officialEmailDomain?: string | null
+  website?: string | null
+  logoUrl?: string | null
+  coverUrl?: string | null
+  description?: string | null
+  address?: string | null
+  city?: string | null
+  state?: string | null
+  country?: string
+  status?: $Enums.CollegeStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutCollegeInput
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutCollegeInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutCollegeInput
+  embeddings?: Prisma.DocumentEmbeddingUncheckedCreateNestedManyWithoutCollegeInput
+}
+
+export type CollegeCreateOrConnectWithoutAiChatMessagesInput = {
+  where: Prisma.CollegeWhereUniqueInput
+  create: Prisma.XOR<Prisma.CollegeCreateWithoutAiChatMessagesInput, Prisma.CollegeUncheckedCreateWithoutAiChatMessagesInput>
+}
+
+export type CollegeUpsertWithoutAiChatMessagesInput = {
+  update: Prisma.XOR<Prisma.CollegeUpdateWithoutAiChatMessagesInput, Prisma.CollegeUncheckedUpdateWithoutAiChatMessagesInput>
+  create: Prisma.XOR<Prisma.CollegeCreateWithoutAiChatMessagesInput, Prisma.CollegeUncheckedCreateWithoutAiChatMessagesInput>
+  where?: Prisma.CollegeWhereInput
+}
+
+export type CollegeUpdateToOneWithWhereWithoutAiChatMessagesInput = {
+  where?: Prisma.CollegeWhereInput
+  data: Prisma.XOR<Prisma.CollegeUpdateWithoutAiChatMessagesInput, Prisma.CollegeUncheckedUpdateWithoutAiChatMessagesInput>
+}
+
+export type CollegeUpdateWithoutAiChatMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  officialEmailDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutCollegeNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutCollegeNestedInput
+  events?: Prisma.EventUpdateManyWithoutCollegeNestedInput
+  embeddings?: Prisma.DocumentEmbeddingUpdateManyWithoutCollegeNestedInput
+}
+
+export type CollegeUncheckedUpdateWithoutAiChatMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  officialEmailDomain?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  website?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  logoUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  coverUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  city?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  state?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCollegeStatusFieldUpdateOperationsInput | $Enums.CollegeStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeNestedInput
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutCollegeNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutCollegeNestedInput
+  embeddings?: Prisma.DocumentEmbeddingUncheckedUpdateManyWithoutCollegeNestedInput
 }
 
 
@@ -894,12 +1162,16 @@ export type CollegeCountOutputType = {
   memberships: number
   clubs: number
   events: number
+  embeddings: number
+  aiChatMessages: number
 }
 
 export type CollegeCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   memberships?: boolean | CollegeCountOutputTypeCountMembershipsArgs
   clubs?: boolean | CollegeCountOutputTypeCountClubsArgs
   events?: boolean | CollegeCountOutputTypeCountEventsArgs
+  embeddings?: boolean | CollegeCountOutputTypeCountEmbeddingsArgs
+  aiChatMessages?: boolean | CollegeCountOutputTypeCountAiChatMessagesArgs
 }
 
 /**
@@ -933,6 +1205,20 @@ export type CollegeCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Types.
   where?: Prisma.EventWhereInput
 }
 
+/**
+ * CollegeCountOutputType without action
+ */
+export type CollegeCountOutputTypeCountEmbeddingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DocumentEmbeddingWhereInput
+}
+
+/**
+ * CollegeCountOutputType without action
+ */
+export type CollegeCountOutputTypeCountAiChatMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AiChatMessageWhereInput
+}
+
 
 export type CollegeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -953,6 +1239,8 @@ export type CollegeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   memberships?: boolean | Prisma.College$membershipsArgs<ExtArgs>
   clubs?: boolean | Prisma.College$clubsArgs<ExtArgs>
   events?: boolean | Prisma.College$eventsArgs<ExtArgs>
+  embeddings?: boolean | Prisma.College$embeddingsArgs<ExtArgs>
+  aiChatMessages?: boolean | Prisma.College$aiChatMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.CollegeCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["college"]>
 
@@ -1015,6 +1303,8 @@ export type CollegeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   memberships?: boolean | Prisma.College$membershipsArgs<ExtArgs>
   clubs?: boolean | Prisma.College$clubsArgs<ExtArgs>
   events?: boolean | Prisma.College$eventsArgs<ExtArgs>
+  embeddings?: boolean | Prisma.College$embeddingsArgs<ExtArgs>
+  aiChatMessages?: boolean | Prisma.College$aiChatMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.CollegeCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CollegeIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1026,6 +1316,8 @@ export type $CollegePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     memberships: Prisma.$CollegeMembershipPayload<ExtArgs>[]
     clubs: Prisma.$ClubPayload<ExtArgs>[]
     events: Prisma.$EventPayload<ExtArgs>[]
+    embeddings: Prisma.$DocumentEmbeddingPayload<ExtArgs>[]
+    aiChatMessages: Prisma.$AiChatMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1440,6 +1732,8 @@ export interface Prisma__CollegeClient<T, Null = never, ExtArgs extends runtime.
   memberships<T extends Prisma.College$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.College$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CollegeMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   clubs<T extends Prisma.College$clubsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.College$clubsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   events<T extends Prisma.College$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.College$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  embeddings<T extends Prisma.College$embeddingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.College$embeddingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DocumentEmbeddingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  aiChatMessages<T extends Prisma.College$aiChatMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.College$aiChatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1946,6 +2240,54 @@ export type College$eventsArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.EventScalarFieldEnum | Prisma.EventScalarFieldEnum[]
+}
+
+/**
+ * College.embeddings
+ */
+export type College$embeddingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the DocumentEmbedding
+   */
+  select?: Prisma.DocumentEmbeddingSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the DocumentEmbedding
+   */
+  omit?: Prisma.DocumentEmbeddingOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DocumentEmbeddingInclude<ExtArgs> | null
+  where?: Prisma.DocumentEmbeddingWhereInput
+  orderBy?: Prisma.DocumentEmbeddingOrderByWithRelationInput | Prisma.DocumentEmbeddingOrderByWithRelationInput[]
+  cursor?: Prisma.DocumentEmbeddingWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DocumentEmbeddingScalarFieldEnum | Prisma.DocumentEmbeddingScalarFieldEnum[]
+}
+
+/**
+ * College.aiChatMessages
+ */
+export type College$aiChatMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AiChatMessage
+   */
+  select?: Prisma.AiChatMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AiChatMessage
+   */
+  omit?: Prisma.AiChatMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AiChatMessageInclude<ExtArgs> | null
+  where?: Prisma.AiChatMessageWhereInput
+  orderBy?: Prisma.AiChatMessageOrderByWithRelationInput | Prisma.AiChatMessageOrderByWithRelationInput[]
+  cursor?: Prisma.AiChatMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AiChatMessageScalarFieldEnum | Prisma.AiChatMessageScalarFieldEnum[]
 }
 
 /**

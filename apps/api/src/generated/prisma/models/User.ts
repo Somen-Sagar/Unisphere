@@ -250,6 +250,7 @@ export type UserWhereInput = {
   refreshSessions?: Prisma.RefreshSessionListRelationFilter
   organizedEvents?: Prisma.EventListRelationFilter
   registrations?: Prisma.EventRegistrationListRelationFilter
+  aiChatMessages?: Prisma.AiChatMessageListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -270,6 +271,7 @@ export type UserOrderByWithRelationInput = {
   refreshSessions?: Prisma.RefreshSessionOrderByRelationAggregateInput
   organizedEvents?: Prisma.EventOrderByRelationAggregateInput
   registrations?: Prisma.EventRegistrationOrderByRelationAggregateInput
+  aiChatMessages?: Prisma.AiChatMessageOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -293,6 +295,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   refreshSessions?: Prisma.RefreshSessionListRelationFilter
   organizedEvents?: Prisma.EventListRelationFilter
   registrations?: Prisma.EventRegistrationListRelationFilter
+  aiChatMessages?: Prisma.AiChatMessageListRelationFilter
 }, "id" | "email" | "phone">
 
 export type UserOrderByWithAggregationInput = {
@@ -351,6 +354,7 @@ export type UserCreateInput = {
   refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
   organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
+  aiChatMessages?: Prisma.AiChatMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -371,6 +375,7 @@ export type UserUncheckedCreateInput = {
   refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
   organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
   registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -391,6 +396,7 @@ export type UserUpdateInput = {
   refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
   organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
   registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -411,6 +417,7 @@ export type UserUncheckedUpdateInput = {
   refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
   organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
   registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -590,6 +597,20 @@ export type UserUpdateOneRequiredWithoutRegistrationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRegistrationsInput, Prisma.UserUpdateWithoutRegistrationsInput>, Prisma.UserUncheckedUpdateWithoutRegistrationsInput>
 }
 
+export type UserCreateNestedOneWithoutAiChatMessagesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiChatMessagesInput, Prisma.UserUncheckedCreateWithoutAiChatMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiChatMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAiChatMessagesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAiChatMessagesInput, Prisma.UserUncheckedCreateWithoutAiChatMessagesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAiChatMessagesInput
+  upsert?: Prisma.UserUpsertWithoutAiChatMessagesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAiChatMessagesInput, Prisma.UserUpdateWithoutAiChatMessagesInput>, Prisma.UserUncheckedUpdateWithoutAiChatMessagesInput>
+}
+
 export type UserCreateWithoutMembershipsInput = {
   id?: string
   email: string
@@ -607,6 +628,7 @@ export type UserCreateWithoutMembershipsInput = {
   refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
   organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
+  aiChatMessages?: Prisma.AiChatMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -626,6 +648,7 @@ export type UserUncheckedCreateWithoutMembershipsInput = {
   refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
   organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
   registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -661,6 +684,7 @@ export type UserUpdateWithoutMembershipsInput = {
   refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
   organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
   registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -680,6 +704,7 @@ export type UserUncheckedUpdateWithoutMembershipsInput = {
   refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
   organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
   registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRefreshSessionsInput = {
@@ -699,6 +724,7 @@ export type UserCreateWithoutRefreshSessionsInput = {
   memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutUserInput
   organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
+  aiChatMessages?: Prisma.AiChatMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRefreshSessionsInput = {
@@ -718,6 +744,7 @@ export type UserUncheckedCreateWithoutRefreshSessionsInput = {
   memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutUserInput
   organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
   registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRefreshSessionsInput = {
@@ -753,6 +780,7 @@ export type UserUpdateWithoutRefreshSessionsInput = {
   memberships?: Prisma.CollegeMembershipUpdateManyWithoutUserNestedInput
   organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
   registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshSessionsInput = {
@@ -772,6 +800,7 @@ export type UserUncheckedUpdateWithoutRefreshSessionsInput = {
   memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutUserNestedInput
   organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
   registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutOrganizedEventsInput = {
@@ -791,6 +820,7 @@ export type UserCreateWithoutOrganizedEventsInput = {
   memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutUserInput
   refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
+  aiChatMessages?: Prisma.AiChatMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutOrganizedEventsInput = {
@@ -810,6 +840,7 @@ export type UserUncheckedCreateWithoutOrganizedEventsInput = {
   memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutUserInput
   refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
   registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutOrganizedEventsInput = {
@@ -845,6 +876,7 @@ export type UserUpdateWithoutOrganizedEventsInput = {
   memberships?: Prisma.CollegeMembershipUpdateManyWithoutUserNestedInput
   refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
   registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrganizedEventsInput = {
@@ -864,6 +896,7 @@ export type UserUncheckedUpdateWithoutOrganizedEventsInput = {
   memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutUserNestedInput
   refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
   registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRegistrationsInput = {
@@ -883,6 +916,7 @@ export type UserCreateWithoutRegistrationsInput = {
   memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutUserInput
   refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
   organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
+  aiChatMessages?: Prisma.AiChatMessageCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRegistrationsInput = {
@@ -902,6 +936,7 @@ export type UserUncheckedCreateWithoutRegistrationsInput = {
   memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutUserInput
   refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
   organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRegistrationsInput = {
@@ -937,6 +972,7 @@ export type UserUpdateWithoutRegistrationsInput = {
   memberships?: Prisma.CollegeMembershipUpdateManyWithoutUserNestedInput
   refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
   organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRegistrationsInput = {
@@ -956,6 +992,103 @@ export type UserUncheckedUpdateWithoutRegistrationsInput = {
   memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutUserNestedInput
   refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
   organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
+  aiChatMessages?: Prisma.AiChatMessageUncheckedUpdateManyWithoutUserNestedInput
+}
+
+export type UserCreateWithoutAiChatMessagesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAiChatMessagesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAiChatMessagesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiChatMessagesInput, Prisma.UserUncheckedCreateWithoutAiChatMessagesInput>
+}
+
+export type UserUpsertWithoutAiChatMessagesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAiChatMessagesInput, Prisma.UserUncheckedUpdateWithoutAiChatMessagesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAiChatMessagesInput, Prisma.UserUncheckedCreateWithoutAiChatMessagesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAiChatMessagesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAiChatMessagesInput, Prisma.UserUncheckedUpdateWithoutAiChatMessagesInput>
+}
+
+export type UserUpdateWithoutAiChatMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAiChatMessagesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -968,6 +1101,7 @@ export type UserCountOutputType = {
   refreshSessions: number
   organizedEvents: number
   registrations: number
+  aiChatMessages: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -975,6 +1109,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   refreshSessions?: boolean | UserCountOutputTypeCountRefreshSessionsArgs
   organizedEvents?: boolean | UserCountOutputTypeCountOrganizedEventsArgs
   registrations?: boolean | UserCountOutputTypeCountRegistrationsArgs
+  aiChatMessages?: boolean | UserCountOutputTypeCountAiChatMessagesArgs
 }
 
 /**
@@ -1015,6 +1150,13 @@ export type UserCountOutputTypeCountRegistrationsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.EventRegistrationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAiChatMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AiChatMessageWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1034,6 +1176,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   refreshSessions?: boolean | Prisma.User$refreshSessionsArgs<ExtArgs>
   organizedEvents?: boolean | Prisma.User$organizedEventsArgs<ExtArgs>
   registrations?: boolean | Prisma.User$registrationsArgs<ExtArgs>
+  aiChatMessages?: boolean | Prisma.User$aiChatMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1091,6 +1234,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   refreshSessions?: boolean | Prisma.User$refreshSessionsArgs<ExtArgs>
   organizedEvents?: boolean | Prisma.User$organizedEventsArgs<ExtArgs>
   registrations?: boolean | Prisma.User$registrationsArgs<ExtArgs>
+  aiChatMessages?: boolean | Prisma.User$aiChatMessagesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1103,6 +1247,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     refreshSessions: Prisma.$RefreshSessionPayload<ExtArgs>[]
     organizedEvents: Prisma.$EventPayload<ExtArgs>[]
     registrations: Prisma.$EventRegistrationPayload<ExtArgs>[]
+    aiChatMessages: Prisma.$AiChatMessagePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1516,6 +1661,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   refreshSessions<T extends Prisma.User$refreshSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$refreshSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RefreshSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   organizedEvents<T extends Prisma.User$organizedEventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$organizedEventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   registrations<T extends Prisma.User$registrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$registrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  aiChatMessages<T extends Prisma.User$aiChatMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$aiChatMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AiChatMessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2044,6 +2190,30 @@ export type User$registrationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.EventRegistrationScalarFieldEnum | Prisma.EventRegistrationScalarFieldEnum[]
+}
+
+/**
+ * User.aiChatMessages
+ */
+export type User$aiChatMessagesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AiChatMessage
+   */
+  select?: Prisma.AiChatMessageSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AiChatMessage
+   */
+  omit?: Prisma.AiChatMessageOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AiChatMessageInclude<ExtArgs> | null
+  where?: Prisma.AiChatMessageWhereInput
+  orderBy?: Prisma.AiChatMessageOrderByWithRelationInput | Prisma.AiChatMessageOrderByWithRelationInput[]
+  cursor?: Prisma.AiChatMessageWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AiChatMessageScalarFieldEnum | Prisma.AiChatMessageScalarFieldEnum[]
 }
 
 /**

@@ -10,6 +10,7 @@ import {
 } from "@/lib/server/backend";
 
 const allowedRoots = new Set([
+  "ai",
   "attendance",
   "clubs",
   "colleges",

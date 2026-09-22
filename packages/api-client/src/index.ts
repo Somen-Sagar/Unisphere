@@ -209,4 +209,24 @@ export class UniSphereApi {
       body: JSON.stringify({ qrToken }),
     });
   }
+
+  aiChat(input: { message: string; sessionId?: string }): Promise<AiChatResponse> {
+    return this.request('ai/chat', {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
+  }
 }
+
+export type AiChatSource = {
+  title: string;
+  sourceType: string;
+  sourceId: string | null;
+  similarity: number;
+};
+
+export type AiChatResponse = {
+  reply: string;
+  sources: AiChatSource[];
+  sessionId: string;
+};

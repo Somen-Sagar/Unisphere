@@ -21,6 +21,9 @@ const environmentSchema = z.object({
   JWT_REFRESH_TTL_DAYS: z.coerce.number().int().min(1).max(365).default(30),
   THROTTLE_TTL_MS: z.coerce.number().int().min(1_000).default(60_000),
   THROTTLE_LIMIT: z.coerce.number().int().min(1).default(120),
+  LLM_BASE_URL: z.string().default('http://localhost:3001/v1'),
+  LLM_API_KEY: z.string().optional(),
+  LLM_MODEL: z.string().default('gpt-3.5-turbo'),
 });
 
 export type Environment = z.infer<typeof environmentSchema>;

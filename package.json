@@ -23,7 +23,8 @@
     "db:logs": "docker compose logs -f",
     "db:migrate": "pnpm --filter api exec prisma migrate dev",
     "db:deploy": "pnpm --filter api db:deploy",
-    "db:seed": "pnpm --filter api db:seed"
+    "db:seed": "pnpm --filter api db:seed",
+    "ai:sync": "pnpm --filter api ai:sync"
   },
   "devDependencies": {
     "prettier": "3.9.6",

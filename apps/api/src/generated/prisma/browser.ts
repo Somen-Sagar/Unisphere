@@ -52,3 +52,13 @@ export type Event = Prisma.EventModel
  * 
  */
 export type EventRegistration = Prisma.EventRegistrationModel
+/**
+ * Model DocumentEmbedding
+ * 
+ */
+export type DocumentEmbedding = Prisma.DocumentEmbeddingModel
+/**
+ * Model AiChatMessage
+ * 
+ */
+export type AiChatMessage = Prisma.AiChatMessageModel

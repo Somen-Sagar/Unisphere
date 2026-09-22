@@ -8,6 +8,7 @@ allowBuilds:
   unrs-resolver: true
   prisma: true
   "@prisma/engines": true
+  protobufjs: true
 
 minimumReleaseAgeExclude:
   - '@expo/cli@57.0.10'
