@@ -5,7 +5,7 @@ import { useMutation } from "@tanstack/react-query";
 import { UniSphereApiError } from "@unisphere/api-client";
 import type { CampusUser } from "@unisphere/types";
 import { loginSchema, type LoginInput } from "@unisphere/validation";
-import { Eye, EyeOff } from "lucide-react";
+import { ArrowRight, Eye, EyeOff, ShieldCheck, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -38,10 +38,16 @@ export function LoginForm() {
     formState: { errors },
     handleSubmit,
     register,
+    setValue,
   } = useForm<LoginInput>({
     resolver: zodResolver(loginSchema),
     defaultValues: { email: "", password: "" },
   });
+
+  const fillCredentials = (email: string, pass: string) => {
+    setValue("email", email, { shouldValidate: true });
+    setValue("password", pass, { shouldValidate: true });
+  };
 
   const mutation = useMutation({
     mutationFn: (input: LoginInput) =>
@@ -62,16 +68,47 @@ export function LoginForm() {
   });
 
   return (
-    <section className="auth-card">
-      <p className="eyebrow">WELCOME BACK</p>
-      <h1>Sign in to UniSphere.</h1>
-      <p className="auth-intro">
-        Your secure web session is stored with HTTP-only cookies and validated by
-        the UniSphere API.
-      </p>
+    <section className="auth-card auth-card-elevated">
+      <div className="auth-card-header">
+        <div className="eyebrow-badge">
+          <span className="eyebrow-dot" aria-hidden="true" />
+          <span>Campus Portal</span>
+        </div>
+        <h1>Welcome Back</h1>
+        <p className="auth-intro">
+          Access your personalized student, club, or faculty workspace.
+        </p>
+      </div>
+
+      {/* Interactive 1-click demo credentials bar */}
+      <div className="demo-credentials-helper">
+        <div className="demo-helper-label">
+          <Sparkles size={13} aria-hidden="true" />
+          <span>Quick Demo Fill:</span>
+        </div>
+        <div className="demo-pills">
+          <button
+            type="button"
+            className="demo-pill"
+            onClick={() => fillCredentials("student@unisphere.local", "UniSphere123!")}
+            title="Auto-fill student fixture credentials"
+          >
+            🎓 Student
+          </button>
+          <button
+            type="button"
+            className="demo-pill"
+            onClick={() => fillCredentials("organizer@unisphere.local", "UniSphere123!")}
+            title="Auto-fill organizer fixture credentials"
+          >
+            ⚡ Organizer
+          </button>
+        </div>
+      </div>
+
       <form className="auth-form" onSubmit={handleSubmit((input) => mutation.mutate(input))}>
         <label>
-          College email
+          <span>College email</span>
           <input
             type="email"
             autoComplete="email"
@@ -80,39 +117,71 @@ export function LoginForm() {
           />
           {errors.email ? <span className="field-error">{errors.email.message}</span> : null}
         </label>
+
         <label>
-          Password
-          <span className="field-with-action">
+          <span>Password</span>
+          <div className="field-with-action">
             <input
               type={showPassword ? "text" : "password"}
               autoComplete="current-password"
-              placeholder="Your password"
+              placeholder="••••••••••••"
               {...register("password")}
             />
             <button
               type="button"
+              className="input-action-btn"
               aria-label={showPassword ? "Hide password" : "Show password"}
               onClick={() => setShowPassword((value) => !value)}
             >
-              {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
+              {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
             </button>
-          </span>
+          </div>
           {errors.password ? (
             <span className="field-error">{errors.password.message}</span>
           ) : null}
         </label>
-        <label className="checkbox-label">
-          <input type="checkbox" />
-          <span>Remember this browser</span>
-        </label>
+
+        <div className="auth-remember-row">
+          <label className="checkbox-label">
+            <input type="checkbox" />
+            <span>Remember browser</span>
+          </label>
+          <Link href="/forgot-password" className="forgot-link">
+            Forgot password?
+          </Link>
+        </div>
+
         {mutation.isError ? <p className="form-error">{errorMessage(mutation.error)}</p> : null}
-        <button className="button button-primary form-submit" disabled={mutation.isPending}>
-          {mutation.isPending ? "Signing in..." : "Sign in"}
+
+        <button
+          type="submit"
+          className="button button-primary form-submit auth-submit-btn"
+          disabled={mutation.isPending}
+        >
+          {mutation.isPending ? (
+            <>
+              <span className="auth-spinner" aria-hidden="true" />
+              <span>Authenticating...</span>
+            </>
+          ) : (
+            <>
+              <span>Sign in to UniSphere</span>
+              <ArrowRight size={16} aria-hidden="true" />
+            </>
+          )}
         </button>
       </form>
-      <div className="auth-links">
-        <Link href="/forgot-password">Forgot password?</Link>
-        <Link href="/register">Create account</Link>
+
+      <div className="auth-footer-prompt">
+        <span>Don&apos;t have an account yet?</span>
+        <Link href="/register" className="register-link">
+          Create student account
+        </Link>
+      </div>
+
+      <div className="auth-card-trust">
+        <ShieldCheck size={14} aria-hidden="true" />
+        <span>HTTP-only token rotation • End-to-end multi-tenant security</span>
       </div>
     </section>
   );

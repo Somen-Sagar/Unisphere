@@ -127,7 +127,11 @@ function NavGroup({
 
   return (
     <section className="portal-nav-group">
-      <p>{collapsed ? title.slice(0, 1) : title}</p>
+      {!collapsed ? (
+        <p className="portal-nav-title">{title}</p>
+      ) : (
+        <div className="portal-nav-divider" aria-hidden="true" />
+      )}
       <nav aria-label={title}>
         {visible.map((item) => {
           const Icon = item.icon;
@@ -143,8 +147,8 @@ function NavGroup({
               title={item.label}
             >
               <Icon aria-hidden="true" size={18} />
-              <span>{item.label}</span>
-              {item.badge ? <small>{item.badge}</small> : null}
+              {!collapsed ? <span>{item.label}</span> : null}
+              {!collapsed && item.badge ? <small>{item.badge}</small> : null}
             </Link>
           );
         })}
@@ -207,29 +211,34 @@ export function AppShell({ children }: PropsWithChildren) {
   const shell = (
     <aside className={collapsed ? "portal-sidebar collapsed" : "portal-sidebar"}>
       <div className="portal-sidebar-top">
-        <Link className="brand portal-brand" href="/dashboard">
+        <Link className="brand portal-brand" href="/dashboard" title="UniSphere Dashboard">
           <span className="brand-mark">U</span>
-          <span>UniSphere</span>
+          {!collapsed ? <span>UniSphere</span> : null}
         </Link>
         <button
           aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
           className="sidebar-collapse"
           onClick={() => setCollapsed((value) => !value)}
           type="button"
+          title={collapsed ? "Expand sidebar" : "Collapse sidebar"}
         >
           {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
         </button>
       </div>
 
-      <div className="tenant-card">
-        <span className="tenant-mark">{membership?.college.name.charAt(0) ?? "U"}</span>
-        <div>
-          <strong>{membership?.college.name ?? "UniSphere"}</strong>
-          <p>{roleLabel(membership?.role)}</p>
+      {!collapsed ? (
+        <div className="tenant-card">
+          <div className="tenant-icon-box" aria-hidden="true">
+            <GraduationCap size={16} />
+          </div>
+          <div className="tenant-info">
+            <strong>{membership?.college.name ?? "UniSphere"}</strong>
+            <p>{roleLabel(membership?.role)}</p>
+          </div>
         </div>
-      </div>
+      ) : null}
 
-      {user && user.memberships.filter((item) => item.status === "ACTIVE").length > 1 ? (
+      {!collapsed && user && user.memberships.filter((item) => item.status === "ACTIVE").length > 1 ? (
         <label className="tenant-switcher">
           <span>College</span>
           <select value={membership?.collegeId} onChange={(event) => changeCollege(event.target.value)}>
@@ -253,24 +262,43 @@ export function AppShell({ children }: PropsWithChildren) {
       </div>
 
       <div className="portal-sidebar-bottom">
-        <ApiStatus health={health.data ?? null} compact />
-        <div className="profile-block">
-          <span>{user?.firstName.charAt(0).toUpperCase() ?? "U"}</span>
-          <div>
-            <strong>{user ? `${user.firstName} ${user.lastName}` : "Loading..."}</strong>
-            <p>{user?.email ?? "Checking session"}</p>
+        {!collapsed ? (
+          <>
+            <ApiStatus health={health.data ?? null} compact />
+            <div className="profile-block">
+              <span className="profile-avatar-pill">{user?.firstName.charAt(0).toUpperCase() ?? "U"}</span>
+              <div className="profile-info">
+                <strong>{user ? `${user.firstName} ${user.lastName}` : "Loading..."}</strong>
+                <p>{user?.email ?? "Checking session"}</p>
+              </div>
+            </div>
+            <button className="sidebar-logout" onClick={signOut} disabled={signingOut} title="Sign out of UniSphere">
+              <DoorOpen aria-hidden="true" size={17} />
+              <span>{signingOut ? "Signing out..." : "Sign out"}</span>
+            </button>
+          </>
+        ) : (
+          <div className="collapsed-bottom-rail">
+            <div className="profile-avatar-pill" title={user ? `${user.firstName} ${user.lastName} (${user.email})` : "User Profile"}>
+              {user?.firstName.charAt(0).toUpperCase() ?? "U"}
+            </div>
+            <button
+              className="collapsed-icon-btn"
+              onClick={signOut}
+              disabled={signingOut}
+              title="Sign out of UniSphere"
+              aria-label="Sign out"
+            >
+              <DoorOpen aria-hidden="true" size={18} />
+            </button>
           </div>
-        </div>
-        <button className="sidebar-logout" onClick={signOut} disabled={signingOut}>
-          <DoorOpen aria-hidden="true" size={17} />
-          <span>{signingOut ? "Signing out..." : "Sign out"}</span>
-        </button>
+        )}
       </div>
     </aside>
   );
 
   return (
-    <div className="portal-shell">
+    <div className={collapsed ? "portal-shell collapsed" : "portal-shell"}>
       {shell}
       {drawerOpen ? (
         <div className="mobile-drawer" role="dialog" aria-modal="true">

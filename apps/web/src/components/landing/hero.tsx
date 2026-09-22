@@ -10,7 +10,10 @@ export function Hero({ health }: { health: UniSphereHealth | null }) {
     <section className="hero-section">
       <div className="hero-copy">
         <Reveal>
-          <p className="eyebrow">THE CAMPUS OPERATING SYSTEM</p>
+          <div className="eyebrow-badge">
+            <span className="eyebrow-dot" aria-hidden="true" />
+            <span>The Campus Operating System</span>
+          </div>
           <h1>
             Your entire campus.
             <span>One intelligent universe.</span>
