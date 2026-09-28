@@ -84,14 +84,14 @@ async function seed(): Promise<void> {
         userId_collegeId_role: {
           userId: clubAdmin.id,
           collegeId: college.id,
-          role: 'CLUB_ADMIN',
+          role: 'STUDENT',
         },
       },
       update: { status: 'ACTIVE', joinedAt: new Date() },
       create: {
         userId: clubAdmin.id,
         collegeId: college.id,
-        role: 'CLUB_ADMIN',
+        role: 'STUDENT',
         status: 'ACTIVE',
         joinedAt: new Date(),
       },
@@ -157,6 +157,45 @@ async function seed(): Promise<void> {
       },
     });
 
+    await prisma.collegeMembership.updateMany({
+      where: { userId: student.id, collegeId: college.id, role: 'STUDENT' },
+      data: { departmentId: computerScience.id, academicYear: 3, semester: 5 },
+    });
+
+    const faculty = await prisma.user.upsert({
+      where: { email: 'mentor@example.test' },
+      update: { passwordHash },
+      create: {
+        email: 'mentor@example.test',
+        passwordHash,
+        firstName: 'Dr Kavya',
+        lastName: 'Menon',
+        emailVerifiedAt: new Date(),
+      },
+    });
+    await prisma.collegeMembership.upsert({
+      where: {
+        userId_collegeId_role: {
+          userId: faculty.id,
+          collegeId: college.id,
+          role: 'FACULTY',
+        },
+      },
+      create: {
+        userId: faculty.id,
+        collegeId: college.id,
+        departmentId: computerScience.id,
+        role: 'FACULTY',
+        status: 'ACTIVE',
+        joinedAt: new Date(),
+      },
+      update: {
+        departmentId: computerScience.id,
+        status: 'ACTIVE',
+        joinedAt: new Date(),
+      },
+    });
+
     const codingClub = await prisma.club.upsert({
       where: {
         collegeId_slug: {
@@ -187,10 +226,33 @@ async function seed(): Promise<void> {
       create: {
         clubId: codingClub.id,
         userId: clubAdmin.id,
-        role: 'ADMIN',
+        role: 'CLUB_LEAD',
         status: 'ACTIVE',
+        joinedAt: new Date(),
       },
-      update: { role: 'ADMIN', status: 'ACTIVE' },
+      update: { role: 'CLUB_LEAD', status: 'ACTIVE', joinedAt: new Date() },
+    });
+    await prisma.clubMembership.upsert({
+      where: { clubId_userId: { clubId: codingClub.id, userId: student.id } },
+      create: {
+        clubId: codingClub.id,
+        userId: student.id,
+        role: 'MEMBER',
+        status: 'ACTIVE',
+        joinedAt: new Date(),
+      },
+      update: { status: 'ACTIVE', joinedAt: new Date() },
+    });
+    await prisma.clubMembership.upsert({
+      where: { clubId_userId: { clubId: codingClub.id, userId: faculty.id } },
+      create: {
+        clubId: codingClub.id,
+        userId: faculty.id,
+        role: 'CLUB_MENTOR',
+        status: 'ACTIVE',
+        joinedAt: new Date(),
+      },
+      update: { role: 'CLUB_MENTOR', status: 'ACTIVE', joinedAt: new Date() },
     });
 
     const roboticsClub = await prisma.club.upsert({
@@ -400,6 +462,7 @@ async function seed(): Promise<void> {
     );
     console.log('Student: student@example.test / UniSphere123!');
     console.log('Club admin: clubadmin@example.test / UniSphere123!');
+    console.log('Faculty mentor: mentor@example.test / UniSphere123!');
     console.log('College admin: admin@example.test / UniSphere123!');
   } finally {
     await prisma.$disconnect();

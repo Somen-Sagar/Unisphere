@@ -46,7 +46,9 @@ enum EventStatus {
   REGISTRATION_CLOSED
   ONGOING
   COMPLETED
+  REJECTED
   CANCELLED
+  POSTPONED
 }
 
 enum RegistrationStatus {
@@ -74,6 +76,11 @@ enum ClubMembershipRole {
   SECRETARY
   PRESIDENT
   ADMIN
+  CLUB_MENTOR
+  CLUB_LEAD
+  CLUB_SUB_LEAD
+  ORGANIZER
+  CORE_MEMBER
 }
 
 enum ClubMembershipStatus {
@@ -91,26 +98,81 @@ enum NotificationType {
   REGISTRATION
 }
 
+enum ClubPermission {
+  CLUB_VIEW_MEMBERS
+  CLUB_MANAGE_MEMBERS
+  CLUB_EDIT_PROFILE
+  CLUB_MANAGE_ROLES
+  CLUB_CREATE_EVENT
+  CLUB_EDIT_EVENT
+  CLUB_DELETE_EVENT
+  CLUB_PUBLISH_EVENT
+  CLUB_VIEW_REGISTRATIONS
+  CLUB_MANAGE_REGISTRATIONS
+  CLUB_MARK_ATTENDANCE
+  CLUB_POST_ANNOUNCEMENT
+  CLUB_MANAGE_RECRUITMENT
+  CLUB_VIEW_ANALYTICS
+  CLUB_MANAGE_MEDIA
+  CLUB_MANAGE_PERMISSIONS
+}
+
+enum PermissionEffect {
+  GRANT
+  REVOKE
+}
+
+enum EventOrganizerPermission {
+  EDIT_EVENT
+  VIEW_REGISTRATIONS
+  MANAGE_REGISTRATIONS
+  MARK_ATTENDANCE
+  SEND_EVENT_NOTIFICATION
+}
+
+enum ClubApplicationStatus {
+  PENDING
+  APPROVED
+  REJECTED
+  WITHDRAWN
+}
+
+enum AttendanceMethod {
+  QR
+  MANUAL
+}
+
+enum AttendanceStatus {
+  PRESENT
+  REVOKED
+}
+
 model User {
-  id              String              @id @default(cuid())
-  email           String              @unique
-  passwordHash    String
-  firstName       String
-  lastName        String
-  avatarUrl       String?
-  phone           String?             @unique
-  emailVerifiedAt DateTime?
-  phoneVerifiedAt DateTime?
-  status          UserStatus          @default(ACTIVE)
-  lastLoginAt     DateTime?
-  memberships     CollegeMembership[]
-  refreshSessions RefreshSession[]
-  organizedEvents Event[]             @relation("EventOrganizer")
-  registrations   EventRegistration[]
-  clubMemberships ClubMembership[]
-  notifications   Notification[]
-  createdAt       DateTime            @default(now())
-  updatedAt       DateTime            @updatedAt
+  id                String                   @id @default(cuid())
+  email             String                   @unique
+  passwordHash      String
+  firstName         String
+  lastName          String
+  avatarUrl         String?
+  phone             String?                  @unique
+  emailVerifiedAt   DateTime?
+  phoneVerifiedAt   DateTime?
+  status            UserStatus               @default(ACTIVE)
+  lastLoginAt       DateTime?
+  memberships       CollegeMembership[]
+  refreshSessions   RefreshSession[]
+  organizedEvents   Event[]                  @relation("EventOrganizer")
+  registrations     EventRegistration[]
+  clubMemberships   ClubMembership[]
+  notifications     Notification[]
+  eventAssignments  EventOrganizer[]         @relation("AssignedEventOrganizer")
+  attendanceChecks  Attendance[]             @relation("AttendanceChecker")
+  permissionChanges ClubPermissionOverride[] @relation("PermissionGrantedBy")
+  clubAnnouncements ClubAnnouncement[]       @relation("ClubAnnouncementAuthor")
+  clubApplications  ClubApplication[]
+  clubAuditEntries  ClubAuditLog[]           @relation("ClubAuditActor")
+  createdAt         DateTime                 @default(now())
+  updatedAt         DateTime                 @updatedAt
 
   @@index([status])
   @@map("users")
@@ -136,6 +198,10 @@ model College {
   events              Event[]
   registrations       EventRegistration[]
   notifications       Notification[]
+  attendance          Attendance[]
+  clubAnnouncements   ClubAnnouncement[]
+  clubApplications    ClubApplication[]
+  clubAuditLogs       ClubAuditLog[]
   createdAt           DateTime            @default(now())
   updatedAt           DateTime            @updatedAt
 
@@ -144,22 +210,27 @@ model College {
 }
 
 model CollegeMembership {
-  id        String           @id @default(cuid())
-  userId    String
-  collegeId String
-  role      MembershipRole
-  status    MembershipStatus @default(PENDING)
-  studentId String?
-  joinedAt  DateTime?
-  createdAt DateTime         @default(now())
-  updatedAt DateTime         @updatedAt
+  id           String           @id @default(cuid())
+  userId       String
+  collegeId    String
+  role         MembershipRole
+  status       MembershipStatus @default(PENDING)
+  studentId    String?
+  departmentId String?
+  academicYear Int?
+  semester     Int?
+  joinedAt     DateTime?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
 
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  college    College     @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  department Department? @relation(fields: [departmentId], references: [id], onDelete: SetNull)
 
   @@unique([userId, collegeId, role])
   @@index([collegeId, status])
   @@index([userId, status])
+  @@index([departmentId])
   @@map("college_memberships")
 }
 
@@ -170,9 +241,10 @@ model Department {
   code        String
   description String?
 
-  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
-  clubs   Club[]
-  events  Event[]
+  college     College             @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  clubs       Club[]
+  events      Event[]
+  memberships CollegeMembership[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -211,10 +283,13 @@ model Club {
   verificationStatus ClubVerificationStatus @default(PENDING)
   isActive           Boolean                @default(true)
 
-  college      College          @relation(fields: [collegeId], references: [id], onDelete: Cascade)
-  department   Department?      @relation(fields: [departmentId], references: [id], onDelete: SetNull)
-  memberships  ClubMembership[]
-  events       Event[]
+  college       College            @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  department    Department?        @relation(fields: [departmentId], references: [id], onDelete: SetNull)
+  memberships   ClubMembership[]
+  events        Event[]
+  announcements ClubAnnouncement[]
+  applications  ClubApplication[]
+  auditLogs     ClubAuditLog[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -232,11 +307,13 @@ model ClubMembership {
   userId    String
   role      ClubMembershipRole   @default(MEMBER)
   status    ClubMembershipStatus @default(PENDING)
+  joinedAt  DateTime?
   createdAt DateTime             @default(now())
   updatedAt DateTime             @updatedAt
 
-  club Club @relation(fields: [clubId], references: [id], onDelete: Cascade)
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  club                Club                     @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  user                User                     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  permissionOverrides ClubPermissionOverride[]
 
   @@unique([clubId, userId])
   @@index([userId, status])
@@ -272,6 +349,8 @@ model Event {
   department    Department?         @relation(fields: [departmentId], references: [id], onDelete: SetNull)
   organizer     User                @relation("EventOrganizer", fields: [organizerId], references: [id], onDelete: Restrict)
   registrations EventRegistration[]
+  organizers    EventOrganizer[]
+  attendance    Attendance[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -298,9 +377,10 @@ model EventRegistration {
   createdAt        DateTime           @default(now())
   updatedAt        DateTime           @updatedAt
 
-  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
-  event   Event   @relation(fields: [eventId], references: [id], onDelete: Cascade)
-  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  college    College     @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  event      Event       @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  attendance Attendance?
 
   @@unique([eventId, userId])
   @@index([collegeId, status])
@@ -325,4 +405,115 @@ model Notification {
   @@index([collegeId, userId, readAt])
   @@index([userId, createdAt])
   @@map("notifications")
+}
+
+model ClubPermissionOverride {
+  id           String           @id @default(cuid())
+  membershipId String
+  permission   ClubPermission
+  effect       PermissionEffect
+  grantedById  String
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  membership ClubMembership @relation(fields: [membershipId], references: [id], onDelete: Cascade)
+  grantedBy  User           @relation("PermissionGrantedBy", fields: [grantedById], references: [id], onDelete: Restrict)
+
+  @@unique([membershipId, permission])
+  @@index([membershipId, effect])
+  @@map("club_permission_overrides")
+}
+
+model EventOrganizer {
+  id          String                     @id @default(cuid())
+  eventId     String
+  userId      String
+  role        String                     @default("CO_ORGANIZER")
+  permissions EventOrganizerPermission[] @default([])
+  assignedAt  DateTime                   @default(now())
+
+  event Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  user  User  @relation("AssignedEventOrganizer", fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([eventId, userId])
+  @@index([userId, assignedAt])
+  @@map("event_organizers")
+}
+
+model Attendance {
+  id             String           @id @default(cuid())
+  collegeId      String
+  eventId        String
+  registrationId String           @unique
+  checkedInById  String
+  checkedInAt    DateTime         @default(now())
+  method         AttendanceMethod @default(MANUAL)
+  status         AttendanceStatus @default(PRESENT)
+
+  college      College           @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  event        Event             @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  registration EventRegistration @relation(fields: [registrationId], references: [id], onDelete: Cascade)
+  checkedInBy  User              @relation("AttendanceChecker", fields: [checkedInById], references: [id], onDelete: Restrict)
+
+  @@unique([eventId, registrationId])
+  @@index([collegeId, eventId, status])
+  @@map("attendance")
+}
+
+model ClubApplication {
+  id           String                @id @default(cuid())
+  collegeId    String
+  clubId       String
+  userId       String
+  answers      Json?
+  status       ClubApplicationStatus @default(PENDING)
+  reviewedById String?
+  reviewedAt   DateTime?
+  createdAt    DateTime              @default(now())
+  updatedAt    DateTime              @updatedAt
+
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  club    Club    @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  user    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([clubId, userId])
+  @@index([collegeId, clubId, status])
+  @@map("club_applications")
+}
+
+model ClubAnnouncement {
+  id          String   @id @default(cuid())
+  collegeId   String
+  clubId      String
+  createdById String
+  title       String
+  content     String
+  publishedAt DateTime @default(now())
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  college   College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  club      Club    @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  createdBy User    @relation("ClubAnnouncementAuthor", fields: [createdById], references: [id], onDelete: Restrict)
+
+  @@index([collegeId, clubId, publishedAt])
+  @@map("club_announcements")
+}
+
+model ClubAuditLog {
+  id        String   @id @default(cuid())
+  collegeId String
+  clubId    String
+  actorId   String
+  action    String
+  targetId  String?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  college College @relation(fields: [collegeId], references: [id], onDelete: Cascade)
+  club    Club    @relation(fields: [clubId], references: [id], onDelete: Cascade)
+  actor   User    @relation("ClubAuditActor", fields: [actorId], references: [id], onDelete: Restrict)
+
+  @@index([collegeId, clubId, createdAt])
+  @@map("club_audit_logs")
 }

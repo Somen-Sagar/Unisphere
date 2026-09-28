@@ -252,6 +252,12 @@ export type UserWhereInput = {
   registrations?: Prisma.EventRegistrationListRelationFilter
   clubMemberships?: Prisma.ClubMembershipListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
+  eventAssignments?: Prisma.EventOrganizerListRelationFilter
+  attendanceChecks?: Prisma.AttendanceListRelationFilter
+  permissionChanges?: Prisma.ClubPermissionOverrideListRelationFilter
+  clubAnnouncements?: Prisma.ClubAnnouncementListRelationFilter
+  clubApplications?: Prisma.ClubApplicationListRelationFilter
+  clubAuditEntries?: Prisma.ClubAuditLogListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -274,6 +280,12 @@ export type UserOrderByWithRelationInput = {
   registrations?: Prisma.EventRegistrationOrderByRelationAggregateInput
   clubMemberships?: Prisma.ClubMembershipOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
+  eventAssignments?: Prisma.EventOrganizerOrderByRelationAggregateInput
+  attendanceChecks?: Prisma.AttendanceOrderByRelationAggregateInput
+  permissionChanges?: Prisma.ClubPermissionOverrideOrderByRelationAggregateInput
+  clubAnnouncements?: Prisma.ClubAnnouncementOrderByRelationAggregateInput
+  clubApplications?: Prisma.ClubApplicationOrderByRelationAggregateInput
+  clubAuditEntries?: Prisma.ClubAuditLogOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -299,6 +311,12 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   registrations?: Prisma.EventRegistrationListRelationFilter
   clubMemberships?: Prisma.ClubMembershipListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
+  eventAssignments?: Prisma.EventOrganizerListRelationFilter
+  attendanceChecks?: Prisma.AttendanceListRelationFilter
+  permissionChanges?: Prisma.ClubPermissionOverrideListRelationFilter
+  clubAnnouncements?: Prisma.ClubAnnouncementListRelationFilter
+  clubApplications?: Prisma.ClubApplicationListRelationFilter
+  clubAuditEntries?: Prisma.ClubAuditLogListRelationFilter
 }, "id" | "email" | "phone">
 
 export type UserOrderByWithAggregationInput = {
@@ -359,6 +377,12 @@ export type UserCreateInput = {
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
   clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -381,6 +405,12 @@ export type UserUncheckedCreateInput = {
   registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
   clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserUpdateInput = {
@@ -403,6 +433,12 @@ export type UserUpdateInput = {
   registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
   clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -425,6 +461,12 @@ export type UserUncheckedUpdateInput = {
   registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
   clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -632,6 +674,90 @@ export type UserUpdateOneRequiredWithoutNotificationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutNotificationsInput, Prisma.UserUpdateWithoutNotificationsInput>, Prisma.UserUncheckedUpdateWithoutNotificationsInput>
 }
 
+export type UserCreateNestedOneWithoutPermissionChangesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermissionChangesInput, Prisma.UserUncheckedCreateWithoutPermissionChangesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermissionChangesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutPermissionChangesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutPermissionChangesInput, Prisma.UserUncheckedCreateWithoutPermissionChangesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutPermissionChangesInput
+  upsert?: Prisma.UserUpsertWithoutPermissionChangesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPermissionChangesInput, Prisma.UserUpdateWithoutPermissionChangesInput>, Prisma.UserUncheckedUpdateWithoutPermissionChangesInput>
+}
+
+export type UserCreateNestedOneWithoutEventAssignmentsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEventAssignmentsInput, Prisma.UserUncheckedCreateWithoutEventAssignmentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventAssignmentsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutEventAssignmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutEventAssignmentsInput, Prisma.UserUncheckedCreateWithoutEventAssignmentsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutEventAssignmentsInput
+  upsert?: Prisma.UserUpsertWithoutEventAssignmentsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutEventAssignmentsInput, Prisma.UserUpdateWithoutEventAssignmentsInput>, Prisma.UserUncheckedUpdateWithoutEventAssignmentsInput>
+}
+
+export type UserCreateNestedOneWithoutAttendanceChecksInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAttendanceChecksInput, Prisma.UserUncheckedCreateWithoutAttendanceChecksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAttendanceChecksInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAttendanceChecksNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAttendanceChecksInput, Prisma.UserUncheckedCreateWithoutAttendanceChecksInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAttendanceChecksInput
+  upsert?: Prisma.UserUpsertWithoutAttendanceChecksInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAttendanceChecksInput, Prisma.UserUpdateWithoutAttendanceChecksInput>, Prisma.UserUncheckedUpdateWithoutAttendanceChecksInput>
+}
+
+export type UserCreateNestedOneWithoutClubApplicationsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutClubApplicationsInput, Prisma.UserUncheckedCreateWithoutClubApplicationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClubApplicationsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutClubApplicationsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutClubApplicationsInput, Prisma.UserUncheckedCreateWithoutClubApplicationsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClubApplicationsInput
+  upsert?: Prisma.UserUpsertWithoutClubApplicationsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutClubApplicationsInput, Prisma.UserUpdateWithoutClubApplicationsInput>, Prisma.UserUncheckedUpdateWithoutClubApplicationsInput>
+}
+
+export type UserCreateNestedOneWithoutClubAnnouncementsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutClubAnnouncementsInput, Prisma.UserUncheckedCreateWithoutClubAnnouncementsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClubAnnouncementsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutClubAnnouncementsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutClubAnnouncementsInput, Prisma.UserUncheckedCreateWithoutClubAnnouncementsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClubAnnouncementsInput
+  upsert?: Prisma.UserUpsertWithoutClubAnnouncementsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutClubAnnouncementsInput, Prisma.UserUpdateWithoutClubAnnouncementsInput>, Prisma.UserUncheckedUpdateWithoutClubAnnouncementsInput>
+}
+
+export type UserCreateNestedOneWithoutClubAuditEntriesInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutClubAuditEntriesInput, Prisma.UserUncheckedCreateWithoutClubAuditEntriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClubAuditEntriesInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutClubAuditEntriesNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutClubAuditEntriesInput, Prisma.UserUncheckedCreateWithoutClubAuditEntriesInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutClubAuditEntriesInput
+  upsert?: Prisma.UserUpsertWithoutClubAuditEntriesInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutClubAuditEntriesInput, Prisma.UserUpdateWithoutClubAuditEntriesInput>, Prisma.UserUncheckedUpdateWithoutClubAuditEntriesInput>
+}
+
 export type UserCreateWithoutMembershipsInput = {
   id?: string
   email: string
@@ -651,6 +777,12 @@ export type UserCreateWithoutMembershipsInput = {
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
   clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutMembershipsInput = {
@@ -672,6 +804,12 @@ export type UserUncheckedCreateWithoutMembershipsInput = {
   registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
   clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutMembershipsInput = {
@@ -709,6 +847,12 @@ export type UserUpdateWithoutMembershipsInput = {
   registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
   clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutMembershipsInput = {
@@ -730,6 +874,12 @@ export type UserUncheckedUpdateWithoutMembershipsInput = {
   registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
   clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutRefreshSessionsInput = {
@@ -751,6 +901,12 @@ export type UserCreateWithoutRefreshSessionsInput = {
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
   clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutRefreshSessionsInput = {
@@ -772,6 +928,12 @@ export type UserUncheckedCreateWithoutRefreshSessionsInput = {
   registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
   clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutRefreshSessionsInput = {
@@ -809,6 +971,12 @@ export type UserUpdateWithoutRefreshSessionsInput = {
   registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
   clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshSessionsInput = {
@@ -830,6 +998,12 @@ export type UserUncheckedUpdateWithoutRefreshSessionsInput = {
   registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
   clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutClubMembershipsInput = {
@@ -851,6 +1025,12 @@ export type UserCreateWithoutClubMembershipsInput = {
   organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutClubMembershipsInput = {
@@ -872,6 +1052,12 @@ export type UserUncheckedCreateWithoutClubMembershipsInput = {
   organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
   registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutClubMembershipsInput = {
@@ -909,6 +1095,12 @@ export type UserUpdateWithoutClubMembershipsInput = {
   organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
   registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutClubMembershipsInput = {
@@ -930,6 +1122,12 @@ export type UserUncheckedUpdateWithoutClubMembershipsInput = {
   organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
   registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutOrganizedEventsInput = {
@@ -951,6 +1149,12 @@ export type UserCreateWithoutOrganizedEventsInput = {
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
   clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutOrganizedEventsInput = {
@@ -972,6 +1176,12 @@ export type UserUncheckedCreateWithoutOrganizedEventsInput = {
   registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
   clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutOrganizedEventsInput = {
@@ -1009,6 +1219,12 @@ export type UserUpdateWithoutOrganizedEventsInput = {
   registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
   clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutOrganizedEventsInput = {
@@ -1030,6 +1246,12 @@ export type UserUncheckedUpdateWithoutOrganizedEventsInput = {
   registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
   clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutRegistrationsInput = {
@@ -1051,6 +1273,12 @@ export type UserCreateWithoutRegistrationsInput = {
   organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
   clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutRegistrationsInput = {
@@ -1072,6 +1300,12 @@ export type UserUncheckedCreateWithoutRegistrationsInput = {
   organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
   clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutRegistrationsInput = {
@@ -1109,6 +1343,12 @@ export type UserUpdateWithoutRegistrationsInput = {
   organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
   clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRegistrationsInput = {
@@ -1130,6 +1370,12 @@ export type UserUncheckedUpdateWithoutRegistrationsInput = {
   organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
   clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -1151,6 +1397,12 @@ export type UserCreateWithoutNotificationsInput = {
   organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
   registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
   clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -1172,6 +1424,12 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
   registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
   clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -1209,6 +1467,12 @@ export type UserUpdateWithoutNotificationsInput = {
   organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
   registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
   clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -1230,6 +1494,756 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
   registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
   clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutPermissionChangesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutPermissionChangesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutPermissionChangesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutPermissionChangesInput, Prisma.UserUncheckedCreateWithoutPermissionChangesInput>
+}
+
+export type UserUpsertWithoutPermissionChangesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutPermissionChangesInput, Prisma.UserUncheckedUpdateWithoutPermissionChangesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutPermissionChangesInput, Prisma.UserUncheckedCreateWithoutPermissionChangesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutPermissionChangesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutPermissionChangesInput, Prisma.UserUncheckedUpdateWithoutPermissionChangesInput>
+}
+
+export type UserUpdateWithoutPermissionChangesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutPermissionChangesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutEventAssignmentsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutEventAssignmentsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutEventAssignmentsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutEventAssignmentsInput, Prisma.UserUncheckedCreateWithoutEventAssignmentsInput>
+}
+
+export type UserUpsertWithoutEventAssignmentsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutEventAssignmentsInput, Prisma.UserUncheckedUpdateWithoutEventAssignmentsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutEventAssignmentsInput, Prisma.UserUncheckedCreateWithoutEventAssignmentsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutEventAssignmentsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutEventAssignmentsInput, Prisma.UserUncheckedUpdateWithoutEventAssignmentsInput>
+}
+
+export type UserUpdateWithoutEventAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutEventAssignmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutAttendanceChecksInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutAttendanceChecksInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutAttendanceChecksInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAttendanceChecksInput, Prisma.UserUncheckedCreateWithoutAttendanceChecksInput>
+}
+
+export type UserUpsertWithoutAttendanceChecksInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAttendanceChecksInput, Prisma.UserUncheckedUpdateWithoutAttendanceChecksInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAttendanceChecksInput, Prisma.UserUncheckedCreateWithoutAttendanceChecksInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAttendanceChecksInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAttendanceChecksInput, Prisma.UserUncheckedUpdateWithoutAttendanceChecksInput>
+}
+
+export type UserUpdateWithoutAttendanceChecksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAttendanceChecksInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutClubApplicationsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutClubApplicationsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutClubApplicationsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutClubApplicationsInput, Prisma.UserUncheckedCreateWithoutClubApplicationsInput>
+}
+
+export type UserUpsertWithoutClubApplicationsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutClubApplicationsInput, Prisma.UserUncheckedUpdateWithoutClubApplicationsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutClubApplicationsInput, Prisma.UserUncheckedCreateWithoutClubApplicationsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutClubApplicationsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutClubApplicationsInput, Prisma.UserUncheckedUpdateWithoutClubApplicationsInput>
+}
+
+export type UserUpdateWithoutClubApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutClubApplicationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutClubAnnouncementsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogCreateNestedManyWithoutActorInput
+}
+
+export type UserUncheckedCreateWithoutClubAnnouncementsInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedCreateNestedManyWithoutActorInput
+}
+
+export type UserCreateOrConnectWithoutClubAnnouncementsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutClubAnnouncementsInput, Prisma.UserUncheckedCreateWithoutClubAnnouncementsInput>
+}
+
+export type UserUpsertWithoutClubAnnouncementsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutClubAnnouncementsInput, Prisma.UserUncheckedUpdateWithoutClubAnnouncementsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutClubAnnouncementsInput, Prisma.UserUncheckedCreateWithoutClubAnnouncementsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutClubAnnouncementsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutClubAnnouncementsInput, Prisma.UserUncheckedUpdateWithoutClubAnnouncementsInput>
+}
+
+export type UserUpdateWithoutClubAnnouncementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUpdateManyWithoutActorNestedInput
+}
+
+export type UserUncheckedUpdateWithoutClubAnnouncementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
+  clubAuditEntries?: Prisma.ClubAuditLogUncheckedUpdateManyWithoutActorNestedInput
+}
+
+export type UserCreateWithoutClubAuditEntriesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutClubAuditEntriesInput = {
+  id?: string
+  email: string
+  passwordHash: string
+  firstName: string
+  lastName: string
+  avatarUrl?: string | null
+  phone?: string | null
+  emailVerifiedAt?: Date | string | null
+  phoneVerifiedAt?: Date | string | null
+  status?: $Enums.UserStatus
+  lastLoginAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutUserInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedCreateNestedManyWithoutUserInput
+  organizedEvents?: Prisma.EventUncheckedCreateNestedManyWithoutOrganizerInput
+  registrations?: Prisma.EventRegistrationUncheckedCreateNestedManyWithoutUserInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedCreateNestedManyWithoutUserInput
+  attendanceChecks?: Prisma.AttendanceUncheckedCreateNestedManyWithoutCheckedInByInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutGrantedByInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedCreateNestedManyWithoutCreatedByInput
+  clubApplications?: Prisma.ClubApplicationUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutClubAuditEntriesInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutClubAuditEntriesInput, Prisma.UserUncheckedCreateWithoutClubAuditEntriesInput>
+}
+
+export type UserUpsertWithoutClubAuditEntriesInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutClubAuditEntriesInput, Prisma.UserUncheckedUpdateWithoutClubAuditEntriesInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutClubAuditEntriesInput, Prisma.UserUncheckedCreateWithoutClubAuditEntriesInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutClubAuditEntriesInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutClubAuditEntriesInput, Prisma.UserUncheckedUpdateWithoutClubAuditEntriesInput>
+}
+
+export type UserUpdateWithoutClubAuditEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutClubAuditEntriesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  passwordHash?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  emailVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  phoneVerifiedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  lastLoginAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutUserNestedInput
+  refreshSessions?: Prisma.RefreshSessionUncheckedUpdateManyWithoutUserNestedInput
+  organizedEvents?: Prisma.EventUncheckedUpdateManyWithoutOrganizerNestedInput
+  registrations?: Prisma.EventRegistrationUncheckedUpdateManyWithoutUserNestedInput
+  clubMemberships?: Prisma.ClubMembershipUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  eventAssignments?: Prisma.EventOrganizerUncheckedUpdateManyWithoutUserNestedInput
+  attendanceChecks?: Prisma.AttendanceUncheckedUpdateManyWithoutCheckedInByNestedInput
+  permissionChanges?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutGrantedByNestedInput
+  clubAnnouncements?: Prisma.ClubAnnouncementUncheckedUpdateManyWithoutCreatedByNestedInput
+  clubApplications?: Prisma.ClubApplicationUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -1244,6 +2258,12 @@ export type UserCountOutputType = {
   registrations: number
   clubMemberships: number
   notifications: number
+  eventAssignments: number
+  attendanceChecks: number
+  permissionChanges: number
+  clubAnnouncements: number
+  clubApplications: number
+  clubAuditEntries: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1253,6 +2273,12 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   registrations?: boolean | UserCountOutputTypeCountRegistrationsArgs
   clubMemberships?: boolean | UserCountOutputTypeCountClubMembershipsArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
+  eventAssignments?: boolean | UserCountOutputTypeCountEventAssignmentsArgs
+  attendanceChecks?: boolean | UserCountOutputTypeCountAttendanceChecksArgs
+  permissionChanges?: boolean | UserCountOutputTypeCountPermissionChangesArgs
+  clubAnnouncements?: boolean | UserCountOutputTypeCountClubAnnouncementsArgs
+  clubApplications?: boolean | UserCountOutputTypeCountClubApplicationsArgs
+  clubAuditEntries?: boolean | UserCountOutputTypeCountClubAuditEntriesArgs
 }
 
 /**
@@ -1307,6 +2333,48 @@ export type UserCountOutputTypeCountNotificationsArgs<ExtArgs extends runtime.Ty
   where?: Prisma.NotificationWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountEventAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.EventOrganizerWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAttendanceChecksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AttendanceWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountPermissionChangesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClubPermissionOverrideWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountClubAnnouncementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClubAnnouncementWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountClubApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClubApplicationWhereInput
+}
+
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountClubAuditEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClubAuditLogWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1328,6 +2396,12 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   registrations?: boolean | Prisma.User$registrationsArgs<ExtArgs>
   clubMemberships?: boolean | Prisma.User$clubMembershipsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  eventAssignments?: boolean | Prisma.User$eventAssignmentsArgs<ExtArgs>
+  attendanceChecks?: boolean | Prisma.User$attendanceChecksArgs<ExtArgs>
+  permissionChanges?: boolean | Prisma.User$permissionChangesArgs<ExtArgs>
+  clubAnnouncements?: boolean | Prisma.User$clubAnnouncementsArgs<ExtArgs>
+  clubApplications?: boolean | Prisma.User$clubApplicationsArgs<ExtArgs>
+  clubAuditEntries?: boolean | Prisma.User$clubAuditEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1387,6 +2461,12 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   registrations?: boolean | Prisma.User$registrationsArgs<ExtArgs>
   clubMemberships?: boolean | Prisma.User$clubMembershipsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
+  eventAssignments?: boolean | Prisma.User$eventAssignmentsArgs<ExtArgs>
+  attendanceChecks?: boolean | Prisma.User$attendanceChecksArgs<ExtArgs>
+  permissionChanges?: boolean | Prisma.User$permissionChangesArgs<ExtArgs>
+  clubAnnouncements?: boolean | Prisma.User$clubAnnouncementsArgs<ExtArgs>
+  clubApplications?: boolean | Prisma.User$clubApplicationsArgs<ExtArgs>
+  clubAuditEntries?: boolean | Prisma.User$clubAuditEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1401,6 +2481,12 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     registrations: Prisma.$EventRegistrationPayload<ExtArgs>[]
     clubMemberships: Prisma.$ClubMembershipPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
+    eventAssignments: Prisma.$EventOrganizerPayload<ExtArgs>[]
+    attendanceChecks: Prisma.$AttendancePayload<ExtArgs>[]
+    permissionChanges: Prisma.$ClubPermissionOverridePayload<ExtArgs>[]
+    clubAnnouncements: Prisma.$ClubAnnouncementPayload<ExtArgs>[]
+    clubApplications: Prisma.$ClubApplicationPayload<ExtArgs>[]
+    clubAuditEntries: Prisma.$ClubAuditLogPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1816,6 +2902,12 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   registrations<T extends Prisma.User$registrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$registrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventRegistrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   clubMemberships<T extends Prisma.User$clubMembershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clubMembershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  eventAssignments<T extends Prisma.User$eventAssignmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$eventAssignmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventOrganizerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  attendanceChecks<T extends Prisma.User$attendanceChecksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$attendanceChecksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  permissionChanges<T extends Prisma.User$permissionChangesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$permissionChangesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubPermissionOverridePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  clubAnnouncements<T extends Prisma.User$clubAnnouncementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clubAnnouncementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubAnnouncementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  clubApplications<T extends Prisma.User$clubApplicationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clubApplicationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubApplicationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  clubAuditEntries<T extends Prisma.User$clubAuditEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$clubAuditEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubAuditLogPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2392,6 +3484,150 @@ export type User$notificationsArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.NotificationScalarFieldEnum | Prisma.NotificationScalarFieldEnum[]
+}
+
+/**
+ * User.eventAssignments
+ */
+export type User$eventAssignmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the EventOrganizer
+   */
+  select?: Prisma.EventOrganizerSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the EventOrganizer
+   */
+  omit?: Prisma.EventOrganizerOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.EventOrganizerInclude<ExtArgs> | null
+  where?: Prisma.EventOrganizerWhereInput
+  orderBy?: Prisma.EventOrganizerOrderByWithRelationInput | Prisma.EventOrganizerOrderByWithRelationInput[]
+  cursor?: Prisma.EventOrganizerWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.EventOrganizerScalarFieldEnum | Prisma.EventOrganizerScalarFieldEnum[]
+}
+
+/**
+ * User.attendanceChecks
+ */
+export type User$attendanceChecksArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Attendance
+   */
+  select?: Prisma.AttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Attendance
+   */
+  omit?: Prisma.AttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttendanceInclude<ExtArgs> | null
+  where?: Prisma.AttendanceWhereInput
+  orderBy?: Prisma.AttendanceOrderByWithRelationInput | Prisma.AttendanceOrderByWithRelationInput[]
+  cursor?: Prisma.AttendanceWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AttendanceScalarFieldEnum | Prisma.AttendanceScalarFieldEnum[]
+}
+
+/**
+ * User.permissionChanges
+ */
+export type User$permissionChangesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClubPermissionOverride
+   */
+  select?: Prisma.ClubPermissionOverrideSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClubPermissionOverride
+   */
+  omit?: Prisma.ClubPermissionOverrideOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClubPermissionOverrideInclude<ExtArgs> | null
+  where?: Prisma.ClubPermissionOverrideWhereInput
+  orderBy?: Prisma.ClubPermissionOverrideOrderByWithRelationInput | Prisma.ClubPermissionOverrideOrderByWithRelationInput[]
+  cursor?: Prisma.ClubPermissionOverrideWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClubPermissionOverrideScalarFieldEnum | Prisma.ClubPermissionOverrideScalarFieldEnum[]
+}
+
+/**
+ * User.clubAnnouncements
+ */
+export type User$clubAnnouncementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClubAnnouncement
+   */
+  select?: Prisma.ClubAnnouncementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClubAnnouncement
+   */
+  omit?: Prisma.ClubAnnouncementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClubAnnouncementInclude<ExtArgs> | null
+  where?: Prisma.ClubAnnouncementWhereInput
+  orderBy?: Prisma.ClubAnnouncementOrderByWithRelationInput | Prisma.ClubAnnouncementOrderByWithRelationInput[]
+  cursor?: Prisma.ClubAnnouncementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClubAnnouncementScalarFieldEnum | Prisma.ClubAnnouncementScalarFieldEnum[]
+}
+
+/**
+ * User.clubApplications
+ */
+export type User$clubApplicationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClubApplication
+   */
+  select?: Prisma.ClubApplicationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClubApplication
+   */
+  omit?: Prisma.ClubApplicationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClubApplicationInclude<ExtArgs> | null
+  where?: Prisma.ClubApplicationWhereInput
+  orderBy?: Prisma.ClubApplicationOrderByWithRelationInput | Prisma.ClubApplicationOrderByWithRelationInput[]
+  cursor?: Prisma.ClubApplicationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClubApplicationScalarFieldEnum | Prisma.ClubApplicationScalarFieldEnum[]
+}
+
+/**
+ * User.clubAuditEntries
+ */
+export type User$clubAuditEntriesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClubAuditLog
+   */
+  select?: Prisma.ClubAuditLogSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClubAuditLog
+   */
+  omit?: Prisma.ClubAuditLogOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClubAuditLogInclude<ExtArgs> | null
+  where?: Prisma.ClubAuditLogWhereInput
+  orderBy?: Prisma.ClubAuditLogOrderByWithRelationInput | Prisma.ClubAuditLogOrderByWithRelationInput[]
+  cursor?: Prisma.ClubAuditLogWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClubAuditLogScalarFieldEnum | Prisma.ClubAuditLogScalarFieldEnum[]
 }
 
 /**

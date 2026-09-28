@@ -3,6 +3,14 @@ import type {
   AuthSession,
   CampusClub,
   CampusClubDetails,
+  ClubAccess,
+  ClubAnnouncement,
+  ClubApplication,
+  ClubDashboardSummary,
+  ClubMember,
+  ClubPermission,
+  CollegeAnnouncementResult,
+  CollegeAdminSummary,
   CampusEvent,
   CampusNotification,
   CampusUser,
@@ -11,6 +19,9 @@ import type {
   DashboardSummary,
   Department,
   EventRegistration,
+  EventAccess,
+  EventOrganizer,
+  AttendanceRecord,
   Membership,
   PaginatedResponse,
 } from '@unisphere/types';
@@ -56,7 +67,7 @@ export type RegisterPayload = {
   password: string;
   firstName: string;
   lastName: string;
-  role?: 'STUDENT' | 'FACULTY' | 'COLLEGE_ADMIN';
+  role?: 'STUDENT' | 'FACULTY';
   termsAccepted: true;
   college:
     | {
@@ -224,6 +235,10 @@ export class UniSphereApi {
     return this.request('clubs');
   }
 
+  managedClubs(): Promise<CampusClub[]> {
+    return this.request('clubs/managed');
+  }
+
   club(clubId: string): Promise<CampusClubDetails> {
     return this.request(`clubs/${clubId}`);
   }
@@ -242,6 +257,92 @@ export class UniSphereApi {
     });
   }
 
+  clubAccess(clubId: string): Promise<ClubAccess> {
+    return this.request(`clubs/${clubId}/access`);
+  }
+
+  clubDashboard(clubId: string): Promise<ClubDashboardSummary> {
+    return this.request(`clubs/${clubId}/dashboard`);
+  }
+
+  clubMembers(
+    clubId: string,
+    params: Record<string, string | number | undefined> = {},
+  ): Promise<ClubMember[]> {
+    const query = new URLSearchParams();
+    Object.entries(params).forEach(([key, value]) => {
+      if (value !== undefined) query.set(key, String(value));
+    });
+    return this.request(`clubs/${clubId}/members?${query.toString()}`);
+  }
+
+  addClubMember(clubId: string, input: Record<string, unknown>): Promise<ClubMember> {
+    return this.request(`clubs/${clubId}/members`, {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
+  }
+
+  updateClubMember(
+    clubId: string,
+    membershipId: string,
+    input: Record<string, unknown>,
+  ): Promise<ClubMember> {
+    return this.request(`clubs/${clubId}/members/${membershipId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(input),
+    });
+  }
+
+  removeClubMember(clubId: string, membershipId: string): Promise<void> {
+    return this.request(`clubs/${clubId}/members/${membershipId}`, { method: 'DELETE' });
+  }
+
+  setClubMemberPermission(
+    clubId: string,
+    membershipId: string,
+    permission: ClubPermission,
+    effect: 'GRANT' | 'REVOKE' | 'INHERIT',
+  ): Promise<ClubMember> {
+    return this.request(`clubs/${clubId}/members/${membershipId}/permissions/${permission}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ effect }),
+    });
+  }
+
+  clubAnnouncements(clubId: string): Promise<ClubAnnouncement[]> {
+    return this.request(`clubs/${clubId}/announcements`);
+  }
+
+  createClubAnnouncement(clubId: string, input: Record<string, unknown>): Promise<ClubAnnouncement> {
+    return this.request(`clubs/${clubId}/announcements`, {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
+  }
+
+  applyToClub(clubId: string, input: Record<string, unknown> = {}): Promise<ClubApplication> {
+    return this.request(`clubs/${clubId}/applications`, {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
+  }
+
+  clubApplications(clubId: string): Promise<ClubApplication[]> {
+    return this.request(`clubs/${clubId}/applications`);
+  }
+
+  reviewClubApplication(
+    clubId: string,
+    applicationId: string,
+    status: 'APPROVED' | 'REJECTED',
+  ): Promise<ClubApplication> {
+    return this.request(`clubs/${clubId}/applications/${applicationId}`, {
+      method: 'PATCH',
+      body: JSON.stringify({ status }),
+    });
+  }
+
   events(params: Record<string, string | number | boolean | undefined> = {}) {
     const query = new URLSearchParams();
     Object.entries(params).forEach(([key, value]) => {
@@ -252,6 +353,10 @@ export class UniSphereApi {
 
   event(eventId: string): Promise<CampusEvent> {
     return this.request(`events/${eventId}`);
+  }
+
+  eventAccess(eventId: string): Promise<EventAccess> {
+    return this.request(`events/${eventId}/access`);
   }
 
   createEvent(input: Record<string, unknown>): Promise<CampusEvent> {
@@ -270,6 +375,61 @@ export class UniSphereApi {
 
   publishEvent(eventId: string): Promise<CampusEvent> {
     return this.request(`events/${eventId}/publish`, { method: 'POST' });
+  }
+
+  deleteEvent(eventId: string): Promise<void> {
+    return this.request(`events/${eventId}`, { method: 'DELETE' });
+  }
+
+  eventOrganizers(eventId: string): Promise<EventOrganizer[]> {
+    return this.request(`events/${eventId}/organizers`);
+  }
+
+  assignEventOrganizer(eventId: string, input: Record<string, unknown>): Promise<EventOrganizer> {
+    return this.request(`events/${eventId}/organizers`, {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
+  }
+
+  removeEventOrganizer(eventId: string, userId: string): Promise<void> {
+    return this.request(`events/${eventId}/organizers/${userId}`, { method: 'DELETE' });
+  }
+
+  manualCheckIn(eventId: string, registrationId: string): Promise<AttendanceRecord> {
+    return this.request(`events/${eventId}/attendance/manual`, {
+      method: 'POST',
+      body: JSON.stringify({ registrationId }),
+    });
+  }
+
+  collegeAdminSummary(collegeId: string): Promise<CollegeAdminSummary> {
+    return this.request(`colleges/${collegeId}/admin/summary`);
+  }
+
+  collegeAdminClubs(collegeId: string): Promise<CampusClub[]> {
+    return this.request(`colleges/${collegeId}/admin/clubs`);
+  }
+
+  createCollegeAnnouncement(
+    collegeId: string,
+    input: { title: string; message: string },
+  ): Promise<CollegeAnnouncementResult> {
+    return this.request(`colleges/${collegeId}/announcements`, {
+      method: 'POST',
+      body: JSON.stringify(input),
+    });
+  }
+
+  updateCollegeMember(
+    collegeId: string,
+    membershipId: string,
+    input: Record<string, unknown>,
+  ): Promise<Membership> {
+    return this.request(`colleges/${collegeId}/members/${membershipId}`, {
+      method: 'PATCH',
+      body: JSON.stringify(input),
+    });
   }
 
   registerForEvent(eventId: string): Promise<EventRegistration> {

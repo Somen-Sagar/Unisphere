@@ -1,27 +1,23 @@
 import {
   ConflictException,
-  ForbiddenException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { isRegistrationAvailable } from '@unisphere/business-rules';
-import type { EventRegistration } from '@unisphere/types';
+import type { AttendanceRecord, EventRegistration } from '@unisphere/types';
 import { randomBytes } from 'node:crypto';
 
 import type { TenantContext } from '../common/tenant-context';
+import { ClubPermissionService } from '../club-authorization/club-permission.service';
 import { PrismaService } from '../database/prisma/prisma.service';
 import { toCampusEvent } from '../events/event.mapper';
 
-const managementRoles = [
-  'CLUB_ADMIN',
-  'DEPARTMENT_ADMIN',
-  'COLLEGE_ADMIN',
-  'PLATFORM_ADMIN',
-] as const;
-
 @Injectable()
 export class RegistrationsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly clubPermissions: ClubPermissionService,
+  ) {}
 
   async register(
     tenant: TenantContext,
@@ -96,6 +92,16 @@ export class RegistrationsService {
               },
             },
           },
+        },
+      });
+
+      await transaction.notification.create({
+        data: {
+          collegeId: tenant.collegeId,
+          userId: tenant.userId,
+          type: 'REGISTRATION',
+          title: 'Event registration confirmed',
+          message: `Your registration for ${event.title} is confirmed.`,
         },
       });
 
@@ -186,14 +192,12 @@ export class RegistrationsService {
     tenant: TenantContext,
     eventId: string,
   ): Promise<EventRegistration[]> {
-    const authorized = tenant.roles.some((role) =>
-      managementRoles.includes(role as (typeof managementRoles)[number]),
+    await this.clubPermissions.assertEvent(
+      tenant,
+      eventId,
+      'CLUB_VIEW_REGISTRATIONS',
+      'VIEW_REGISTRATIONS',
     );
-    if (!authorized) {
-      throw new ForbiddenException(
-        'You are not authorized to view event registrations.',
-      );
-    }
 
     const registrations = await this.prisma.eventRegistration.findMany({
       where: {
@@ -202,6 +206,9 @@ export class RegistrationsService {
         event: { collegeId: tenant.collegeId },
       },
       include: {
+        user: {
+          select: { id: true, firstName: true, lastName: true, email: true },
+        },
         event: {
           include: {
             _count: {
@@ -251,43 +258,125 @@ export class RegistrationsService {
       );
     }
 
-    const authorized = await this.prisma.collegeMembership.findFirst({
-      where: {
-        userId: tenant.userId,
-        collegeId: tenant.collegeId,
-        status: 'ACTIVE',
-        role: { in: [...managementRoles] },
-      },
-      select: { id: true },
-    });
-    if (!authorized) {
-      throw new ForbiddenException(
-        'You are not authorized to scan this event.',
-      );
-    }
-
     if (registration.event.collegeId !== tenant.collegeId) {
       throw new NotFoundException('This registration pass is not valid.');
     }
+    await this.clubPermissions.assertEvent(
+      tenant,
+      registration.eventId,
+      'CLUB_MARK_ATTENDANCE',
+      'MARK_ATTENDANCE',
+    );
 
-    const updated = await this.prisma.eventRegistration.update({
-      where: { id: registration.id },
-      data: { checkedInAt: new Date(), checkedInBy: tenant.userId },
-      include: {
-        event: {
-          include: {
-            _count: {
-              select: {
-                registrations: {
-                  where: { status: 'REGISTERED' },
-                },
+    const now = new Date();
+    const updated = await this.prisma.$transaction(async (tx) => {
+      await tx.attendance.upsert({
+        where: { registrationId: registration.id },
+        create: {
+          collegeId: tenant.collegeId,
+          eventId: registration.eventId,
+          registrationId: registration.id,
+          checkedInById: tenant.userId,
+          checkedInAt: now,
+          method: 'QR',
+        },
+        update: {
+          checkedInById: tenant.userId,
+          checkedInAt: now,
+          method: 'QR',
+          status: 'PRESENT',
+        },
+      });
+      return tx.eventRegistration.update({
+        where: { id: registration.id },
+        data: { checkedInAt: now, checkedInBy: tenant.userId },
+        include: {
+          event: {
+            include: {
+              _count: {
+                select: { registrations: { where: { status: 'REGISTERED' } } },
               },
             },
           },
         },
-      },
+      });
     });
     return this.toRegistration(updated);
+  }
+
+  async manualCheckIn(
+    tenant: TenantContext,
+    eventId: string,
+    registrationId: string,
+  ): Promise<AttendanceRecord> {
+    await this.clubPermissions.assertEvent(
+      tenant,
+      eventId,
+      'CLUB_MARK_ATTENDANCE',
+      'MARK_ATTENDANCE',
+    );
+    const registration = await this.prisma.eventRegistration.findFirst({
+      where: {
+        id: registrationId,
+        eventId,
+        collegeId: tenant.collegeId,
+        status: 'REGISTERED',
+        event: { collegeId: tenant.collegeId },
+      },
+      select: { id: true, checkedInAt: true },
+    });
+    if (!registration)
+      throw new NotFoundException('Active registration not found.');
+    if (registration.checkedInAt) {
+      throw new ConflictException(
+        'This registration has already been checked in.',
+      );
+    }
+    const now = new Date();
+    let attendance;
+    try {
+      attendance = await this.prisma.$transaction(async (tx) => {
+        const updated = await tx.eventRegistration.updateMany({
+          where: { id: registrationId, checkedInAt: null },
+          data: { checkedInAt: now, checkedInBy: tenant.userId },
+        });
+        if (updated.count !== 1) {
+          throw new ConflictException(
+            'This registration has already been checked in.',
+          );
+        }
+        return tx.attendance.create({
+          data: {
+            collegeId: tenant.collegeId,
+            eventId,
+            registrationId,
+            checkedInById: tenant.userId,
+            checkedInAt: now,
+            method: 'MANUAL',
+          },
+        });
+      });
+    } catch (error) {
+      const errorCode =
+        typeof error === 'object' && error !== null
+          ? (error as { code?: unknown }).code
+          : undefined;
+      if (error instanceof ConflictException || errorCode === 'P2002') {
+        throw new ConflictException(
+          'This registration has already been checked in.',
+        );
+      }
+      throw error;
+    }
+    return {
+      id: attendance.id,
+      eventId: attendance.eventId,
+      registrationId: attendance.registrationId,
+      checkedInById: attendance.checkedInById,
+      checkedInAt: attendance.checkedInAt.toISOString(),
+      method: attendance.method,
+      status: attendance.status,
+    };
   }
 
   private toRegistration(registration: {
@@ -300,6 +389,7 @@ export class RegistrationsService {
     cancelledAt: Date | null;
     checkedInAt: Date | null;
     event: Parameters<typeof toCampusEvent>[0];
+    user?: { id: string; firstName: string; lastName: string; email: string };
   }): EventRegistration {
     return {
       id: registration.id,
@@ -311,6 +401,7 @@ export class RegistrationsService {
       cancelledAt: registration.cancelledAt?.toISOString() ?? null,
       checkedInAt: registration.checkedInAt?.toISOString() ?? null,
       event: toCampusEvent(registration.event),
+      registrant: registration.user,
     };
   }
 

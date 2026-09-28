@@ -9,6 +9,7 @@ import { AuthModule } from './auth/auth.module';
 import { RedisModule } from './cache/redis.module';
 import { CollegesModule } from './colleges/colleges.module';
 import { ClubsModule } from './clubs/clubs.module';
+import { ClubAuthorizationModule } from './club-authorization/club-authorization.module';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { PrismaModule } from './database/prisma/prisma.module';
 import { DepartmentsModule } from './departments/departments.module';
@@ -30,6 +31,7 @@ import { validateEnvironment } from './config/environment';
       },
     ]),
     PrismaModule,
+    ClubAuthorizationModule,
     RedisModule,
     AuthModule,
     CollegesModule,

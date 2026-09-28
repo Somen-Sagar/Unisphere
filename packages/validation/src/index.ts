@@ -22,7 +22,7 @@ export const registerSchema = z.object({
   firstName: z.string().trim().min(2).max(60),
   lastName: z.string().trim().min(2).max(60),
   role: z
-    .enum(['STUDENT', 'FACULTY', 'COLLEGE_ADMIN'])
+    .enum(['STUDENT', 'FACULTY'])
     .default('STUDENT')
     .optional(),
   termsAccepted: z.literal(true, {
@@ -95,7 +95,9 @@ export const eventQuerySchema = z.object({
       'REGISTRATION_CLOSED',
       'ONGOING',
       'COMPLETED',
+      'REJECTED',
       'CANCELLED',
+      'POSTPONED',
     ])
     .optional(),
   upcoming: z
@@ -117,7 +119,7 @@ const eventSchemaBase = z.object({
       .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Use a URL-friendly slug.'),
   ),
   description: z.string().trim().min(20).max(10_000),
-  eventType: z.string().trim().min(2).max(80).default('GENERAL').optional(),
+  eventType: z.string().trim().min(2).max(80).optional(),
   venue: z.string().trim().min(2).max(200),
   onlineMeetingUrl: optionalTrimmed(z.url()),
   imageUrl: z.url().optional(),
@@ -128,7 +130,7 @@ const eventSchemaBase = z.object({
   registrationClosesAt: z.iso.datetime().optional(),
   capacity: z.number().int().positive().max(100_000).optional(),
   feeAmount: z.coerce.number().min(0).max(1_000_000).optional(),
-  currency: z.string().trim().length(3).default('INR').optional(),
+  currency: z.string().trim().length(3).optional(),
 });
 
 export const createEventSchema = eventSchemaBase
@@ -148,7 +150,9 @@ export const updateEventSchema = eventSchemaBase.partial().extend({
       'REGISTRATION_CLOSED',
       'ONGOING',
       'COMPLETED',
+      'REJECTED',
       'CANCELLED',
+      'POSTPONED',
     ])
     .optional(),
 });
@@ -208,6 +212,122 @@ export const updateClubSchema = createClubSchema.partial().extend({
   isActive: z.boolean().optional(),
 });
 
+export const clubRoleSchema = z.enum([
+  'CLUB_MENTOR',
+  'CLUB_LEAD',
+  'CLUB_SUB_LEAD',
+  'ORGANIZER',
+  'CORE_MEMBER',
+  'MEMBER',
+]);
+
+export const clubPermissionSchema = z.enum([
+  'CLUB_VIEW_MEMBERS',
+  'CLUB_MANAGE_MEMBERS',
+  'CLUB_EDIT_PROFILE',
+  'CLUB_MANAGE_ROLES',
+  'CLUB_CREATE_EVENT',
+  'CLUB_EDIT_EVENT',
+  'CLUB_DELETE_EVENT',
+  'CLUB_PUBLISH_EVENT',
+  'CLUB_VIEW_REGISTRATIONS',
+  'CLUB_MANAGE_REGISTRATIONS',
+  'CLUB_MARK_ATTENDANCE',
+  'CLUB_POST_ANNOUNCEMENT',
+  'CLUB_MANAGE_RECRUITMENT',
+  'CLUB_VIEW_ANALYTICS',
+  'CLUB_MANAGE_MEDIA',
+  'CLUB_MANAGE_PERMISSIONS',
+]);
+
+export const clubMemberQuerySchema = z.object({
+  search: z.string().trim().max(100).optional(),
+  role: clubRoleSchema.optional(),
+  status: z.enum(['PENDING', 'ACTIVE', 'REJECTED', 'SUSPENDED']).optional(),
+  departmentId: z.string().min(1).optional(),
+  academicYear: z.coerce.number().int().min(1).max(8).optional(),
+  joinedFrom: z.iso.datetime().optional(),
+  joinedTo: z.iso.datetime().optional(),
+});
+
+export const addClubMemberSchema = z.object({
+  userId: z.string().min(1),
+  role: clubRoleSchema.default('MEMBER'),
+  status: z.enum(['PENDING', 'ACTIVE']).default('ACTIVE'),
+});
+
+export const updateClubMemberSchema = z.object({
+  role: clubRoleSchema.optional(),
+  status: z.enum(['PENDING', 'ACTIVE', 'REJECTED', 'SUSPENDED']).optional(),
+}).refine((value) => value.role !== undefined || value.status !== undefined, {
+  message: 'Provide a role or membership status.',
+});
+
+export const setClubPermissionSchema = z.object({
+  effect: z.enum(['GRANT', 'REVOKE', 'INHERIT']),
+});
+
+export const eventOrganizerPermissionSchema = z.enum([
+  'EDIT_EVENT',
+  'VIEW_REGISTRATIONS',
+  'MANAGE_REGISTRATIONS',
+  'MARK_ATTENDANCE',
+  'SEND_EVENT_NOTIFICATION',
+]);
+
+export const assignEventOrganizerSchema = z.object({
+  userId: z.string().min(1),
+  role: z.string().trim().min(2).max(80).default('CO_ORGANIZER'),
+  permissions: z.array(eventOrganizerPermissionSchema).max(5).default([]),
+}).superRefine((value, context) => {
+  const registrationDependent = value.permissions.some((permission) =>
+    ['MANAGE_REGISTRATIONS', 'MARK_ATTENDANCE'].includes(permission),
+  );
+  if (
+    registrationDependent &&
+    !value.permissions.includes('VIEW_REGISTRATIONS')
+  ) {
+    context.addIssue({
+      code: 'custom',
+      path: ['permissions'],
+      message:
+        'Managing registrations or attendance also requires VIEW_REGISTRATIONS.',
+    });
+  }
+});
+
+export const manualAttendanceSchema = z.object({
+  registrationId: z.string().min(1),
+});
+
+export const createClubAnnouncementSchema = z.object({
+  title: z.string().trim().min(3).max(160),
+  content: z.string().trim().min(3).max(5000),
+});
+
+export const createClubApplicationSchema = z.object({
+  answers: z.record(z.string(), z.union([z.string().max(2000), z.array(z.string().max(300))])).optional(),
+});
+
+export const reviewClubApplicationSchema = z.object({
+  status: z.enum(['APPROVED', 'REJECTED']),
+});
+
+export const updateCollegeMembershipSchema = z.object({
+  status: z.enum(['PENDING', 'ACTIVE', 'REJECTED', 'SUSPENDED']).optional(),
+  role: z.enum(['STUDENT', 'FACULTY', 'COLLEGE_ADMIN']).optional(),
+  departmentId: z.string().min(1).nullable().optional(),
+  academicYear: z.number().int().min(1).max(8).nullable().optional(),
+  semester: z.number().int().min(1).max(16).nullable().optional(),
+}).refine((value) => Object.values(value).some((item) => item !== undefined), {
+  message: 'Provide at least one membership change.',
+});
+
+export const createCollegeAnnouncementSchema = z.object({
+  title: z.string().trim().min(3).max(160),
+  message: z.string().trim().min(3).max(5000),
+});
+
 export type LoginInput = z.infer<typeof loginSchema>;
 export type RegisterInput = z.infer<typeof registerSchema>;
 export type RefreshSessionInput = z.infer<typeof refreshSessionSchema>;
@@ -219,3 +339,14 @@ export type UpdateCollegeInput = z.infer<typeof updateCollegeSchema>;
 export type CreateDepartmentInput = z.infer<typeof createDepartmentSchema>;
 export type CreateClubInput = z.infer<typeof createClubSchema>;
 export type UpdateClubInput = z.infer<typeof updateClubSchema>;
+export type ClubMemberQueryInput = z.infer<typeof clubMemberQuerySchema>;
+export type AddClubMemberInput = z.infer<typeof addClubMemberSchema>;
+export type UpdateClubMemberInput = z.infer<typeof updateClubMemberSchema>;
+export type SetClubPermissionInput = z.infer<typeof setClubPermissionSchema>;
+export type AssignEventOrganizerInput = z.infer<typeof assignEventOrganizerSchema>;
+export type ManualAttendanceInput = z.infer<typeof manualAttendanceSchema>;
+export type CreateClubAnnouncementInput = z.infer<typeof createClubAnnouncementSchema>;
+export type CreateClubApplicationInput = z.infer<typeof createClubApplicationSchema>;
+export type ReviewClubApplicationInput = z.infer<typeof reviewClubApplicationSchema>;
+export type UpdateCollegeMembershipInput = z.infer<typeof updateCollegeMembershipSchema>;
+export type CreateCollegeAnnouncementInput = z.infer<typeof createCollegeAnnouncementSchema>;

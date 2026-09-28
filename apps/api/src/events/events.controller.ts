@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   Param,
   Patch,
@@ -8,20 +9,25 @@ import {
   Query,
   UseGuards,
 } from '@nestjs/common';
-import type { CampusEvent, PaginatedResponse } from '@unisphere/types';
+import type {
+  CampusEvent,
+  EventAccess,
+  EventOrganizer,
+  PaginatedResponse,
+} from '@unisphere/types';
 import {
+  assignEventOrganizerSchema,
   createEventSchema,
   eventQuerySchema,
   updateEventSchema,
   type CreateEventInput,
+  type AssignEventOrganizerInput,
   type EventQueryInput,
   type UpdateEventInput,
 } from '@unisphere/validation';
 
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentTenant } from '../common/current-tenant.decorator';
-import { RolesGuard } from '../common/roles.guard';
-import { TenantRoles } from '../common/roles.decorator';
 import { TenantGuard } from '../common/tenant.guard';
 import type { TenantContext } from '../common/tenant-context';
 import { ZodValidationPipe } from '../common/zod-validation.pipe';
@@ -48,8 +54,14 @@ export class EventsController {
     return this.events.findOne(tenant, eventId);
   }
 
-  @UseGuards(RolesGuard)
-  @TenantRoles('CLUB_ADMIN', 'DEPARTMENT_ADMIN', 'COLLEGE_ADMIN')
+  @Get(':eventId/access')
+  access(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('eventId') eventId: string,
+  ): Promise<EventAccess> {
+    return this.events.access(tenant, eventId);
+  }
+
   @Post()
   create(
     @CurrentTenant() tenant: TenantContext,
@@ -58,8 +70,6 @@ export class EventsController {
     return this.events.create(tenant, input);
   }
 
-  @UseGuards(RolesGuard)
-  @TenantRoles('CLUB_ADMIN', 'DEPARTMENT_ADMIN', 'COLLEGE_ADMIN')
   @Patch(':eventId')
   update(
     @CurrentTenant() tenant: TenantContext,
@@ -69,13 +79,46 @@ export class EventsController {
     return this.events.update(tenant, eventId, input);
   }
 
-  @UseGuards(RolesGuard)
-  @TenantRoles('CLUB_ADMIN', 'DEPARTMENT_ADMIN', 'COLLEGE_ADMIN')
   @Post(':eventId/publish')
   publish(
     @CurrentTenant() tenant: TenantContext,
     @Param('eventId') eventId: string,
   ): Promise<CampusEvent> {
     return this.events.publish(tenant, eventId);
+  }
+
+  @Get(':eventId/organizers')
+  organizers(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('eventId') eventId: string,
+  ): Promise<EventOrganizer[]> {
+    return this.events.organizers(tenant, eventId);
+  }
+
+  @Post(':eventId/organizers')
+  assignOrganizer(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('eventId') eventId: string,
+    @Body(new ZodValidationPipe(assignEventOrganizerSchema))
+    input: AssignEventOrganizerInput,
+  ): Promise<EventOrganizer> {
+    return this.events.assignOrganizer(tenant, eventId, input);
+  }
+
+  @Delete(':eventId/organizers/:userId')
+  removeOrganizer(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('eventId') eventId: string,
+    @Param('userId') userId: string,
+  ): Promise<void> {
+    return this.events.removeOrganizer(tenant, eventId, userId);
+  }
+
+  @Delete(':eventId')
+  remove(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('eventId') eventId: string,
+  ): Promise<void> {
+    return this.events.remove(tenant, eventId);
   }
 }

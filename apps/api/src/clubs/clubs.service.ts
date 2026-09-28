@@ -1,9 +1,14 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import type { CampusClub, CampusClubDetails } from '@unisphere/types';
 import type { CreateClubInput, UpdateClubInput } from '@unisphere/validation';
 import { randomUUID } from 'node:crypto';
 
 import type { TenantContext } from '../common/tenant-context';
+import { ClubPermissionService } from '../club-authorization/club-permission.service';
 import { PrismaService } from '../database/prisma/prisma.service';
 import { toCampusEvent } from '../events/event.mapper';
 
@@ -17,7 +22,10 @@ const publicEventStatuses = [
 
 @Injectable()
 export class ClubsService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly permissions: ClubPermissionService,
+  ) {}
 
   async findAll(tenant: TenantContext): Promise<CampusClub[]> {
     const now = new Date();
@@ -56,7 +64,6 @@ export class ClubsService {
         id: clubId,
         collegeId: tenant.collegeId,
         isActive: true,
-        verificationStatus: 'VERIFIED',
       },
       include: {
         _count: {
@@ -90,6 +97,15 @@ export class ClubsService {
       },
     });
     if (!club) throw new NotFoundException('Club not found.');
+    if (club.verificationStatus !== 'VERIFIED') {
+      const access = await this.permissions.access(tenant, clubId);
+      if (
+        !access.isCollegeAdmin &&
+        (!access.membershipId || club.verificationStatus === 'SUSPENDED')
+      ) {
+        throw new NotFoundException('Club not found.');
+      }
+    }
 
     return {
       ...this.toClub(club),
@@ -97,10 +113,41 @@ export class ClubsService {
     };
   }
 
+  async findManaged(tenant: TenantContext): Promise<CampusClub[]> {
+    const isTenantAdmin = tenant.roles.some((role) =>
+      ['COLLEGE_ADMIN', 'PLATFORM_ADMIN'].includes(role),
+    );
+    const clubs = await this.prisma.club.findMany({
+      where: {
+        collegeId: tenant.collegeId,
+        ...(isTenantAdmin
+          ? {}
+          : {
+              memberships: {
+                some: { userId: tenant.userId, status: 'ACTIVE' },
+              },
+            }),
+      },
+      include: {
+        _count: {
+          select: {
+            memberships: { where: { status: 'ACTIVE' } },
+            events: { where: { endsAt: { gte: new Date() } } },
+          },
+        },
+      },
+      orderBy: { name: 'asc' },
+    });
+    return clubs.map((club) => this.toClub(club));
+  }
+
   async create(
     tenant: TenantContext,
     input: CreateClubInput,
   ): Promise<CampusClub> {
+    const isTenantAdmin = tenant.roles.some((role) =>
+      ['COLLEGE_ADMIN', 'PLATFORM_ADMIN'].includes(role),
+    );
     if (input.departmentId) {
       const department = await this.prisma.department.findFirst({
         where: { id: input.departmentId, collegeId: tenant.collegeId },
@@ -124,16 +171,17 @@ export class ClubsService {
         logoUrl: input.logoUrl,
         coverUrl: input.coverUrl,
         recruitmentStatus: input.recruitmentStatus,
-        verificationStatus: tenant.roles.includes('COLLEGE_ADMIN')
-          ? 'VERIFIED'
-          : 'PENDING',
-        memberships: {
-          create: {
-            userId: tenant.userId,
-            role: 'ADMIN',
-            status: 'ACTIVE',
-          },
-        },
+        verificationStatus: isTenantAdmin ? 'VERIFIED' : 'PENDING',
+        memberships: !isTenantAdmin
+          ? {
+              create: {
+                userId: tenant.userId,
+                role: 'CLUB_LEAD',
+                status: 'ACTIVE',
+                joinedAt: new Date(),
+              },
+            }
+          : undefined,
       },
       include: {
         _count: { select: { memberships: true, events: true } },
@@ -153,6 +201,17 @@ export class ClubsService {
       select: { id: true },
     });
     if (!club) throw new NotFoundException('Club not found.');
+
+    const changesGovernance =
+      input.verificationStatus !== undefined || input.isActive !== undefined;
+    const isTenantAdmin = tenant.roles.some((role) =>
+      ['COLLEGE_ADMIN', 'PLATFORM_ADMIN'].includes(role),
+    );
+    if (changesGovernance && !isTenantAdmin) {
+      throw new ForbiddenException(
+        'Only a college administrator can change club approval or suspension.',
+      );
+    }
 
     if (input.departmentId) {
       const department = await this.prisma.department.findFirst({
@@ -199,6 +258,22 @@ export class ClubsService {
         },
       },
     });
+
+    if (changesGovernance) {
+      await this.prisma.clubAuditLog.create({
+        data: {
+          collegeId: tenant.collegeId,
+          clubId,
+          actorId: tenant.userId,
+          action: 'CLUB_GOVERNANCE_UPDATED',
+          targetId: clubId,
+          metadata: {
+            verificationStatus: input.verificationStatus,
+            isActive: input.isActive,
+          },
+        },
+      });
+    }
 
     return this.toClub(updated);
   }

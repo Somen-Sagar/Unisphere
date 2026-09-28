@@ -20,8 +20,20 @@ export type CollegeMembershipModel = runtime.Types.Result.DefaultSelection<Prism
 
 export type AggregateCollegeMembership = {
   _count: CollegeMembershipCountAggregateOutputType | null
+  _avg: CollegeMembershipAvgAggregateOutputType | null
+  _sum: CollegeMembershipSumAggregateOutputType | null
   _min: CollegeMembershipMinAggregateOutputType | null
   _max: CollegeMembershipMaxAggregateOutputType | null
+}
+
+export type CollegeMembershipAvgAggregateOutputType = {
+  academicYear: number | null
+  semester: number | null
+}
+
+export type CollegeMembershipSumAggregateOutputType = {
+  academicYear: number | null
+  semester: number | null
 }
 
 export type CollegeMembershipMinAggregateOutputType = {
@@ -31,6 +43,9 @@ export type CollegeMembershipMinAggregateOutputType = {
   role: $Enums.MembershipRole | null
   status: $Enums.MembershipStatus | null
   studentId: string | null
+  departmentId: string | null
+  academicYear: number | null
+  semester: number | null
   joinedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -43,6 +58,9 @@ export type CollegeMembershipMaxAggregateOutputType = {
   role: $Enums.MembershipRole | null
   status: $Enums.MembershipStatus | null
   studentId: string | null
+  departmentId: string | null
+  academicYear: number | null
+  semester: number | null
   joinedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -55,12 +73,25 @@ export type CollegeMembershipCountAggregateOutputType = {
   role: number
   status: number
   studentId: number
+  departmentId: number
+  academicYear: number
+  semester: number
   joinedAt: number
   createdAt: number
   updatedAt: number
   _all: number
 }
 
+
+export type CollegeMembershipAvgAggregateInputType = {
+  academicYear?: true
+  semester?: true
+}
+
+export type CollegeMembershipSumAggregateInputType = {
+  academicYear?: true
+  semester?: true
+}
 
 export type CollegeMembershipMinAggregateInputType = {
   id?: true
@@ -69,6 +100,9 @@ export type CollegeMembershipMinAggregateInputType = {
   role?: true
   status?: true
   studentId?: true
+  departmentId?: true
+  academicYear?: true
+  semester?: true
   joinedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -81,6 +115,9 @@ export type CollegeMembershipMaxAggregateInputType = {
   role?: true
   status?: true
   studentId?: true
+  departmentId?: true
+  academicYear?: true
+  semester?: true
   joinedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -93,6 +130,9 @@ export type CollegeMembershipCountAggregateInputType = {
   role?: true
   status?: true
   studentId?: true
+  departmentId?: true
+  academicYear?: true
+  semester?: true
   joinedAt?: true
   createdAt?: true
   updatedAt?: true
@@ -137,6 +177,18 @@ export type CollegeMembershipAggregateArgs<ExtArgs extends runtime.Types.Extensi
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
+   * Select which fields to average
+  **/
+  _avg?: CollegeMembershipAvgAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
+   * Select which fields to sum
+  **/
+  _sum?: CollegeMembershipSumAggregateInputType
+  /**
+   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+   * 
    * Select which fields to find the minimum value
   **/
   _min?: CollegeMembershipMinAggregateInputType
@@ -167,6 +219,8 @@ export type CollegeMembershipGroupByArgs<ExtArgs extends runtime.Types.Extension
   take?: number
   skip?: number
   _count?: CollegeMembershipCountAggregateInputType | true
+  _avg?: CollegeMembershipAvgAggregateInputType
+  _sum?: CollegeMembershipSumAggregateInputType
   _min?: CollegeMembershipMinAggregateInputType
   _max?: CollegeMembershipMaxAggregateInputType
 }
@@ -178,10 +232,15 @@ export type CollegeMembershipGroupByOutputType = {
   role: $Enums.MembershipRole
   status: $Enums.MembershipStatus
   studentId: string | null
+  departmentId: string | null
+  academicYear: number | null
+  semester: number | null
   joinedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: CollegeMembershipCountAggregateOutputType | null
+  _avg: CollegeMembershipAvgAggregateOutputType | null
+  _sum: CollegeMembershipSumAggregateOutputType | null
   _min: CollegeMembershipMinAggregateOutputType | null
   _max: CollegeMembershipMaxAggregateOutputType | null
 }
@@ -211,11 +270,15 @@ export type CollegeMembershipWhereInput = {
   role?: Prisma.EnumMembershipRoleFilter<"CollegeMembership"> | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFilter<"CollegeMembership"> | $Enums.MembershipStatus
   studentId?: Prisma.StringNullableFilter<"CollegeMembership"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"CollegeMembership"> | string | null
+  academicYear?: Prisma.IntNullableFilter<"CollegeMembership"> | number | null
+  semester?: Prisma.IntNullableFilter<"CollegeMembership"> | number | null
   joinedAt?: Prisma.DateTimeNullableFilter<"CollegeMembership"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CollegeMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CollegeMembership"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   college?: Prisma.XOR<Prisma.CollegeScalarRelationFilter, Prisma.CollegeWhereInput>
+  department?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
 }
 
 export type CollegeMembershipOrderByWithRelationInput = {
@@ -225,11 +288,15 @@ export type CollegeMembershipOrderByWithRelationInput = {
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   studentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  departmentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  academicYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  semester?: Prisma.SortOrderInput | Prisma.SortOrder
   joinedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
   college?: Prisma.CollegeOrderByWithRelationInput
+  department?: Prisma.DepartmentOrderByWithRelationInput
 }
 
 export type CollegeMembershipWhereUniqueInput = Prisma.AtLeast<{
@@ -243,11 +310,15 @@ export type CollegeMembershipWhereUniqueInput = Prisma.AtLeast<{
   role?: Prisma.EnumMembershipRoleFilter<"CollegeMembership"> | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFilter<"CollegeMembership"> | $Enums.MembershipStatus
   studentId?: Prisma.StringNullableFilter<"CollegeMembership"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"CollegeMembership"> | string | null
+  academicYear?: Prisma.IntNullableFilter<"CollegeMembership"> | number | null
+  semester?: Prisma.IntNullableFilter<"CollegeMembership"> | number | null
   joinedAt?: Prisma.DateTimeNullableFilter<"CollegeMembership"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CollegeMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CollegeMembership"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   college?: Prisma.XOR<Prisma.CollegeScalarRelationFilter, Prisma.CollegeWhereInput>
+  department?: Prisma.XOR<Prisma.DepartmentNullableScalarRelationFilter, Prisma.DepartmentWhereInput> | null
 }, "id" | "userId_collegeId_role">
 
 export type CollegeMembershipOrderByWithAggregationInput = {
@@ -257,12 +328,17 @@ export type CollegeMembershipOrderByWithAggregationInput = {
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   studentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  departmentId?: Prisma.SortOrderInput | Prisma.SortOrder
+  academicYear?: Prisma.SortOrderInput | Prisma.SortOrder
+  semester?: Prisma.SortOrderInput | Prisma.SortOrder
   joinedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CollegeMembershipCountOrderByAggregateInput
+  _avg?: Prisma.CollegeMembershipAvgOrderByAggregateInput
   _max?: Prisma.CollegeMembershipMaxOrderByAggregateInput
   _min?: Prisma.CollegeMembershipMinOrderByAggregateInput
+  _sum?: Prisma.CollegeMembershipSumOrderByAggregateInput
 }
 
 export type CollegeMembershipScalarWhereWithAggregatesInput = {
@@ -275,6 +351,9 @@ export type CollegeMembershipScalarWhereWithAggregatesInput = {
   role?: Prisma.EnumMembershipRoleWithAggregatesFilter<"CollegeMembership"> | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusWithAggregatesFilter<"CollegeMembership"> | $Enums.MembershipStatus
   studentId?: Prisma.StringNullableWithAggregatesFilter<"CollegeMembership"> | string | null
+  departmentId?: Prisma.StringNullableWithAggregatesFilter<"CollegeMembership"> | string | null
+  academicYear?: Prisma.IntNullableWithAggregatesFilter<"CollegeMembership"> | number | null
+  semester?: Prisma.IntNullableWithAggregatesFilter<"CollegeMembership"> | number | null
   joinedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"CollegeMembership"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"CollegeMembership"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"CollegeMembership"> | Date | string
@@ -285,11 +364,14 @@ export type CollegeMembershipCreateInput = {
   role: $Enums.MembershipRole
   status?: $Enums.MembershipStatus
   studentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMembershipsInput
   college: Prisma.CollegeCreateNestedOneWithoutMembershipsInput
+  department?: Prisma.DepartmentCreateNestedOneWithoutMembershipsInput
 }
 
 export type CollegeMembershipUncheckedCreateInput = {
@@ -299,6 +381,9 @@ export type CollegeMembershipUncheckedCreateInput = {
   role: $Enums.MembershipRole
   status?: $Enums.MembershipStatus
   studentId?: string | null
+  departmentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -309,11 +394,14 @@ export type CollegeMembershipUpdateInput = {
   role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMembershipsNestedInput
   college?: Prisma.CollegeUpdateOneRequiredWithoutMembershipsNestedInput
+  department?: Prisma.DepartmentUpdateOneWithoutMembershipsNestedInput
 }
 
 export type CollegeMembershipUncheckedUpdateInput = {
@@ -323,6 +411,9 @@ export type CollegeMembershipUncheckedUpdateInput = {
   role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -335,6 +426,9 @@ export type CollegeMembershipCreateManyInput = {
   role: $Enums.MembershipRole
   status?: $Enums.MembershipStatus
   studentId?: string | null
+  departmentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -345,6 +439,8 @@ export type CollegeMembershipUpdateManyMutationInput = {
   role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -357,6 +453,9 @@ export type CollegeMembershipUncheckedUpdateManyInput = {
   role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -385,9 +484,17 @@ export type CollegeMembershipCountOrderByAggregateInput = {
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  academicYear?: Prisma.SortOrder
+  semester?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type CollegeMembershipAvgOrderByAggregateInput = {
+  academicYear?: Prisma.SortOrder
+  semester?: Prisma.SortOrder
 }
 
 export type CollegeMembershipMaxOrderByAggregateInput = {
@@ -397,6 +504,9 @@ export type CollegeMembershipMaxOrderByAggregateInput = {
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  academicYear?: Prisma.SortOrder
+  semester?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -409,9 +519,17 @@ export type CollegeMembershipMinOrderByAggregateInput = {
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
   studentId?: Prisma.SortOrder
+  departmentId?: Prisma.SortOrder
+  academicYear?: Prisma.SortOrder
+  semester?: Prisma.SortOrder
   joinedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type CollegeMembershipSumOrderByAggregateInput = {
+  academicYear?: Prisma.SortOrder
+  semester?: Prisma.SortOrder
 }
 
 export type CollegeMembershipCreateNestedManyWithoutUserInput = {
@@ -506,15 +624,68 @@ export type EnumMembershipStatusFieldUpdateOperationsInput = {
   set?: $Enums.MembershipStatus
 }
 
+export type NullableIntFieldUpdateOperationsInput = {
+  set?: number | null
+  increment?: number
+  decrement?: number
+  multiply?: number
+  divide?: number
+}
+
+export type CollegeMembershipCreateNestedManyWithoutDepartmentInput = {
+  create?: Prisma.XOR<Prisma.CollegeMembershipCreateWithoutDepartmentInput, Prisma.CollegeMembershipUncheckedCreateWithoutDepartmentInput> | Prisma.CollegeMembershipCreateWithoutDepartmentInput[] | Prisma.CollegeMembershipUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.CollegeMembershipCreateOrConnectWithoutDepartmentInput | Prisma.CollegeMembershipCreateOrConnectWithoutDepartmentInput[]
+  createMany?: Prisma.CollegeMembershipCreateManyDepartmentInputEnvelope
+  connect?: Prisma.CollegeMembershipWhereUniqueInput | Prisma.CollegeMembershipWhereUniqueInput[]
+}
+
+export type CollegeMembershipUncheckedCreateNestedManyWithoutDepartmentInput = {
+  create?: Prisma.XOR<Prisma.CollegeMembershipCreateWithoutDepartmentInput, Prisma.CollegeMembershipUncheckedCreateWithoutDepartmentInput> | Prisma.CollegeMembershipCreateWithoutDepartmentInput[] | Prisma.CollegeMembershipUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.CollegeMembershipCreateOrConnectWithoutDepartmentInput | Prisma.CollegeMembershipCreateOrConnectWithoutDepartmentInput[]
+  createMany?: Prisma.CollegeMembershipCreateManyDepartmentInputEnvelope
+  connect?: Prisma.CollegeMembershipWhereUniqueInput | Prisma.CollegeMembershipWhereUniqueInput[]
+}
+
+export type CollegeMembershipUpdateManyWithoutDepartmentNestedInput = {
+  create?: Prisma.XOR<Prisma.CollegeMembershipCreateWithoutDepartmentInput, Prisma.CollegeMembershipUncheckedCreateWithoutDepartmentInput> | Prisma.CollegeMembershipCreateWithoutDepartmentInput[] | Prisma.CollegeMembershipUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.CollegeMembershipCreateOrConnectWithoutDepartmentInput | Prisma.CollegeMembershipCreateOrConnectWithoutDepartmentInput[]
+  upsert?: Prisma.CollegeMembershipUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.CollegeMembershipUpsertWithWhereUniqueWithoutDepartmentInput[]
+  createMany?: Prisma.CollegeMembershipCreateManyDepartmentInputEnvelope
+  set?: Prisma.CollegeMembershipWhereUniqueInput | Prisma.CollegeMembershipWhereUniqueInput[]
+  disconnect?: Prisma.CollegeMembershipWhereUniqueInput | Prisma.CollegeMembershipWhereUniqueInput[]
+  delete?: Prisma.CollegeMembershipWhereUniqueInput | Prisma.CollegeMembershipWhereUniqueInput[]
+  connect?: Prisma.CollegeMembershipWhereUniqueInput | Prisma.CollegeMembershipWhereUniqueInput[]
+  update?: Prisma.CollegeMembershipUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.CollegeMembershipUpdateWithWhereUniqueWithoutDepartmentInput[]
+  updateMany?: Prisma.CollegeMembershipUpdateManyWithWhereWithoutDepartmentInput | Prisma.CollegeMembershipUpdateManyWithWhereWithoutDepartmentInput[]
+  deleteMany?: Prisma.CollegeMembershipScalarWhereInput | Prisma.CollegeMembershipScalarWhereInput[]
+}
+
+export type CollegeMembershipUncheckedUpdateManyWithoutDepartmentNestedInput = {
+  create?: Prisma.XOR<Prisma.CollegeMembershipCreateWithoutDepartmentInput, Prisma.CollegeMembershipUncheckedCreateWithoutDepartmentInput> | Prisma.CollegeMembershipCreateWithoutDepartmentInput[] | Prisma.CollegeMembershipUncheckedCreateWithoutDepartmentInput[]
+  connectOrCreate?: Prisma.CollegeMembershipCreateOrConnectWithoutDepartmentInput | Prisma.CollegeMembershipCreateOrConnectWithoutDepartmentInput[]
+  upsert?: Prisma.CollegeMembershipUpsertWithWhereUniqueWithoutDepartmentInput | Prisma.CollegeMembershipUpsertWithWhereUniqueWithoutDepartmentInput[]
+  createMany?: Prisma.CollegeMembershipCreateManyDepartmentInputEnvelope
+  set?: Prisma.CollegeMembershipWhereUniqueInput | Prisma.CollegeMembershipWhereUniqueInput[]
+  disconnect?: Prisma.CollegeMembershipWhereUniqueInput | Prisma.CollegeMembershipWhereUniqueInput[]
+  delete?: Prisma.CollegeMembershipWhereUniqueInput | Prisma.CollegeMembershipWhereUniqueInput[]
+  connect?: Prisma.CollegeMembershipWhereUniqueInput | Prisma.CollegeMembershipWhereUniqueInput[]
+  update?: Prisma.CollegeMembershipUpdateWithWhereUniqueWithoutDepartmentInput | Prisma.CollegeMembershipUpdateWithWhereUniqueWithoutDepartmentInput[]
+  updateMany?: Prisma.CollegeMembershipUpdateManyWithWhereWithoutDepartmentInput | Prisma.CollegeMembershipUpdateManyWithWhereWithoutDepartmentInput[]
+  deleteMany?: Prisma.CollegeMembershipScalarWhereInput | Prisma.CollegeMembershipScalarWhereInput[]
+}
+
 export type CollegeMembershipCreateWithoutUserInput = {
   id?: string
   role: $Enums.MembershipRole
   status?: $Enums.MembershipStatus
   studentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   college: Prisma.CollegeCreateNestedOneWithoutMembershipsInput
+  department?: Prisma.DepartmentCreateNestedOneWithoutMembershipsInput
 }
 
 export type CollegeMembershipUncheckedCreateWithoutUserInput = {
@@ -523,6 +694,9 @@ export type CollegeMembershipUncheckedCreateWithoutUserInput = {
   role: $Enums.MembershipRole
   status?: $Enums.MembershipStatus
   studentId?: string | null
+  departmentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -564,6 +738,9 @@ export type CollegeMembershipScalarWhereInput = {
   role?: Prisma.EnumMembershipRoleFilter<"CollegeMembership"> | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFilter<"CollegeMembership"> | $Enums.MembershipStatus
   studentId?: Prisma.StringNullableFilter<"CollegeMembership"> | string | null
+  departmentId?: Prisma.StringNullableFilter<"CollegeMembership"> | string | null
+  academicYear?: Prisma.IntNullableFilter<"CollegeMembership"> | number | null
+  semester?: Prisma.IntNullableFilter<"CollegeMembership"> | number | null
   joinedAt?: Prisma.DateTimeNullableFilter<"CollegeMembership"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"CollegeMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"CollegeMembership"> | Date | string
@@ -574,10 +751,13 @@ export type CollegeMembershipCreateWithoutCollegeInput = {
   role: $Enums.MembershipRole
   status?: $Enums.MembershipStatus
   studentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutMembershipsInput
+  department?: Prisma.DepartmentCreateNestedOneWithoutMembershipsInput
 }
 
 export type CollegeMembershipUncheckedCreateWithoutCollegeInput = {
@@ -586,6 +766,9 @@ export type CollegeMembershipUncheckedCreateWithoutCollegeInput = {
   role: $Enums.MembershipRole
   status?: $Enums.MembershipStatus
   studentId?: string | null
+  departmentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -617,12 +800,69 @@ export type CollegeMembershipUpdateManyWithWhereWithoutCollegeInput = {
   data: Prisma.XOR<Prisma.CollegeMembershipUpdateManyMutationInput, Prisma.CollegeMembershipUncheckedUpdateManyWithoutCollegeInput>
 }
 
+export type CollegeMembershipCreateWithoutDepartmentInput = {
+  id?: string
+  role: $Enums.MembershipRole
+  status?: $Enums.MembershipStatus
+  studentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
+  joinedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutMembershipsInput
+  college: Prisma.CollegeCreateNestedOneWithoutMembershipsInput
+}
+
+export type CollegeMembershipUncheckedCreateWithoutDepartmentInput = {
+  id?: string
+  userId: string
+  collegeId: string
+  role: $Enums.MembershipRole
+  status?: $Enums.MembershipStatus
+  studentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
+  joinedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CollegeMembershipCreateOrConnectWithoutDepartmentInput = {
+  where: Prisma.CollegeMembershipWhereUniqueInput
+  create: Prisma.XOR<Prisma.CollegeMembershipCreateWithoutDepartmentInput, Prisma.CollegeMembershipUncheckedCreateWithoutDepartmentInput>
+}
+
+export type CollegeMembershipCreateManyDepartmentInputEnvelope = {
+  data: Prisma.CollegeMembershipCreateManyDepartmentInput | Prisma.CollegeMembershipCreateManyDepartmentInput[]
+  skipDuplicates?: boolean
+}
+
+export type CollegeMembershipUpsertWithWhereUniqueWithoutDepartmentInput = {
+  where: Prisma.CollegeMembershipWhereUniqueInput
+  update: Prisma.XOR<Prisma.CollegeMembershipUpdateWithoutDepartmentInput, Prisma.CollegeMembershipUncheckedUpdateWithoutDepartmentInput>
+  create: Prisma.XOR<Prisma.CollegeMembershipCreateWithoutDepartmentInput, Prisma.CollegeMembershipUncheckedCreateWithoutDepartmentInput>
+}
+
+export type CollegeMembershipUpdateWithWhereUniqueWithoutDepartmentInput = {
+  where: Prisma.CollegeMembershipWhereUniqueInput
+  data: Prisma.XOR<Prisma.CollegeMembershipUpdateWithoutDepartmentInput, Prisma.CollegeMembershipUncheckedUpdateWithoutDepartmentInput>
+}
+
+export type CollegeMembershipUpdateManyWithWhereWithoutDepartmentInput = {
+  where: Prisma.CollegeMembershipScalarWhereInput
+  data: Prisma.XOR<Prisma.CollegeMembershipUpdateManyMutationInput, Prisma.CollegeMembershipUncheckedUpdateManyWithoutDepartmentInput>
+}
+
 export type CollegeMembershipCreateManyUserInput = {
   id?: string
   collegeId: string
   role: $Enums.MembershipRole
   status?: $Enums.MembershipStatus
   studentId?: string | null
+  departmentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -633,10 +873,13 @@ export type CollegeMembershipUpdateWithoutUserInput = {
   role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   college?: Prisma.CollegeUpdateOneRequiredWithoutMembershipsNestedInput
+  department?: Prisma.DepartmentUpdateOneWithoutMembershipsNestedInput
 }
 
 export type CollegeMembershipUncheckedUpdateWithoutUserInput = {
@@ -645,6 +888,9 @@ export type CollegeMembershipUncheckedUpdateWithoutUserInput = {
   role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -656,6 +902,9 @@ export type CollegeMembershipUncheckedUpdateManyWithoutUserInput = {
   role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -667,6 +916,9 @@ export type CollegeMembershipCreateManyCollegeInput = {
   role: $Enums.MembershipRole
   status?: $Enums.MembershipStatus
   studentId?: string | null
+  departmentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
   joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -677,10 +929,13 @@ export type CollegeMembershipUpdateWithoutCollegeInput = {
   role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutMembershipsNestedInput
+  department?: Prisma.DepartmentUpdateOneWithoutMembershipsNestedInput
 }
 
 export type CollegeMembershipUncheckedUpdateWithoutCollegeInput = {
@@ -689,6 +944,9 @@ export type CollegeMembershipUncheckedUpdateWithoutCollegeInput = {
   role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -700,6 +958,65 @@ export type CollegeMembershipUncheckedUpdateManyWithoutCollegeInput = {
   role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
   status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
   studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  departmentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CollegeMembershipCreateManyDepartmentInput = {
+  id?: string
+  userId: string
+  collegeId: string
+  role: $Enums.MembershipRole
+  status?: $Enums.MembershipStatus
+  studentId?: string | null
+  academicYear?: number | null
+  semester?: number | null
+  joinedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type CollegeMembershipUpdateWithoutDepartmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+  status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutMembershipsNestedInput
+  college?: Prisma.CollegeUpdateOneRequiredWithoutMembershipsNestedInput
+}
+
+export type CollegeMembershipUncheckedUpdateWithoutDepartmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+  status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type CollegeMembershipUncheckedUpdateManyWithoutDepartmentInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumMembershipRoleFieldUpdateOperationsInput | $Enums.MembershipRole
+  status?: Prisma.EnumMembershipStatusFieldUpdateOperationsInput | $Enums.MembershipStatus
+  studentId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  academicYear?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
+  semester?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -714,11 +1031,15 @@ export type CollegeMembershipSelect<ExtArgs extends runtime.Types.Extensions.Int
   role?: boolean
   status?: boolean
   studentId?: boolean
+  departmentId?: boolean
+  academicYear?: boolean
+  semester?: boolean
   joinedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
+  department?: boolean | Prisma.CollegeMembership$departmentArgs<ExtArgs>
 }, ExtArgs["result"]["collegeMembership"]>
 
 export type CollegeMembershipSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -728,11 +1049,15 @@ export type CollegeMembershipSelectCreateManyAndReturn<ExtArgs extends runtime.T
   role?: boolean
   status?: boolean
   studentId?: boolean
+  departmentId?: boolean
+  academicYear?: boolean
+  semester?: boolean
   joinedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
+  department?: boolean | Prisma.CollegeMembership$departmentArgs<ExtArgs>
 }, ExtArgs["result"]["collegeMembership"]>
 
 export type CollegeMembershipSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -742,11 +1067,15 @@ export type CollegeMembershipSelectUpdateManyAndReturn<ExtArgs extends runtime.T
   role?: boolean
   status?: boolean
   studentId?: boolean
+  departmentId?: boolean
+  academicYear?: boolean
+  semester?: boolean
   joinedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
+  department?: boolean | Prisma.CollegeMembership$departmentArgs<ExtArgs>
 }, ExtArgs["result"]["collegeMembership"]>
 
 export type CollegeMembershipSelectScalar = {
@@ -756,23 +1085,29 @@ export type CollegeMembershipSelectScalar = {
   role?: boolean
   status?: boolean
   studentId?: boolean
+  departmentId?: boolean
+  academicYear?: boolean
+  semester?: boolean
   joinedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CollegeMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "collegeId" | "role" | "status" | "studentId" | "joinedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["collegeMembership"]>
+export type CollegeMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "collegeId" | "role" | "status" | "studentId" | "departmentId" | "academicYear" | "semester" | "joinedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["collegeMembership"]>
 export type CollegeMembershipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
+  department?: boolean | Prisma.CollegeMembership$departmentArgs<ExtArgs>
 }
 export type CollegeMembershipIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
+  department?: boolean | Prisma.CollegeMembership$departmentArgs<ExtArgs>
 }
 export type CollegeMembershipIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
+  department?: boolean | Prisma.CollegeMembership$departmentArgs<ExtArgs>
 }
 
 export type $CollegeMembershipPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -780,6 +1115,7 @@ export type $CollegeMembershipPayload<ExtArgs extends runtime.Types.Extensions.I
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
     college: Prisma.$CollegePayload<ExtArgs>
+    department: Prisma.$DepartmentPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -788,6 +1124,9 @@ export type $CollegeMembershipPayload<ExtArgs extends runtime.Types.Extensions.I
     role: $Enums.MembershipRole
     status: $Enums.MembershipStatus
     studentId: string | null
+    departmentId: string | null
+    academicYear: number | null
+    semester: number | null
     joinedAt: Date | null
     createdAt: Date
     updatedAt: Date
@@ -1187,6 +1526,7 @@ export interface Prisma__CollegeMembershipClient<T, Null = never, ExtArgs extend
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   college<T extends Prisma.CollegeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CollegeDefaultArgs<ExtArgs>>): Prisma.Prisma__CollegeClient<runtime.Types.Result.GetResult<Prisma.$CollegePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  department<T extends Prisma.CollegeMembership$departmentArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CollegeMembership$departmentArgs<ExtArgs>>): Prisma.Prisma__DepartmentClient<runtime.Types.Result.GetResult<Prisma.$DepartmentPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1222,6 +1562,9 @@ export interface CollegeMembershipFieldRefs {
   readonly role: Prisma.FieldRef<"CollegeMembership", 'MembershipRole'>
   readonly status: Prisma.FieldRef<"CollegeMembership", 'MembershipStatus'>
   readonly studentId: Prisma.FieldRef<"CollegeMembership", 'String'>
+  readonly departmentId: Prisma.FieldRef<"CollegeMembership", 'String'>
+  readonly academicYear: Prisma.FieldRef<"CollegeMembership", 'Int'>
+  readonly semester: Prisma.FieldRef<"CollegeMembership", 'Int'>
   readonly joinedAt: Prisma.FieldRef<"CollegeMembership", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"CollegeMembership", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"CollegeMembership", 'DateTime'>
@@ -1623,6 +1966,25 @@ export type CollegeMembershipDeleteManyArgs<ExtArgs extends runtime.Types.Extens
    * Limit how many CollegeMemberships to delete.
    */
   limit?: number
+}
+
+/**
+ * CollegeMembership.department
+ */
+export type CollegeMembership$departmentArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Department
+   */
+  select?: Prisma.DepartmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Department
+   */
+  omit?: Prisma.DepartmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DepartmentInclude<ExtArgs> | null
+  where?: Prisma.DepartmentWhereInput
 }
 
 /**

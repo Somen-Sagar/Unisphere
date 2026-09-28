@@ -25,7 +25,22 @@ const userInclude = {
   memberships: {
     include: {
       college: true,
+      department: true,
     },
+  },
+  clubMemberships: {
+    include: {
+      club: {
+        select: {
+          id: true,
+          collegeId: true,
+          name: true,
+          slug: true,
+          logoUrl: true,
+        },
+      },
+    },
+    orderBy: { createdAt: 'asc' as const },
   },
 } as const;
 
@@ -92,8 +107,9 @@ export class AuthService {
               where: { id: input.college.collegeId },
               select: { id: true, status: true },
             });
-      const activeOnCreateOrVerifiedJoin =
-        input.college.mode === 'create' || college.status === 'VERIFIED';
+      const activeOnCreateOrVerifiedStudentJoin =
+        input.college.mode === 'create' ||
+        (college.status === 'VERIFIED' && role === 'STUDENT');
 
       return tx.user.create({
         data: {
@@ -105,8 +121,12 @@ export class AuthService {
             create: {
               collegeId: college.id,
               role: input.college.mode === 'create' ? 'COLLEGE_ADMIN' : role,
-              status: activeOnCreateOrVerifiedJoin ? 'ACTIVE' : 'PENDING',
-              joinedAt: activeOnCreateOrVerifiedJoin ? new Date() : undefined,
+              status: activeOnCreateOrVerifiedStudentJoin
+                ? 'ACTIVE'
+                : 'PENDING',
+              joinedAt: activeOnCreateOrVerifiedStudentJoin
+                ? new Date()
+                : undefined,
               studentId:
                 input.college.mode === 'join'
                   ? input.college.studentId
@@ -259,6 +279,16 @@ export class AuthService {
         role: membership.role,
         status: membership.status,
         studentId: membership.studentId,
+        departmentId: membership.departmentId,
+        academicYear: membership.academicYear,
+        semester: membership.semester,
+        department: membership.department
+          ? {
+              id: membership.department.id,
+              name: membership.department.name,
+              code: membership.department.code,
+            }
+          : null,
         college: {
           id: membership.college.id,
           name: membership.college.name,
@@ -268,6 +298,14 @@ export class AuthService {
           logoUrl: membership.college.logoUrl,
           status: membership.college.status,
         },
+      })),
+      clubMemberships: user.clubMemberships.map((membership) => ({
+        id: membership.id,
+        clubId: membership.clubId,
+        role: membership.role,
+        status: membership.status,
+        joinedAt: membership.joinedAt?.toISOString() ?? null,
+        club: membership.club,
       })),
     };
   }

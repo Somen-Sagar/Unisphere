@@ -30,6 +30,7 @@ export type ClubMembershipMinAggregateOutputType = {
   userId: string | null
   role: $Enums.ClubMembershipRole | null
   status: $Enums.ClubMembershipStatus | null
+  joinedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -40,6 +41,7 @@ export type ClubMembershipMaxAggregateOutputType = {
   userId: string | null
   role: $Enums.ClubMembershipRole | null
   status: $Enums.ClubMembershipStatus | null
+  joinedAt: Date | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -50,6 +52,7 @@ export type ClubMembershipCountAggregateOutputType = {
   userId: number
   role: number
   status: number
+  joinedAt: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -62,6 +65,7 @@ export type ClubMembershipMinAggregateInputType = {
   userId?: true
   role?: true
   status?: true
+  joinedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -72,6 +76,7 @@ export type ClubMembershipMaxAggregateInputType = {
   userId?: true
   role?: true
   status?: true
+  joinedAt?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -82,6 +87,7 @@ export type ClubMembershipCountAggregateInputType = {
   userId?: true
   role?: true
   status?: true
+  joinedAt?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -165,6 +171,7 @@ export type ClubMembershipGroupByOutputType = {
   userId: string
   role: $Enums.ClubMembershipRole
   status: $Enums.ClubMembershipStatus
+  joinedAt: Date | null
   createdAt: Date
   updatedAt: Date
   _count: ClubMembershipCountAggregateOutputType | null
@@ -196,10 +203,12 @@ export type ClubMembershipWhereInput = {
   userId?: Prisma.StringFilter<"ClubMembership"> | string
   role?: Prisma.EnumClubMembershipRoleFilter<"ClubMembership"> | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFilter<"ClubMembership"> | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.DateTimeNullableFilter<"ClubMembership"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ClubMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ClubMembership"> | Date | string
   club?: Prisma.XOR<Prisma.ClubScalarRelationFilter, Prisma.ClubWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  permissionOverrides?: Prisma.ClubPermissionOverrideListRelationFilter
 }
 
 export type ClubMembershipOrderByWithRelationInput = {
@@ -208,10 +217,12 @@ export type ClubMembershipOrderByWithRelationInput = {
   userId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  joinedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   club?: Prisma.ClubOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
+  permissionOverrides?: Prisma.ClubPermissionOverrideOrderByRelationAggregateInput
 }
 
 export type ClubMembershipWhereUniqueInput = Prisma.AtLeast<{
@@ -224,10 +235,12 @@ export type ClubMembershipWhereUniqueInput = Prisma.AtLeast<{
   userId?: Prisma.StringFilter<"ClubMembership"> | string
   role?: Prisma.EnumClubMembershipRoleFilter<"ClubMembership"> | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFilter<"ClubMembership"> | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.DateTimeNullableFilter<"ClubMembership"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ClubMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ClubMembership"> | Date | string
   club?: Prisma.XOR<Prisma.ClubScalarRelationFilter, Prisma.ClubWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  permissionOverrides?: Prisma.ClubPermissionOverrideListRelationFilter
 }, "id" | "clubId_userId">
 
 export type ClubMembershipOrderByWithAggregationInput = {
@@ -236,6 +249,7 @@ export type ClubMembershipOrderByWithAggregationInput = {
   userId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  joinedAt?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.ClubMembershipCountOrderByAggregateInput
@@ -252,6 +266,7 @@ export type ClubMembershipScalarWhereWithAggregatesInput = {
   userId?: Prisma.StringWithAggregatesFilter<"ClubMembership"> | string
   role?: Prisma.EnumClubMembershipRoleWithAggregatesFilter<"ClubMembership"> | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusWithAggregatesFilter<"ClubMembership"> | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"ClubMembership"> | Date | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"ClubMembership"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"ClubMembership"> | Date | string
 }
@@ -260,10 +275,12 @@ export type ClubMembershipCreateInput = {
   id?: string
   role?: $Enums.ClubMembershipRole
   status?: $Enums.ClubMembershipStatus
+  joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   club: Prisma.ClubCreateNestedOneWithoutMembershipsInput
   user: Prisma.UserCreateNestedOneWithoutClubMembershipsInput
+  permissionOverrides?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutMembershipInput
 }
 
 export type ClubMembershipUncheckedCreateInput = {
@@ -272,18 +289,22 @@ export type ClubMembershipUncheckedCreateInput = {
   userId: string
   role?: $Enums.ClubMembershipRole
   status?: $Enums.ClubMembershipStatus
+  joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  permissionOverrides?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutMembershipInput
 }
 
 export type ClubMembershipUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   club?: Prisma.ClubUpdateOneRequiredWithoutMembershipsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutClubMembershipsNestedInput
+  permissionOverrides?: Prisma.ClubPermissionOverrideUpdateManyWithoutMembershipNestedInput
 }
 
 export type ClubMembershipUncheckedUpdateInput = {
@@ -292,8 +313,10 @@ export type ClubMembershipUncheckedUpdateInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  permissionOverrides?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutMembershipNestedInput
 }
 
 export type ClubMembershipCreateManyInput = {
@@ -302,6 +325,7 @@ export type ClubMembershipCreateManyInput = {
   userId: string
   role?: $Enums.ClubMembershipRole
   status?: $Enums.ClubMembershipStatus
+  joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -310,6 +334,7 @@ export type ClubMembershipUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -320,6 +345,7 @@ export type ClubMembershipUncheckedUpdateManyInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -345,6 +371,7 @@ export type ClubMembershipCountOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  joinedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -355,6 +382,7 @@ export type ClubMembershipMaxOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  joinedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -365,8 +393,14 @@ export type ClubMembershipMinOrderByAggregateInput = {
   userId?: Prisma.SortOrder
   role?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  joinedAt?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type ClubMembershipScalarRelationFilter = {
+  is?: Prisma.ClubMembershipWhereInput
+  isNot?: Prisma.ClubMembershipWhereInput
 }
 
 export type ClubMembershipCreateNestedManyWithoutUserInput = {
@@ -461,13 +495,29 @@ export type EnumClubMembershipStatusFieldUpdateOperationsInput = {
   set?: $Enums.ClubMembershipStatus
 }
 
+export type ClubMembershipCreateNestedOneWithoutPermissionOverridesInput = {
+  create?: Prisma.XOR<Prisma.ClubMembershipCreateWithoutPermissionOverridesInput, Prisma.ClubMembershipUncheckedCreateWithoutPermissionOverridesInput>
+  connectOrCreate?: Prisma.ClubMembershipCreateOrConnectWithoutPermissionOverridesInput
+  connect?: Prisma.ClubMembershipWhereUniqueInput
+}
+
+export type ClubMembershipUpdateOneRequiredWithoutPermissionOverridesNestedInput = {
+  create?: Prisma.XOR<Prisma.ClubMembershipCreateWithoutPermissionOverridesInput, Prisma.ClubMembershipUncheckedCreateWithoutPermissionOverridesInput>
+  connectOrCreate?: Prisma.ClubMembershipCreateOrConnectWithoutPermissionOverridesInput
+  upsert?: Prisma.ClubMembershipUpsertWithoutPermissionOverridesInput
+  connect?: Prisma.ClubMembershipWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ClubMembershipUpdateToOneWithWhereWithoutPermissionOverridesInput, Prisma.ClubMembershipUpdateWithoutPermissionOverridesInput>, Prisma.ClubMembershipUncheckedUpdateWithoutPermissionOverridesInput>
+}
+
 export type ClubMembershipCreateWithoutUserInput = {
   id?: string
   role?: $Enums.ClubMembershipRole
   status?: $Enums.ClubMembershipStatus
+  joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   club: Prisma.ClubCreateNestedOneWithoutMembershipsInput
+  permissionOverrides?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutMembershipInput
 }
 
 export type ClubMembershipUncheckedCreateWithoutUserInput = {
@@ -475,8 +525,10 @@ export type ClubMembershipUncheckedCreateWithoutUserInput = {
   clubId: string
   role?: $Enums.ClubMembershipRole
   status?: $Enums.ClubMembershipStatus
+  joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  permissionOverrides?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutMembershipInput
 }
 
 export type ClubMembershipCreateOrConnectWithoutUserInput = {
@@ -514,6 +566,7 @@ export type ClubMembershipScalarWhereInput = {
   userId?: Prisma.StringFilter<"ClubMembership"> | string
   role?: Prisma.EnumClubMembershipRoleFilter<"ClubMembership"> | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFilter<"ClubMembership"> | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.DateTimeNullableFilter<"ClubMembership"> | Date | string | null
   createdAt?: Prisma.DateTimeFilter<"ClubMembership"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"ClubMembership"> | Date | string
 }
@@ -522,9 +575,11 @@ export type ClubMembershipCreateWithoutClubInput = {
   id?: string
   role?: $Enums.ClubMembershipRole
   status?: $Enums.ClubMembershipStatus
+  joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutClubMembershipsInput
+  permissionOverrides?: Prisma.ClubPermissionOverrideCreateNestedManyWithoutMembershipInput
 }
 
 export type ClubMembershipUncheckedCreateWithoutClubInput = {
@@ -532,8 +587,10 @@ export type ClubMembershipUncheckedCreateWithoutClubInput = {
   userId: string
   role?: $Enums.ClubMembershipRole
   status?: $Enums.ClubMembershipStatus
+  joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  permissionOverrides?: Prisma.ClubPermissionOverrideUncheckedCreateNestedManyWithoutMembershipInput
 }
 
 export type ClubMembershipCreateOrConnectWithoutClubInput = {
@@ -562,11 +619,72 @@ export type ClubMembershipUpdateManyWithWhereWithoutClubInput = {
   data: Prisma.XOR<Prisma.ClubMembershipUpdateManyMutationInput, Prisma.ClubMembershipUncheckedUpdateManyWithoutClubInput>
 }
 
+export type ClubMembershipCreateWithoutPermissionOverridesInput = {
+  id?: string
+  role?: $Enums.ClubMembershipRole
+  status?: $Enums.ClubMembershipStatus
+  joinedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  club: Prisma.ClubCreateNestedOneWithoutMembershipsInput
+  user: Prisma.UserCreateNestedOneWithoutClubMembershipsInput
+}
+
+export type ClubMembershipUncheckedCreateWithoutPermissionOverridesInput = {
+  id?: string
+  clubId: string
+  userId: string
+  role?: $Enums.ClubMembershipRole
+  status?: $Enums.ClubMembershipStatus
+  joinedAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ClubMembershipCreateOrConnectWithoutPermissionOverridesInput = {
+  where: Prisma.ClubMembershipWhereUniqueInput
+  create: Prisma.XOR<Prisma.ClubMembershipCreateWithoutPermissionOverridesInput, Prisma.ClubMembershipUncheckedCreateWithoutPermissionOverridesInput>
+}
+
+export type ClubMembershipUpsertWithoutPermissionOverridesInput = {
+  update: Prisma.XOR<Prisma.ClubMembershipUpdateWithoutPermissionOverridesInput, Prisma.ClubMembershipUncheckedUpdateWithoutPermissionOverridesInput>
+  create: Prisma.XOR<Prisma.ClubMembershipCreateWithoutPermissionOverridesInput, Prisma.ClubMembershipUncheckedCreateWithoutPermissionOverridesInput>
+  where?: Prisma.ClubMembershipWhereInput
+}
+
+export type ClubMembershipUpdateToOneWithWhereWithoutPermissionOverridesInput = {
+  where?: Prisma.ClubMembershipWhereInput
+  data: Prisma.XOR<Prisma.ClubMembershipUpdateWithoutPermissionOverridesInput, Prisma.ClubMembershipUncheckedUpdateWithoutPermissionOverridesInput>
+}
+
+export type ClubMembershipUpdateWithoutPermissionOverridesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
+  status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  club?: Prisma.ClubUpdateOneRequiredWithoutMembershipsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutClubMembershipsNestedInput
+}
+
+export type ClubMembershipUncheckedUpdateWithoutPermissionOverridesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  clubId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
+  status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type ClubMembershipCreateManyUserInput = {
   id?: string
   clubId: string
   role?: $Enums.ClubMembershipRole
   status?: $Enums.ClubMembershipStatus
+  joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -575,9 +693,11 @@ export type ClubMembershipUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   club?: Prisma.ClubUpdateOneRequiredWithoutMembershipsNestedInput
+  permissionOverrides?: Prisma.ClubPermissionOverrideUpdateManyWithoutMembershipNestedInput
 }
 
 export type ClubMembershipUncheckedUpdateWithoutUserInput = {
@@ -585,8 +705,10 @@ export type ClubMembershipUncheckedUpdateWithoutUserInput = {
   clubId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  permissionOverrides?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutMembershipNestedInput
 }
 
 export type ClubMembershipUncheckedUpdateManyWithoutUserInput = {
@@ -594,6 +716,7 @@ export type ClubMembershipUncheckedUpdateManyWithoutUserInput = {
   clubId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -603,6 +726,7 @@ export type ClubMembershipCreateManyClubInput = {
   userId: string
   role?: $Enums.ClubMembershipRole
   status?: $Enums.ClubMembershipStatus
+  joinedAt?: Date | string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -611,9 +735,11 @@ export type ClubMembershipUpdateWithoutClubInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutClubMembershipsNestedInput
+  permissionOverrides?: Prisma.ClubPermissionOverrideUpdateManyWithoutMembershipNestedInput
 }
 
 export type ClubMembershipUncheckedUpdateWithoutClubInput = {
@@ -621,8 +747,10 @@ export type ClubMembershipUncheckedUpdateWithoutClubInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  permissionOverrides?: Prisma.ClubPermissionOverrideUncheckedUpdateManyWithoutMembershipNestedInput
 }
 
 export type ClubMembershipUncheckedUpdateManyWithoutClubInput = {
@@ -630,10 +758,40 @@ export type ClubMembershipUncheckedUpdateManyWithoutClubInput = {
   userId?: Prisma.StringFieldUpdateOperationsInput | string
   role?: Prisma.EnumClubMembershipRoleFieldUpdateOperationsInput | $Enums.ClubMembershipRole
   status?: Prisma.EnumClubMembershipStatusFieldUpdateOperationsInput | $Enums.ClubMembershipStatus
+  joinedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type ClubMembershipCountOutputType
+ */
+
+export type ClubMembershipCountOutputType = {
+  permissionOverrides: number
+}
+
+export type ClubMembershipCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  permissionOverrides?: boolean | ClubMembershipCountOutputTypeCountPermissionOverridesArgs
+}
+
+/**
+ * ClubMembershipCountOutputType without action
+ */
+export type ClubMembershipCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClubMembershipCountOutputType
+   */
+  select?: Prisma.ClubMembershipCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ClubMembershipCountOutputType without action
+ */
+export type ClubMembershipCountOutputTypeCountPermissionOverridesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ClubPermissionOverrideWhereInput
+}
 
 
 export type ClubMembershipSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -642,10 +800,13 @@ export type ClubMembershipSelect<ExtArgs extends runtime.Types.Extensions.Intern
   userId?: boolean
   role?: boolean
   status?: boolean
+  joinedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  permissionOverrides?: boolean | Prisma.ClubMembership$permissionOverridesArgs<ExtArgs>
+  _count?: boolean | Prisma.ClubMembershipCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["clubMembership"]>
 
 export type ClubMembershipSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -654,6 +815,7 @@ export type ClubMembershipSelectCreateManyAndReturn<ExtArgs extends runtime.Type
   userId?: boolean
   role?: boolean
   status?: boolean
+  joinedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
@@ -666,6 +828,7 @@ export type ClubMembershipSelectUpdateManyAndReturn<ExtArgs extends runtime.Type
   userId?: boolean
   role?: boolean
   status?: boolean
+  joinedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
@@ -678,14 +841,17 @@ export type ClubMembershipSelectScalar = {
   userId?: boolean
   role?: boolean
   status?: boolean
+  joinedAt?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type ClubMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clubId" | "userId" | "role" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["clubMembership"]>
+export type ClubMembershipOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "clubId" | "userId" | "role" | "status" | "joinedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["clubMembership"]>
 export type ClubMembershipInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  permissionOverrides?: boolean | Prisma.ClubMembership$permissionOverridesArgs<ExtArgs>
+  _count?: boolean | Prisma.ClubMembershipCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ClubMembershipIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   club?: boolean | Prisma.ClubDefaultArgs<ExtArgs>
@@ -701,6 +867,7 @@ export type $ClubMembershipPayload<ExtArgs extends runtime.Types.Extensions.Inte
   objects: {
     club: Prisma.$ClubPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
+    permissionOverrides: Prisma.$ClubPermissionOverridePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -708,6 +875,7 @@ export type $ClubMembershipPayload<ExtArgs extends runtime.Types.Extensions.Inte
     userId: string
     role: $Enums.ClubMembershipRole
     status: $Enums.ClubMembershipStatus
+    joinedAt: Date | null
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["clubMembership"]>
@@ -1106,6 +1274,7 @@ export interface Prisma__ClubMembershipClient<T, Null = never, ExtArgs extends r
   readonly [Symbol.toStringTag]: "PrismaPromise"
   club<T extends Prisma.ClubDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClubDefaultArgs<ExtArgs>>): Prisma.Prisma__ClubClient<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  permissionOverrides<T extends Prisma.ClubMembership$permissionOverridesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.ClubMembership$permissionOverridesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubPermissionOverridePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1140,6 +1309,7 @@ export interface ClubMembershipFieldRefs {
   readonly userId: Prisma.FieldRef<"ClubMembership", 'String'>
   readonly role: Prisma.FieldRef<"ClubMembership", 'ClubMembershipRole'>
   readonly status: Prisma.FieldRef<"ClubMembership", 'ClubMembershipStatus'>
+  readonly joinedAt: Prisma.FieldRef<"ClubMembership", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"ClubMembership", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"ClubMembership", 'DateTime'>
 }
@@ -1540,6 +1710,30 @@ export type ClubMembershipDeleteManyArgs<ExtArgs extends runtime.Types.Extension
    * Limit how many ClubMemberships to delete.
    */
   limit?: number
+}
+
+/**
+ * ClubMembership.permissionOverrides
+ */
+export type ClubMembership$permissionOverridesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ClubPermissionOverride
+   */
+  select?: Prisma.ClubPermissionOverrideSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ClubPermissionOverride
+   */
+  omit?: Prisma.ClubPermissionOverrideOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ClubPermissionOverrideInclude<ExtArgs> | null
+  where?: Prisma.ClubPermissionOverrideWhereInput
+  orderBy?: Prisma.ClubPermissionOverrideOrderByWithRelationInput | Prisma.ClubPermissionOverrideOrderByWithRelationInput[]
+  cursor?: Prisma.ClubPermissionOverrideWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ClubPermissionOverrideScalarFieldEnum | Prisma.ClubPermissionOverrideScalarFieldEnum[]
 }
 
 /**

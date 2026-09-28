@@ -89,7 +89,7 @@
     },
     "moduleNameMapper": {
       "^(\\.{1,2}/.*)\\.js$": "$1",
-      "^@unisphere/types$": "<rootDir>/../../../packages/types/src/index.ts",
+      "^@unisphere/types$": "<rootDir>/test-support/types.stub.ts",
       "^@unisphere/validation$": "<rootDir>/test-support/validation.stub.ts",
       "^@unisphere/business-rules$": "<rootDir>/test-support/business-rules.stub.ts"
     },

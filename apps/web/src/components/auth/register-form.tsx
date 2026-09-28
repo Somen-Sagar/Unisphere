@@ -13,6 +13,7 @@ import type { z } from "zod";
 
 import { api } from "@/lib/api/client";
 import { dashboardRouteForUser } from "@/lib/auth/dashboard-route";
+import { reconcileActiveCollege } from "@/lib/auth/active-college";
 
 type WebRegisterInput = z.infer<typeof webRegisterSchema>;
 type CollegeFormErrors = {
@@ -89,6 +90,7 @@ export function RegisterForm() {
       });
     },
     onSuccess: ({ user }) => {
+      reconcileActiveCollege(user, window.localStorage);
       router.replace(dashboardRouteForUser(user));
       router.refresh();
     },
@@ -186,8 +188,8 @@ export function RegisterForm() {
           <select {...register("role")}>
             <option value="STUDENT">Student</option>
             <option value="FACULTY">Faculty</option>
-            <option value="COLLEGE_ADMIN">College admin</option>
           </select>
+          <small>Registering a new college creates its initial college administrator; joining an existing college never grants admin access.</small>
         </label>
 
         <div className="segment-control" aria-label="College onboarding mode">

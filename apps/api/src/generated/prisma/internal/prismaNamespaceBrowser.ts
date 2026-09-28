@@ -60,7 +60,13 @@ export const ModelName = {
   ClubMembership: 'ClubMembership',
   Event: 'Event',
   EventRegistration: 'EventRegistration',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  ClubPermissionOverride: 'ClubPermissionOverride',
+  EventOrganizer: 'EventOrganizer',
+  Attendance: 'Attendance',
+  ClubApplication: 'ClubApplication',
+  ClubAnnouncement: 'ClubAnnouncement',
+  ClubAuditLog: 'ClubAuditLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -126,6 +132,9 @@ export const CollegeMembershipScalarFieldEnum = {
   role: 'role',
   status: 'status',
   studentId: 'studentId',
+  departmentId: 'departmentId',
+  academicYear: 'academicYear',
+  semester: 'semester',
   joinedAt: 'joinedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -186,6 +195,7 @@ export const ClubMembershipScalarFieldEnum = {
   userId: 'userId',
   role: 'role',
   status: 'status',
+  joinedAt: 'joinedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -255,12 +265,104 @@ export const NotificationScalarFieldEnum = {
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
+export const ClubPermissionOverrideScalarFieldEnum = {
+  id: 'id',
+  membershipId: 'membershipId',
+  permission: 'permission',
+  effect: 'effect',
+  grantedById: 'grantedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClubPermissionOverrideScalarFieldEnum = (typeof ClubPermissionOverrideScalarFieldEnum)[keyof typeof ClubPermissionOverrideScalarFieldEnum]
+
+
+export const EventOrganizerScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  userId: 'userId',
+  role: 'role',
+  permissions: 'permissions',
+  assignedAt: 'assignedAt'
+} as const
+
+export type EventOrganizerScalarFieldEnum = (typeof EventOrganizerScalarFieldEnum)[keyof typeof EventOrganizerScalarFieldEnum]
+
+
+export const AttendanceScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  eventId: 'eventId',
+  registrationId: 'registrationId',
+  checkedInById: 'checkedInById',
+  checkedInAt: 'checkedInAt',
+  method: 'method',
+  status: 'status'
+} as const
+
+export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof typeof AttendanceScalarFieldEnum]
+
+
+export const ClubApplicationScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  clubId: 'clubId',
+  userId: 'userId',
+  answers: 'answers',
+  status: 'status',
+  reviewedById: 'reviewedById',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClubApplicationScalarFieldEnum = (typeof ClubApplicationScalarFieldEnum)[keyof typeof ClubApplicationScalarFieldEnum]
+
+
+export const ClubAnnouncementScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  clubId: 'clubId',
+  createdById: 'createdById',
+  title: 'title',
+  content: 'content',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClubAnnouncementScalarFieldEnum = (typeof ClubAnnouncementScalarFieldEnum)[keyof typeof ClubAnnouncementScalarFieldEnum]
+
+
+export const ClubAuditLogScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  clubId: 'clubId',
+  actorId: 'actorId',
+  action: 'action',
+  targetId: 'targetId',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type ClubAuditLogScalarFieldEnum = (typeof ClubAuditLogScalarFieldEnum)[keyof typeof ClubAuditLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -277,4 +379,13 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 

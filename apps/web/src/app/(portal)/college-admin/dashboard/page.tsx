@@ -1,5 +1,5 @@
-import { DashboardClient } from "@/components/dashboard-client";
+import { CollegeAdminClient } from "@/components/college-admin-client";
 
 export default function CollegeAdminDashboardPage() {
-  return <DashboardClient allowedRoles={["COLLEGE_ADMIN"]} />;
+  return <CollegeAdminClient />;
 }

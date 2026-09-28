@@ -8,13 +8,20 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import type {
+  CollegeAnnouncementResult,
+  CollegeAdminSummary,
   CollegeDetails,
   CollegeSummary,
+  CampusClub,
   Membership,
 } from '@unisphere/types';
 import {
+  createCollegeAnnouncementSchema,
   createCollegeSchema,
+  updateCollegeMembershipSchema,
+  type CreateCollegeAnnouncementInput,
   type CreateCollegeInput,
+  type UpdateCollegeMembershipInput,
   type UpdateCollegeInput,
   updateCollegeSchema,
 } from '@unisphere/validation';
@@ -72,5 +79,50 @@ export class CollegesController {
     @Param('collegeId') collegeId: string,
   ): Promise<Membership[]> {
     return this.colleges.members(tenant, collegeId);
+  }
+
+  @UseGuards(JwtAuthGuard, TenantGuard, RolesGuard)
+  @TenantRoles('COLLEGE_ADMIN', 'PLATFORM_ADMIN')
+  @Get(':collegeId/admin/summary')
+  adminSummary(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('collegeId') collegeId: string,
+  ): Promise<CollegeAdminSummary> {
+    return this.colleges.adminSummary(tenant, collegeId);
+  }
+
+  @UseGuards(JwtAuthGuard, TenantGuard, RolesGuard)
+  @TenantRoles('COLLEGE_ADMIN', 'PLATFORM_ADMIN')
+  @Get(':collegeId/admin/clubs')
+  adminClubs(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('collegeId') collegeId: string,
+  ): Promise<CampusClub[]> {
+    return this.colleges.adminClubs(tenant, collegeId);
+  }
+
+  @UseGuards(JwtAuthGuard, TenantGuard, RolesGuard)
+  @TenantRoles('COLLEGE_ADMIN', 'PLATFORM_ADMIN')
+  @Post(':collegeId/announcements')
+  announce(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('collegeId') collegeId: string,
+    @Body(new ZodValidationPipe(createCollegeAnnouncementSchema))
+    input: CreateCollegeAnnouncementInput,
+  ): Promise<CollegeAnnouncementResult> {
+    return this.colleges.announce(tenant, collegeId, input);
+  }
+
+  @UseGuards(JwtAuthGuard, TenantGuard, RolesGuard)
+  @TenantRoles('COLLEGE_ADMIN', 'PLATFORM_ADMIN')
+  @Patch(':collegeId/members/:membershipId')
+  updateMember(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('collegeId') collegeId: string,
+    @Param('membershipId') membershipId: string,
+    @Body(new ZodValidationPipe(updateCollegeMembershipSchema))
+    input: UpdateCollegeMembershipInput,
+  ): Promise<Membership> {
+    return this.colleges.updateMember(tenant, collegeId, membershipId, input);
   }
 }

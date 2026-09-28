@@ -7,7 +7,11 @@ import {
   Post,
   UseGuards,
 } from '@nestjs/common';
-import type { EventRegistration } from '@unisphere/types';
+import type { AttendanceRecord, EventRegistration } from '@unisphere/types';
+import {
+  manualAttendanceSchema,
+  type ManualAttendanceInput,
+} from '@unisphere/validation';
 import { z } from 'zod';
 
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -69,5 +73,19 @@ export class RegistrationsController {
     @Body(new ZodValidationPipe(scanSchema)) input: { qrToken: string },
   ): Promise<EventRegistration> {
     return this.registrations.scan(tenant, input.qrToken);
+  }
+
+  @Post('events/:eventId/attendance/manual')
+  manualAttendance(
+    @CurrentTenant() tenant: TenantContext,
+    @Param('eventId') eventId: string,
+    @Body(new ZodValidationPipe(manualAttendanceSchema))
+    input: ManualAttendanceInput,
+  ): Promise<AttendanceRecord> {
+    return this.registrations.manualCheckIn(
+      tenant,
+      eventId,
+      input.registrationId,
+    );
   }
 }

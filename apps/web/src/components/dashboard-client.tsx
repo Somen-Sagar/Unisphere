@@ -12,7 +12,9 @@ import {
   CircleGauge,
   Clock3,
   FileBadge,
-  MapPin,
+  Orbit,
+  Pause,
+  Play,
   Search,
   ShieldAlert,
   Sparkles,
@@ -30,6 +32,7 @@ import { UniSphereApiError, type UniSphereHealth } from "@unisphere/api-client";
 import type {
   CampusClub,
   CampusClubDetails,
+  ClubAnnouncement,
   CampusEvent,
   CampusNotification,
   CampusUser,
@@ -40,6 +43,10 @@ import type {
 } from "@unisphere/types";
 
 import { api } from "@/lib/api/client";
+import {
+  ACTIVE_COLLEGE_STORAGE_KEY,
+  activeMembershipForUser,
+} from "@/lib/auth/active-college";
 
 export type DashboardView =
   | "overview"
@@ -180,16 +187,8 @@ function resolveMembership(user: CampusUser): Membership | null {
   const stored =
     typeof window === "undefined"
       ? null
-      : window.localStorage.getItem("unisphere.activeCollegeId");
-  return (
-    user.memberships.find(
-      (membership) =>
-        membership.status === "ACTIVE" && membership.collegeId === stored,
-    ) ??
-    user.memberships.find((membership) => membership.status === "ACTIVE") ??
-    user.memberships[0] ??
-    null
-  );
+      : window.localStorage.getItem(ACTIVE_COLLEGE_STORAGE_KEY);
+  return activeMembershipForUser(user, stored);
 }
 
 function roleRoute(role: MembershipRole): string {
@@ -551,6 +550,66 @@ function PassCard({ registration }: { registration: EventRegistration }) {
   );
 }
 
+function CampusSpatialModel({
+  nextEvent,
+  summary,
+}: {
+  nextEvent?: CampusEvent;
+  summary: DashboardSummary;
+}) {
+  const [paused, setPaused] = useState(false);
+  const [tilt, setTilt] = useState({ x: 0, y: 0 });
+
+  return (
+    <aside
+      className="campus-spatial-card"
+      onPointerLeave={() => setTilt({ x: 0, y: 0 })}
+      onPointerMove={(event) => {
+        const bounds = event.currentTarget.getBoundingClientRect();
+        const x = ((event.clientX - bounds.left) / bounds.width - 0.5) * 12;
+        const y = ((event.clientY - bounds.top) / bounds.height - 0.5) * -10;
+        setTilt({ x, y });
+      }}
+    >
+      <div className="spatial-card-toolbar">
+        <span><i /> Campus digital twin</span>
+        <button
+          aria-label={paused ? "Resume 3D model" : "Pause 3D model"}
+          onClick={() => setPaused((value) => !value)}
+          type="button"
+        >
+          {paused ? <Play size={13} /> : <Pause size={13} />}
+        </button>
+      </div>
+      <div
+        className={`campus-model-stage${paused ? " paused" : ""}`}
+        style={{ transform: `rotateX(${tilt.y}deg) rotateY(${tilt.x}deg)` }}
+      >
+        <span className="model-orbit model-orbit-a" />
+        <span className="model-orbit model-orbit-b" />
+        <span className="model-axis" />
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/media/campus-orbit.webp" alt="A futuristic 3D digital twin of the campus" />
+        <span className="model-node node-a" />
+        <span className="model-node node-b" />
+        <span className="model-node node-c" />
+      </div>
+      <div className="spatial-telemetry">
+        <span><small>Events</small><strong>{summary.upcomingEvents}</strong></span>
+        <span><small>Communities</small><strong>{summary.activeClubs}</strong></span>
+        <span><small>Next signal</small><strong>{nextEvent ? eventDate(nextEvent.startsAt).split(",")[0] : "Standby"}</strong></span>
+      </div>
+      <div className="spatial-event-label">
+        <Orbit size={14} />
+        <span>
+          <small>Next campus moment</small>
+          <strong>{nextEvent?.title ?? "Awaiting published events"}</strong>
+        </span>
+      </div>
+    </aside>
+  );
+}
+
 function Overview({
   user,
   membership,
@@ -578,14 +637,15 @@ function Overview({
 }) {
   const nextEvent = events[0];
   const registrationCount = registrations.length;
+  const platformView = membership?.role === "PLATFORM_ADMIN";
 
   return (
     <>
-      <section className="dashboard-hero">
-        <div>
-          <p className="eyebrow">{membership?.college.name ?? "UNISPHERE"}</p>
-          <h1>Your campus is moving, {user.firstName}.</h1>
-          <p>Here&apos;s what is happening across your campus, drawn live from the UniSphere backend and scoped to your active college.</p>
+      <section className="dashboard-hero dashboard-hero-spatial">
+        <div className="hero-copy-zone">
+          <p className="eyebrow">{platformView ? "Platform command" : membership?.college.name ?? "UNISPHERE"}</p>
+          <h1>{platformView ? `The network is online, ${user.firstName}.` : `Your campus is moving, ${user.firstName}.`}</h1>
+          <p>{platformView ? "Monitor the active tenant through a live spatial control surface with platform-level visibility." : "See what is happening across your campus through a live, tenant-scoped command surface."}</p>
           <div className="hero-metric-row">
             <span><strong>{summary.upcomingEvents}</strong> upcoming events</span>
             <span><strong>{summary.activeClubs}</strong> active clubs</span>
@@ -598,24 +658,7 @@ function Overview({
             <Link className="button button-secondary preview-action" href="/dashboard/ai"><Bot size={16} />AI Preview</Link>
           </div>
         </div>
-        <aside className="hero-context-panel">
-          <span className="eyebrow">Next campus moment</span>
-          {nextEvent ? (
-            <>
-              <h2>{nextEvent.title}</h2>
-              <p><CalendarDays size={14} /> {eventDate(nextEvent.startsAt)}</p>
-              <p><MapPin size={14} /> {nextEvent.venue}</p>
-              <Link className="button button-secondary button-sm" href={`/dashboard/events/${nextEvent.id}`}>
-                Open event
-              </Link>
-            </>
-          ) : (
-            <>
-              <h2>No upcoming events yet</h2>
-              <p>Published events for your active college will appear here.</p>
-            </>
-          )}
-        </aside>
+        <CampusSpatialModel nextEvent={nextEvent} summary={summary} />
       </section>
       <KpiGrid events={events} clubs={clubs} registrations={registrations} summary={summary} />
       <section className="portal-two-column">
@@ -837,7 +880,7 @@ function ClubsView({ clubs }: { clubs: CampusClub[] }) {
   );
 }
 
-function ClubDetailView({ club }: { club?: CampusClub | CampusClubDetails }) {
+function ClubDetailView({ club, announcements, applying, onApply }: { club?: CampusClub | CampusClubDetails; announcements: ClubAnnouncement[]; applying: boolean; onApply: () => void }) {
   if (!club) {
     return (
       <EmptyState
@@ -883,7 +926,11 @@ function ClubDetailView({ club }: { club?: CampusClub | CampusClubDetails }) {
             ))}
           </div>
         ) : null}
-        <Link className="button button-secondary" href="/dashboard/clubs">Back to clubs</Link>
+        {announcements.length ? <div className="embedded-list"><p className="eyebrow">Announcements</p>{announcements.slice(0, 4).map((item) => <article key={item.id}><strong>{item.title}</strong><small>{item.content}</small></article>)}</div> : null}
+        <div className="card-actions">
+          <Link className="button button-secondary" href="/dashboard/clubs">Back to clubs</Link>
+          {club.recruitmentStatus === "OPEN" ? <button className="button button-primary" disabled={applying} onClick={onApply}>{applying ? "Applying…" : "Apply to join"}</button> : null}
+        </div>
       </div>
     </section>
   );
@@ -1009,6 +1056,8 @@ function ProfileView({ user, membership, registrations }: { user: CampusUser; me
             <div><dt>Role</dt><dd>{membership ? titleCase(membership.role) : "Pending"}</dd></div>
             <div><dt>Status</dt><dd>{membership ? titleCase(membership.status) : "Pending"}</dd></div>
             <div><dt>Student ID</dt><dd>{membership?.studentId ?? "Not provided"}</dd></div>
+            <div><dt>Department</dt><dd>{membership?.department?.name ?? "Not assigned"}</dd></div>
+            <div><dt>Academic year</dt><dd>{membership?.academicYear ?? "Not provided"}</dd></div>
             <div><dt>Registrations</dt><dd>{registrations.length}</dd></div>
           </dl>
         </article>
@@ -1021,6 +1070,18 @@ function ProfileView({ user, membership, registrations }: { user: CampusUser; me
                 <span>{titleCase(item.role)} · {titleCase(item.status)}</span>
               </div>
             ))}
+          </div>
+        </article>
+        <article>
+          <p className="eyebrow">Club roles</p>
+          <div className="membership-list">
+            {user.clubMemberships?.filter((item) => item.club.collegeId === membership?.collegeId).map((item) => (
+              <div key={item.id}>
+                <strong>{item.club.name}</strong>
+                <span>{titleCase(item.role)} · {titleCase(item.status)}</span>
+              </div>
+            ))}
+            {!user.clubMemberships?.some((item) => item.club.collegeId === membership?.collegeId) ? <p>No club memberships yet.</p> : null}
           </div>
         </article>
       </section>
@@ -1138,6 +1199,12 @@ export function DashboardClient({
   const clubDetail = useQuery({
     queryKey: ["club", tenantVersion, clubId],
     queryFn: () => api.club(clubId ?? ""),
+    enabled: view === "club-detail" && Boolean(clubId),
+    retry: false,
+  });
+  const clubAnnouncements = useQuery({
+    queryKey: ["club-announcements", tenantVersion, clubId],
+    queryFn: () => api.clubAnnouncements(clubId ?? ""),
     enabled: view === "club-detail" && Boolean(clubId),
     retry: false,
   });
@@ -1273,6 +1340,20 @@ export function DashboardClient({
     }
   }
 
+  async function applyToClub() {
+    if (!clubId) return;
+    setRegisteringId(clubId);
+    setActionMessage(null);
+    try {
+      await api.applyToClub(clubId);
+      setActionMessage("Your club application was submitted for review.");
+    } catch (applicationError) {
+      setActionMessage(apiErrorMessage(applicationError));
+    } finally {
+      setRegisteringId(null);
+    }
+  }
+
   if (!roleAllowed) {
     return (
       <main className="portal-content centered-state">
@@ -1354,7 +1435,7 @@ export function DashboardClient({
             />
           ) : null}
           {view === "clubs" ? <ClubsView clubs={clubs} /> : null}
-          {view === "club-detail" && !detailLoading ? <ClubDetailView club={selectedClub} /> : null}
+          {view === "club-detail" && !detailLoading ? <ClubDetailView club={selectedClub} announcements={clubAnnouncements.data ?? []} applying={registeringId === clubId} onApply={applyToClub} /> : null}
           {view === "passes" ? <PassesView registrations={registrations} /> : null}
           {view === "notifications" ? (
             <NotificationsView notifications={notifications} onMarkRead={markNotificationRead} />

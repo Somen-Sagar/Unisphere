@@ -25,7 +25,7 @@ export class DepartmentsController {
   }
 
   @UseGuards(RolesGuard)
-  @TenantRoles('FACULTY', 'DEPARTMENT_ADMIN', 'COLLEGE_ADMIN')
+  @TenantRoles('COLLEGE_ADMIN', 'PLATFORM_ADMIN')
   @Post()
   create(
     @CurrentTenant() tenant: TenantContext,

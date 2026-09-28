@@ -406,7 +406,13 @@ export const ModelName = {
   ClubMembership: 'ClubMembership',
   Event: 'Event',
   EventRegistration: 'EventRegistration',
-  Notification: 'Notification'
+  Notification: 'Notification',
+  ClubPermissionOverride: 'ClubPermissionOverride',
+  EventOrganizer: 'EventOrganizer',
+  Attendance: 'Attendance',
+  ClubApplication: 'ClubApplication',
+  ClubAnnouncement: 'ClubAnnouncement',
+  ClubAuditLog: 'ClubAuditLog'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -422,7 +428,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "college" | "collegeMembership" | "department" | "refreshSession" | "club" | "clubMembership" | "event" | "eventRegistration" | "notification"
+    modelProps: "user" | "college" | "collegeMembership" | "department" | "refreshSession" | "club" | "clubMembership" | "event" | "eventRegistration" | "notification" | "clubPermissionOverride" | "eventOrganizer" | "attendance" | "clubApplication" | "clubAnnouncement" | "clubAuditLog"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1166,6 +1172,450 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ClubPermissionOverride: {
+      payload: Prisma.$ClubPermissionOverridePayload<ExtArgs>
+      fields: Prisma.ClubPermissionOverrideFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClubPermissionOverrideFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPermissionOverridePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClubPermissionOverrideFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPermissionOverridePayload>
+        }
+        findFirst: {
+          args: Prisma.ClubPermissionOverrideFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPermissionOverridePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClubPermissionOverrideFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPermissionOverridePayload>
+        }
+        findMany: {
+          args: Prisma.ClubPermissionOverrideFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPermissionOverridePayload>[]
+        }
+        create: {
+          args: Prisma.ClubPermissionOverrideCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPermissionOverridePayload>
+        }
+        createMany: {
+          args: Prisma.ClubPermissionOverrideCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClubPermissionOverrideCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPermissionOverridePayload>[]
+        }
+        delete: {
+          args: Prisma.ClubPermissionOverrideDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPermissionOverridePayload>
+        }
+        update: {
+          args: Prisma.ClubPermissionOverrideUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPermissionOverridePayload>
+        }
+        deleteMany: {
+          args: Prisma.ClubPermissionOverrideDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClubPermissionOverrideUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClubPermissionOverrideUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPermissionOverridePayload>[]
+        }
+        upsert: {
+          args: Prisma.ClubPermissionOverrideUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubPermissionOverridePayload>
+        }
+        aggregate: {
+          args: Prisma.ClubPermissionOverrideAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClubPermissionOverride>
+        }
+        groupBy: {
+          args: Prisma.ClubPermissionOverrideGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubPermissionOverrideGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClubPermissionOverrideCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubPermissionOverrideCountAggregateOutputType> | number
+        }
+      }
+    }
+    EventOrganizer: {
+      payload: Prisma.$EventOrganizerPayload<ExtArgs>
+      fields: Prisma.EventOrganizerFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.EventOrganizerFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventOrganizerPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.EventOrganizerFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventOrganizerPayload>
+        }
+        findFirst: {
+          args: Prisma.EventOrganizerFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventOrganizerPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.EventOrganizerFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventOrganizerPayload>
+        }
+        findMany: {
+          args: Prisma.EventOrganizerFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventOrganizerPayload>[]
+        }
+        create: {
+          args: Prisma.EventOrganizerCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventOrganizerPayload>
+        }
+        createMany: {
+          args: Prisma.EventOrganizerCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.EventOrganizerCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventOrganizerPayload>[]
+        }
+        delete: {
+          args: Prisma.EventOrganizerDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventOrganizerPayload>
+        }
+        update: {
+          args: Prisma.EventOrganizerUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventOrganizerPayload>
+        }
+        deleteMany: {
+          args: Prisma.EventOrganizerDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.EventOrganizerUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.EventOrganizerUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventOrganizerPayload>[]
+        }
+        upsert: {
+          args: Prisma.EventOrganizerUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$EventOrganizerPayload>
+        }
+        aggregate: {
+          args: Prisma.EventOrganizerAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateEventOrganizer>
+        }
+        groupBy: {
+          args: Prisma.EventOrganizerGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EventOrganizerGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.EventOrganizerCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.EventOrganizerCountAggregateOutputType> | number
+        }
+      }
+    }
+    Attendance: {
+      payload: Prisma.$AttendancePayload<ExtArgs>
+      fields: Prisma.AttendanceFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AttendanceFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendancePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AttendanceFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendancePayload>
+        }
+        findFirst: {
+          args: Prisma.AttendanceFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendancePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AttendanceFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendancePayload>
+        }
+        findMany: {
+          args: Prisma.AttendanceFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendancePayload>[]
+        }
+        create: {
+          args: Prisma.AttendanceCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendancePayload>
+        }
+        createMany: {
+          args: Prisma.AttendanceCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AttendanceCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendancePayload>[]
+        }
+        delete: {
+          args: Prisma.AttendanceDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendancePayload>
+        }
+        update: {
+          args: Prisma.AttendanceUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendancePayload>
+        }
+        deleteMany: {
+          args: Prisma.AttendanceDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AttendanceUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AttendanceUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendancePayload>[]
+        }
+        upsert: {
+          args: Prisma.AttendanceUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AttendancePayload>
+        }
+        aggregate: {
+          args: Prisma.AttendanceAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAttendance>
+        }
+        groupBy: {
+          args: Prisma.AttendanceGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AttendanceGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AttendanceCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AttendanceCountAggregateOutputType> | number
+        }
+      }
+    }
+    ClubApplication: {
+      payload: Prisma.$ClubApplicationPayload<ExtArgs>
+      fields: Prisma.ClubApplicationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClubApplicationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubApplicationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClubApplicationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubApplicationPayload>
+        }
+        findFirst: {
+          args: Prisma.ClubApplicationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubApplicationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClubApplicationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubApplicationPayload>
+        }
+        findMany: {
+          args: Prisma.ClubApplicationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubApplicationPayload>[]
+        }
+        create: {
+          args: Prisma.ClubApplicationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubApplicationPayload>
+        }
+        createMany: {
+          args: Prisma.ClubApplicationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClubApplicationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubApplicationPayload>[]
+        }
+        delete: {
+          args: Prisma.ClubApplicationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubApplicationPayload>
+        }
+        update: {
+          args: Prisma.ClubApplicationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubApplicationPayload>
+        }
+        deleteMany: {
+          args: Prisma.ClubApplicationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClubApplicationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClubApplicationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubApplicationPayload>[]
+        }
+        upsert: {
+          args: Prisma.ClubApplicationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubApplicationPayload>
+        }
+        aggregate: {
+          args: Prisma.ClubApplicationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClubApplication>
+        }
+        groupBy: {
+          args: Prisma.ClubApplicationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubApplicationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClubApplicationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubApplicationCountAggregateOutputType> | number
+        }
+      }
+    }
+    ClubAnnouncement: {
+      payload: Prisma.$ClubAnnouncementPayload<ExtArgs>
+      fields: Prisma.ClubAnnouncementFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClubAnnouncementFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAnnouncementPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClubAnnouncementFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAnnouncementPayload>
+        }
+        findFirst: {
+          args: Prisma.ClubAnnouncementFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAnnouncementPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClubAnnouncementFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAnnouncementPayload>
+        }
+        findMany: {
+          args: Prisma.ClubAnnouncementFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAnnouncementPayload>[]
+        }
+        create: {
+          args: Prisma.ClubAnnouncementCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAnnouncementPayload>
+        }
+        createMany: {
+          args: Prisma.ClubAnnouncementCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClubAnnouncementCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAnnouncementPayload>[]
+        }
+        delete: {
+          args: Prisma.ClubAnnouncementDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAnnouncementPayload>
+        }
+        update: {
+          args: Prisma.ClubAnnouncementUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAnnouncementPayload>
+        }
+        deleteMany: {
+          args: Prisma.ClubAnnouncementDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClubAnnouncementUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClubAnnouncementUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAnnouncementPayload>[]
+        }
+        upsert: {
+          args: Prisma.ClubAnnouncementUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAnnouncementPayload>
+        }
+        aggregate: {
+          args: Prisma.ClubAnnouncementAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClubAnnouncement>
+        }
+        groupBy: {
+          args: Prisma.ClubAnnouncementGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubAnnouncementGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClubAnnouncementCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubAnnouncementCountAggregateOutputType> | number
+        }
+      }
+    }
+    ClubAuditLog: {
+      payload: Prisma.$ClubAuditLogPayload<ExtArgs>
+      fields: Prisma.ClubAuditLogFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ClubAuditLogFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAuditLogPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ClubAuditLogFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAuditLogPayload>
+        }
+        findFirst: {
+          args: Prisma.ClubAuditLogFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAuditLogPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ClubAuditLogFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAuditLogPayload>
+        }
+        findMany: {
+          args: Prisma.ClubAuditLogFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAuditLogPayload>[]
+        }
+        create: {
+          args: Prisma.ClubAuditLogCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAuditLogPayload>
+        }
+        createMany: {
+          args: Prisma.ClubAuditLogCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ClubAuditLogCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAuditLogPayload>[]
+        }
+        delete: {
+          args: Prisma.ClubAuditLogDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAuditLogPayload>
+        }
+        update: {
+          args: Prisma.ClubAuditLogUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAuditLogPayload>
+        }
+        deleteMany: {
+          args: Prisma.ClubAuditLogDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ClubAuditLogUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ClubAuditLogUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAuditLogPayload>[]
+        }
+        upsert: {
+          args: Prisma.ClubAuditLogUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ClubAuditLogPayload>
+        }
+        aggregate: {
+          args: Prisma.ClubAuditLogAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateClubAuditLog>
+        }
+        groupBy: {
+          args: Prisma.ClubAuditLogGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubAuditLogGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ClubAuditLogCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ClubAuditLogCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1252,6 +1702,9 @@ export const CollegeMembershipScalarFieldEnum = {
   role: 'role',
   status: 'status',
   studentId: 'studentId',
+  departmentId: 'departmentId',
+  academicYear: 'academicYear',
+  semester: 'semester',
   joinedAt: 'joinedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
@@ -1312,6 +1765,7 @@ export const ClubMembershipScalarFieldEnum = {
   userId: 'userId',
   role: 'role',
   status: 'status',
+  joinedAt: 'joinedAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1381,12 +1835,104 @@ export const NotificationScalarFieldEnum = {
 export type NotificationScalarFieldEnum = (typeof NotificationScalarFieldEnum)[keyof typeof NotificationScalarFieldEnum]
 
 
+export const ClubPermissionOverrideScalarFieldEnum = {
+  id: 'id',
+  membershipId: 'membershipId',
+  permission: 'permission',
+  effect: 'effect',
+  grantedById: 'grantedById',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClubPermissionOverrideScalarFieldEnum = (typeof ClubPermissionOverrideScalarFieldEnum)[keyof typeof ClubPermissionOverrideScalarFieldEnum]
+
+
+export const EventOrganizerScalarFieldEnum = {
+  id: 'id',
+  eventId: 'eventId',
+  userId: 'userId',
+  role: 'role',
+  permissions: 'permissions',
+  assignedAt: 'assignedAt'
+} as const
+
+export type EventOrganizerScalarFieldEnum = (typeof EventOrganizerScalarFieldEnum)[keyof typeof EventOrganizerScalarFieldEnum]
+
+
+export const AttendanceScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  eventId: 'eventId',
+  registrationId: 'registrationId',
+  checkedInById: 'checkedInById',
+  checkedInAt: 'checkedInAt',
+  method: 'method',
+  status: 'status'
+} as const
+
+export type AttendanceScalarFieldEnum = (typeof AttendanceScalarFieldEnum)[keyof typeof AttendanceScalarFieldEnum]
+
+
+export const ClubApplicationScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  clubId: 'clubId',
+  userId: 'userId',
+  answers: 'answers',
+  status: 'status',
+  reviewedById: 'reviewedById',
+  reviewedAt: 'reviewedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClubApplicationScalarFieldEnum = (typeof ClubApplicationScalarFieldEnum)[keyof typeof ClubApplicationScalarFieldEnum]
+
+
+export const ClubAnnouncementScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  clubId: 'clubId',
+  createdById: 'createdById',
+  title: 'title',
+  content: 'content',
+  publishedAt: 'publishedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ClubAnnouncementScalarFieldEnum = (typeof ClubAnnouncementScalarFieldEnum)[keyof typeof ClubAnnouncementScalarFieldEnum]
+
+
+export const ClubAuditLogScalarFieldEnum = {
+  id: 'id',
+  collegeId: 'collegeId',
+  clubId: 'clubId',
+  actorId: 'actorId',
+  action: 'action',
+  targetId: 'targetId',
+  metadata: 'metadata',
+  createdAt: 'createdAt'
+} as const
+
+export type ClubAuditLogScalarFieldEnum = (typeof ClubAuditLogScalarFieldEnum)[keyof typeof ClubAuditLogScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
 } as const
 
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1403,6 +1949,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -1496,6 +2051,20 @@ export type ListEnumMembershipStatusFieldRefInput<$PrismaModel> = FieldRefInputT
 
 
 /**
+ * Reference to a field of type 'Int'
+ */
+export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
+    
+
+
+/**
+ * Reference to a field of type 'Int[]'
+ */
+export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
  * Reference to a field of type 'ClubRecruitmentStatus'
  */
 export type EnumClubRecruitmentStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubRecruitmentStatus'>
@@ -1559,20 +2128,6 @@ export type ListEnumClubMembershipStatusFieldRefInput<$PrismaModel> = FieldRefIn
 
 
 /**
- * Reference to a field of type 'Int'
- */
-export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
-    
-
-
-/**
- * Reference to a field of type 'Int[]'
- */
-export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
-    
-
-
-/**
  * Reference to a field of type 'Decimal'
  */
 export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
@@ -1625,6 +2180,104 @@ export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'NotificationType[]'
  */
 export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ClubPermission'
+ */
+export type EnumClubPermissionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubPermission'>
+    
+
+
+/**
+ * Reference to a field of type 'ClubPermission[]'
+ */
+export type ListEnumClubPermissionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubPermission[]'>
+    
+
+
+/**
+ * Reference to a field of type 'PermissionEffect'
+ */
+export type EnumPermissionEffectFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PermissionEffect'>
+    
+
+
+/**
+ * Reference to a field of type 'PermissionEffect[]'
+ */
+export type ListEnumPermissionEffectFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'PermissionEffect[]'>
+    
+
+
+/**
+ * Reference to a field of type 'EventOrganizerPermission[]'
+ */
+export type ListEnumEventOrganizerPermissionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventOrganizerPermission[]'>
+    
+
+
+/**
+ * Reference to a field of type 'EventOrganizerPermission'
+ */
+export type EnumEventOrganizerPermissionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'EventOrganizerPermission'>
+    
+
+
+/**
+ * Reference to a field of type 'AttendanceMethod'
+ */
+export type EnumAttendanceMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceMethod'>
+    
+
+
+/**
+ * Reference to a field of type 'AttendanceMethod[]'
+ */
+export type ListEnumAttendanceMethodFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceMethod[]'>
+    
+
+
+/**
+ * Reference to a field of type 'AttendanceStatus'
+ */
+export type EnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'AttendanceStatus[]'
+ */
+export type ListEnumAttendanceStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'AttendanceStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
+    
+
+
+/**
+ * Reference to a field of type 'ClubApplicationStatus'
+ */
+export type EnumClubApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubApplicationStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ClubApplicationStatus[]'
+ */
+export type ListEnumClubApplicationStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ClubApplicationStatus[]'>
     
 
 
@@ -1802,6 +2455,12 @@ export type GlobalOmitConfig = {
   event?: Prisma.EventOmit
   eventRegistration?: Prisma.EventRegistrationOmit
   notification?: Prisma.NotificationOmit
+  clubPermissionOverride?: Prisma.ClubPermissionOverrideOmit
+  eventOrganizer?: Prisma.EventOrganizerOmit
+  attendance?: Prisma.AttendanceOmit
+  clubApplication?: Prisma.ClubApplicationOmit
+  clubAnnouncement?: Prisma.ClubAnnouncementOmit
+  clubAuditLog?: Prisma.ClubAuditLogOmit
 }
 
 /* Types for Logging */

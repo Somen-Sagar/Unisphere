@@ -16,6 +16,8 @@ import {
 } from '@unisphere/validation';
 
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ClubPermissionGuard } from '../club-authorization/club-permission.guard';
+import { RequireClubPermission } from '../club-authorization/club-permission.decorator';
 import { CurrentTenant } from '../common/current-tenant.decorator';
 import { RolesGuard } from '../common/roles.guard';
 import { TenantRoles } from '../common/roles.decorator';
@@ -34,6 +36,11 @@ export class ClubsController {
     return this.clubs.findAll(tenant);
   }
 
+  @Get('managed')
+  findManaged(@CurrentTenant() tenant: TenantContext): Promise<CampusClub[]> {
+    return this.clubs.findManaged(tenant);
+  }
+
   @Get(':clubId')
   findOne(
     @CurrentTenant() tenant: TenantContext,
@@ -43,7 +50,7 @@ export class ClubsController {
   }
 
   @UseGuards(RolesGuard)
-  @TenantRoles('CLUB_ADMIN', 'DEPARTMENT_ADMIN', 'COLLEGE_ADMIN')
+  @TenantRoles('STUDENT', 'COLLEGE_ADMIN', 'PLATFORM_ADMIN')
   @Post()
   create(
     @CurrentTenant() tenant: TenantContext,
@@ -52,8 +59,8 @@ export class ClubsController {
     return this.clubs.create(tenant, input);
   }
 
-  @UseGuards(RolesGuard)
-  @TenantRoles('CLUB_ADMIN', 'DEPARTMENT_ADMIN', 'COLLEGE_ADMIN')
+  @UseGuards(ClubPermissionGuard)
+  @RequireClubPermission('CLUB_EDIT_PROFILE')
   @Patch(':clubId')
   update(
     @CurrentTenant() tenant: TenantContext,

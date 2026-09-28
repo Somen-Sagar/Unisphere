@@ -201,6 +201,7 @@ export type DepartmentWhereInput = {
   college?: Prisma.XOR<Prisma.CollegeScalarRelationFilter, Prisma.CollegeWhereInput>
   clubs?: Prisma.ClubListRelationFilter
   events?: Prisma.EventListRelationFilter
+  memberships?: Prisma.CollegeMembershipListRelationFilter
 }
 
 export type DepartmentOrderByWithRelationInput = {
@@ -214,6 +215,7 @@ export type DepartmentOrderByWithRelationInput = {
   college?: Prisma.CollegeOrderByWithRelationInput
   clubs?: Prisma.ClubOrderByRelationAggregateInput
   events?: Prisma.EventOrderByRelationAggregateInput
+  memberships?: Prisma.CollegeMembershipOrderByRelationAggregateInput
 }
 
 export type DepartmentWhereUniqueInput = Prisma.AtLeast<{
@@ -231,6 +233,7 @@ export type DepartmentWhereUniqueInput = Prisma.AtLeast<{
   college?: Prisma.XOR<Prisma.CollegeScalarRelationFilter, Prisma.CollegeWhereInput>
   clubs?: Prisma.ClubListRelationFilter
   events?: Prisma.EventListRelationFilter
+  memberships?: Prisma.CollegeMembershipListRelationFilter
 }, "id" | "collegeId_code">
 
 export type DepartmentOrderByWithAggregationInput = {
@@ -269,6 +272,7 @@ export type DepartmentCreateInput = {
   college: Prisma.CollegeCreateNestedOneWithoutDepartmentsInput
   clubs?: Prisma.ClubCreateNestedManyWithoutDepartmentInput
   events?: Prisma.EventCreateNestedManyWithoutDepartmentInput
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateInput = {
@@ -281,6 +285,7 @@ export type DepartmentUncheckedCreateInput = {
   updatedAt?: Date | string
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutDepartmentInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutDepartmentInput
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUpdateInput = {
@@ -293,6 +298,7 @@ export type DepartmentUpdateInput = {
   college?: Prisma.CollegeUpdateOneRequiredWithoutDepartmentsNestedInput
   clubs?: Prisma.ClubUpdateManyWithoutDepartmentNestedInput
   events?: Prisma.EventUpdateManyWithoutDepartmentNestedInput
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateInput = {
@@ -305,6 +311,7 @@ export type DepartmentUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutDepartmentNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutDepartmentNestedInput
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentCreateManyInput = {
@@ -346,6 +353,11 @@ export type DepartmentOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type DepartmentNullableScalarRelationFilter = {
+  is?: Prisma.DepartmentWhereInput | null
+  isNot?: Prisma.DepartmentWhereInput | null
+}
+
 export type DepartmentCollegeIdCodeCompoundUniqueInput = {
   collegeId: string
   code: string
@@ -379,11 +391,6 @@ export type DepartmentMinOrderByAggregateInput = {
   description?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
-}
-
-export type DepartmentNullableScalarRelationFilter = {
-  is?: Prisma.DepartmentWhereInput | null
-  isNot?: Prisma.DepartmentWhereInput | null
 }
 
 export type DepartmentCreateNestedManyWithoutCollegeInput = {
@@ -428,6 +435,22 @@ export type DepartmentUncheckedUpdateManyWithoutCollegeNestedInput = {
   deleteMany?: Prisma.DepartmentScalarWhereInput | Prisma.DepartmentScalarWhereInput[]
 }
 
+export type DepartmentCreateNestedOneWithoutMembershipsInput = {
+  create?: Prisma.XOR<Prisma.DepartmentCreateWithoutMembershipsInput, Prisma.DepartmentUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.DepartmentCreateOrConnectWithoutMembershipsInput
+  connect?: Prisma.DepartmentWhereUniqueInput
+}
+
+export type DepartmentUpdateOneWithoutMembershipsNestedInput = {
+  create?: Prisma.XOR<Prisma.DepartmentCreateWithoutMembershipsInput, Prisma.DepartmentUncheckedCreateWithoutMembershipsInput>
+  connectOrCreate?: Prisma.DepartmentCreateOrConnectWithoutMembershipsInput
+  upsert?: Prisma.DepartmentUpsertWithoutMembershipsInput
+  disconnect?: Prisma.DepartmentWhereInput | boolean
+  delete?: Prisma.DepartmentWhereInput | boolean
+  connect?: Prisma.DepartmentWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.DepartmentUpdateToOneWithWhereWithoutMembershipsInput, Prisma.DepartmentUpdateWithoutMembershipsInput>, Prisma.DepartmentUncheckedUpdateWithoutMembershipsInput>
+}
+
 export type DepartmentCreateNestedOneWithoutClubsInput = {
   create?: Prisma.XOR<Prisma.DepartmentCreateWithoutClubsInput, Prisma.DepartmentUncheckedCreateWithoutClubsInput>
   connectOrCreate?: Prisma.DepartmentCreateOrConnectWithoutClubsInput
@@ -469,6 +492,7 @@ export type DepartmentCreateWithoutCollegeInput = {
   updatedAt?: Date | string
   clubs?: Prisma.ClubCreateNestedManyWithoutDepartmentInput
   events?: Prisma.EventCreateNestedManyWithoutDepartmentInput
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateWithoutCollegeInput = {
@@ -480,6 +504,7 @@ export type DepartmentUncheckedCreateWithoutCollegeInput = {
   updatedAt?: Date | string
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutDepartmentInput
   events?: Prisma.EventUncheckedCreateNestedManyWithoutDepartmentInput
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentCreateOrConnectWithoutCollegeInput = {
@@ -521,6 +546,70 @@ export type DepartmentScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Department"> | Date | string
 }
 
+export type DepartmentCreateWithoutMembershipsInput = {
+  id?: string
+  name: string
+  code: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  college: Prisma.CollegeCreateNestedOneWithoutDepartmentsInput
+  clubs?: Prisma.ClubCreateNestedManyWithoutDepartmentInput
+  events?: Prisma.EventCreateNestedManyWithoutDepartmentInput
+}
+
+export type DepartmentUncheckedCreateWithoutMembershipsInput = {
+  id?: string
+  collegeId: string
+  name: string
+  code: string
+  description?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutDepartmentInput
+  events?: Prisma.EventUncheckedCreateNestedManyWithoutDepartmentInput
+}
+
+export type DepartmentCreateOrConnectWithoutMembershipsInput = {
+  where: Prisma.DepartmentWhereUniqueInput
+  create: Prisma.XOR<Prisma.DepartmentCreateWithoutMembershipsInput, Prisma.DepartmentUncheckedCreateWithoutMembershipsInput>
+}
+
+export type DepartmentUpsertWithoutMembershipsInput = {
+  update: Prisma.XOR<Prisma.DepartmentUpdateWithoutMembershipsInput, Prisma.DepartmentUncheckedUpdateWithoutMembershipsInput>
+  create: Prisma.XOR<Prisma.DepartmentCreateWithoutMembershipsInput, Prisma.DepartmentUncheckedCreateWithoutMembershipsInput>
+  where?: Prisma.DepartmentWhereInput
+}
+
+export type DepartmentUpdateToOneWithWhereWithoutMembershipsInput = {
+  where?: Prisma.DepartmentWhereInput
+  data: Prisma.XOR<Prisma.DepartmentUpdateWithoutMembershipsInput, Prisma.DepartmentUncheckedUpdateWithoutMembershipsInput>
+}
+
+export type DepartmentUpdateWithoutMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  college?: Prisma.CollegeUpdateOneRequiredWithoutDepartmentsNestedInput
+  clubs?: Prisma.ClubUpdateManyWithoutDepartmentNestedInput
+  events?: Prisma.EventUpdateManyWithoutDepartmentNestedInput
+}
+
+export type DepartmentUncheckedUpdateWithoutMembershipsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  code?: Prisma.StringFieldUpdateOperationsInput | string
+  description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  clubs?: Prisma.ClubUncheckedUpdateManyWithoutDepartmentNestedInput
+  events?: Prisma.EventUncheckedUpdateManyWithoutDepartmentNestedInput
+}
+
 export type DepartmentCreateWithoutClubsInput = {
   id?: string
   name: string
@@ -530,6 +619,7 @@ export type DepartmentCreateWithoutClubsInput = {
   updatedAt?: Date | string
   college: Prisma.CollegeCreateNestedOneWithoutDepartmentsInput
   events?: Prisma.EventCreateNestedManyWithoutDepartmentInput
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateWithoutClubsInput = {
@@ -541,6 +631,7 @@ export type DepartmentUncheckedCreateWithoutClubsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   events?: Prisma.EventUncheckedCreateNestedManyWithoutDepartmentInput
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentCreateOrConnectWithoutClubsInput = {
@@ -568,6 +659,7 @@ export type DepartmentUpdateWithoutClubsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   college?: Prisma.CollegeUpdateOneRequiredWithoutDepartmentsNestedInput
   events?: Prisma.EventUpdateManyWithoutDepartmentNestedInput
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateWithoutClubsInput = {
@@ -579,6 +671,7 @@ export type DepartmentUncheckedUpdateWithoutClubsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   events?: Prisma.EventUncheckedUpdateManyWithoutDepartmentNestedInput
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentCreateWithoutEventsInput = {
@@ -590,6 +683,7 @@ export type DepartmentCreateWithoutEventsInput = {
   updatedAt?: Date | string
   college: Prisma.CollegeCreateNestedOneWithoutDepartmentsInput
   clubs?: Prisma.ClubCreateNestedManyWithoutDepartmentInput
+  memberships?: Prisma.CollegeMembershipCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentUncheckedCreateWithoutEventsInput = {
@@ -601,6 +695,7 @@ export type DepartmentUncheckedCreateWithoutEventsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   clubs?: Prisma.ClubUncheckedCreateNestedManyWithoutDepartmentInput
+  memberships?: Prisma.CollegeMembershipUncheckedCreateNestedManyWithoutDepartmentInput
 }
 
 export type DepartmentCreateOrConnectWithoutEventsInput = {
@@ -628,6 +723,7 @@ export type DepartmentUpdateWithoutEventsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   college?: Prisma.CollegeUpdateOneRequiredWithoutDepartmentsNestedInput
   clubs?: Prisma.ClubUpdateManyWithoutDepartmentNestedInput
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateWithoutEventsInput = {
@@ -639,6 +735,7 @@ export type DepartmentUncheckedUpdateWithoutEventsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutDepartmentNestedInput
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentCreateManyCollegeInput = {
@@ -659,6 +756,7 @@ export type DepartmentUpdateWithoutCollegeInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUpdateManyWithoutDepartmentNestedInput
   events?: Prisma.EventUpdateManyWithoutDepartmentNestedInput
+  memberships?: Prisma.CollegeMembershipUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateWithoutCollegeInput = {
@@ -670,6 +768,7 @@ export type DepartmentUncheckedUpdateWithoutCollegeInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   clubs?: Prisma.ClubUncheckedUpdateManyWithoutDepartmentNestedInput
   events?: Prisma.EventUncheckedUpdateManyWithoutDepartmentNestedInput
+  memberships?: Prisma.CollegeMembershipUncheckedUpdateManyWithoutDepartmentNestedInput
 }
 
 export type DepartmentUncheckedUpdateManyWithoutCollegeInput = {
@@ -689,11 +788,13 @@ export type DepartmentUncheckedUpdateManyWithoutCollegeInput = {
 export type DepartmentCountOutputType = {
   clubs: number
   events: number
+  memberships: number
 }
 
 export type DepartmentCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   clubs?: boolean | DepartmentCountOutputTypeCountClubsArgs
   events?: boolean | DepartmentCountOutputTypeCountEventsArgs
+  memberships?: boolean | DepartmentCountOutputTypeCountMembershipsArgs
 }
 
 /**
@@ -720,6 +821,13 @@ export type DepartmentCountOutputTypeCountEventsArgs<ExtArgs extends runtime.Typ
   where?: Prisma.EventWhereInput
 }
 
+/**
+ * DepartmentCountOutputType without action
+ */
+export type DepartmentCountOutputTypeCountMembershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.CollegeMembershipWhereInput
+}
+
 
 export type DepartmentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -732,6 +840,7 @@ export type DepartmentSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   clubs?: boolean | Prisma.Department$clubsArgs<ExtArgs>
   events?: boolean | Prisma.Department$eventsArgs<ExtArgs>
+  memberships?: boolean | Prisma.Department$membershipsArgs<ExtArgs>
   _count?: boolean | Prisma.DepartmentCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["department"]>
 
@@ -772,6 +881,7 @@ export type DepartmentInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   clubs?: boolean | Prisma.Department$clubsArgs<ExtArgs>
   events?: boolean | Prisma.Department$eventsArgs<ExtArgs>
+  memberships?: boolean | Prisma.Department$membershipsArgs<ExtArgs>
   _count?: boolean | Prisma.DepartmentCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type DepartmentIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -787,6 +897,7 @@ export type $DepartmentPayload<ExtArgs extends runtime.Types.Extensions.Internal
     college: Prisma.$CollegePayload<ExtArgs>
     clubs: Prisma.$ClubPayload<ExtArgs>[]
     events: Prisma.$EventPayload<ExtArgs>[]
+    memberships: Prisma.$CollegeMembershipPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1193,6 +1304,7 @@ export interface Prisma__DepartmentClient<T, Null = never, ExtArgs extends runti
   college<T extends Prisma.CollegeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CollegeDefaultArgs<ExtArgs>>): Prisma.Prisma__CollegeClient<runtime.Types.Result.GetResult<Prisma.$CollegePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   clubs<T extends Prisma.Department$clubsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Department$clubsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ClubPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   events<T extends Prisma.Department$eventsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Department$eventsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  memberships<T extends Prisma.Department$membershipsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Department$membershipsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CollegeMembershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1675,6 +1787,30 @@ export type Department$eventsArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.EventScalarFieldEnum | Prisma.EventScalarFieldEnum[]
+}
+
+/**
+ * Department.memberships
+ */
+export type Department$membershipsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the CollegeMembership
+   */
+  select?: Prisma.CollegeMembershipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the CollegeMembership
+   */
+  omit?: Prisma.CollegeMembershipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.CollegeMembershipInclude<ExtArgs> | null
+  where?: Prisma.CollegeMembershipWhereInput
+  orderBy?: Prisma.CollegeMembershipOrderByWithRelationInput | Prisma.CollegeMembershipOrderByWithRelationInput[]
+  cursor?: Prisma.CollegeMembershipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.CollegeMembershipScalarFieldEnum | Prisma.CollegeMembershipScalarFieldEnum[]
 }
 
 /**

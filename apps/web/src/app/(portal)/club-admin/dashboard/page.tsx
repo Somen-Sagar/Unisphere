@@ -1,5 +1,5 @@
-import { DashboardClient } from "@/components/dashboard-client";
+import { ManagedClubsClient } from "@/components/managed-clubs-client";
 
 export default function ClubAdminDashboardPage() {
-  return <DashboardClient allowedRoles={["CLUB_ADMIN", "COLLEGE_ADMIN"]} />;
+  return <ManagedClubsClient />;
 }

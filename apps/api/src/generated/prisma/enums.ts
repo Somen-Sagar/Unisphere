@@ -59,7 +59,9 @@ export const EventStatus = {
   REGISTRATION_CLOSED: 'REGISTRATION_CLOSED',
   ONGOING: 'ONGOING',
   COMPLETED: 'COMPLETED',
-  CANCELLED: 'CANCELLED'
+  REJECTED: 'REJECTED',
+  CANCELLED: 'CANCELLED',
+  POSTPONED: 'POSTPONED'
 } as const
 
 export type EventStatus = (typeof EventStatus)[keyof typeof EventStatus]
@@ -98,7 +100,12 @@ export const ClubMembershipRole = {
   LEAD: 'LEAD',
   SECRETARY: 'SECRETARY',
   PRESIDENT: 'PRESIDENT',
-  ADMIN: 'ADMIN'
+  ADMIN: 'ADMIN',
+  CLUB_MENTOR: 'CLUB_MENTOR',
+  CLUB_LEAD: 'CLUB_LEAD',
+  CLUB_SUB_LEAD: 'CLUB_SUB_LEAD',
+  ORGANIZER: 'ORGANIZER',
+  CORE_MEMBER: 'CORE_MEMBER'
 } as const
 
 export type ClubMembershipRole = (typeof ClubMembershipRole)[keyof typeof ClubMembershipRole]
@@ -123,3 +130,70 @@ export const NotificationType = {
 } as const
 
 export type NotificationType = (typeof NotificationType)[keyof typeof NotificationType]
+
+
+export const ClubPermission = {
+  CLUB_VIEW_MEMBERS: 'CLUB_VIEW_MEMBERS',
+  CLUB_MANAGE_MEMBERS: 'CLUB_MANAGE_MEMBERS',
+  CLUB_EDIT_PROFILE: 'CLUB_EDIT_PROFILE',
+  CLUB_MANAGE_ROLES: 'CLUB_MANAGE_ROLES',
+  CLUB_CREATE_EVENT: 'CLUB_CREATE_EVENT',
+  CLUB_EDIT_EVENT: 'CLUB_EDIT_EVENT',
+  CLUB_DELETE_EVENT: 'CLUB_DELETE_EVENT',
+  CLUB_PUBLISH_EVENT: 'CLUB_PUBLISH_EVENT',
+  CLUB_VIEW_REGISTRATIONS: 'CLUB_VIEW_REGISTRATIONS',
+  CLUB_MANAGE_REGISTRATIONS: 'CLUB_MANAGE_REGISTRATIONS',
+  CLUB_MARK_ATTENDANCE: 'CLUB_MARK_ATTENDANCE',
+  CLUB_POST_ANNOUNCEMENT: 'CLUB_POST_ANNOUNCEMENT',
+  CLUB_MANAGE_RECRUITMENT: 'CLUB_MANAGE_RECRUITMENT',
+  CLUB_VIEW_ANALYTICS: 'CLUB_VIEW_ANALYTICS',
+  CLUB_MANAGE_MEDIA: 'CLUB_MANAGE_MEDIA',
+  CLUB_MANAGE_PERMISSIONS: 'CLUB_MANAGE_PERMISSIONS'
+} as const
+
+export type ClubPermission = (typeof ClubPermission)[keyof typeof ClubPermission]
+
+
+export const PermissionEffect = {
+  GRANT: 'GRANT',
+  REVOKE: 'REVOKE'
+} as const
+
+export type PermissionEffect = (typeof PermissionEffect)[keyof typeof PermissionEffect]
+
+
+export const EventOrganizerPermission = {
+  EDIT_EVENT: 'EDIT_EVENT',
+  VIEW_REGISTRATIONS: 'VIEW_REGISTRATIONS',
+  MANAGE_REGISTRATIONS: 'MANAGE_REGISTRATIONS',
+  MARK_ATTENDANCE: 'MARK_ATTENDANCE',
+  SEND_EVENT_NOTIFICATION: 'SEND_EVENT_NOTIFICATION'
+} as const
+
+export type EventOrganizerPermission = (typeof EventOrganizerPermission)[keyof typeof EventOrganizerPermission]
+
+
+export const ClubApplicationStatus = {
+  PENDING: 'PENDING',
+  APPROVED: 'APPROVED',
+  REJECTED: 'REJECTED',
+  WITHDRAWN: 'WITHDRAWN'
+} as const
+
+export type ClubApplicationStatus = (typeof ClubApplicationStatus)[keyof typeof ClubApplicationStatus]
+
+
+export const AttendanceMethod = {
+  QR: 'QR',
+  MANUAL: 'MANUAL'
+} as const
+
+export type AttendanceMethod = (typeof AttendanceMethod)[keyof typeof AttendanceMethod]
+
+
+export const AttendanceStatus = {
+  PRESENT: 'PRESENT',
+  REVOKED: 'REVOKED'
+} as const
+
+export type AttendanceStatus = (typeof AttendanceStatus)[keyof typeof AttendanceStatus]

@@ -4,12 +4,14 @@ import { ClubsController } from './clubs.controller';
 import { ClubsService } from './clubs.service';
 import type { TenantContext } from '../common/tenant-context';
 import { PrismaService } from '../database/prisma/prisma.service';
+import { ClubPermissionService } from '../club-authorization/club-permission.service';
 
 describe('ClubsController', () => {
   let controller: ClubsController;
   const clubsService = {
     findAll: jest.fn(),
     findOne: jest.fn(),
+    findManaged: jest.fn(),
   };
   const tenant: TenantContext = {
     userId: 'user-1',
@@ -32,6 +34,7 @@ describe('ClubsController', () => {
       providers: [
         { provide: ClubsService, useValue: clubsService },
         { provide: PrismaService, useValue: {} },
+        { provide: ClubPermissionService, useValue: { assert: jest.fn() } },
       ],
     }).compile();
 

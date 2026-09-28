@@ -249,6 +249,7 @@ export type EventRegistrationWhereInput = {
   college?: Prisma.XOR<Prisma.CollegeScalarRelationFilter, Prisma.CollegeWhereInput>
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  attendance?: Prisma.XOR<Prisma.AttendanceNullableScalarRelationFilter, Prisma.AttendanceWhereInput> | null
 }
 
 export type EventRegistrationOrderByWithRelationInput = {
@@ -268,6 +269,7 @@ export type EventRegistrationOrderByWithRelationInput = {
   college?: Prisma.CollegeOrderByWithRelationInput
   event?: Prisma.EventOrderByWithRelationInput
   user?: Prisma.UserOrderByWithRelationInput
+  attendance?: Prisma.AttendanceOrderByWithRelationInput
 }
 
 export type EventRegistrationWhereUniqueInput = Prisma.AtLeast<{
@@ -291,6 +293,7 @@ export type EventRegistrationWhereUniqueInput = Prisma.AtLeast<{
   college?: Prisma.XOR<Prisma.CollegeScalarRelationFilter, Prisma.CollegeWhereInput>
   event?: Prisma.XOR<Prisma.EventScalarRelationFilter, Prisma.EventWhereInput>
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  attendance?: Prisma.XOR<Prisma.AttendanceNullableScalarRelationFilter, Prisma.AttendanceWhereInput> | null
 }, "id" | "registrationCode" | "qrToken" | "eventId_userId">
 
 export type EventRegistrationOrderByWithAggregationInput = {
@@ -345,6 +348,7 @@ export type EventRegistrationCreateInput = {
   college: Prisma.CollegeCreateNestedOneWithoutRegistrationsInput
   event: Prisma.EventCreateNestedOneWithoutRegistrationsInput
   user: Prisma.UserCreateNestedOneWithoutRegistrationsInput
+  attendance?: Prisma.AttendanceCreateNestedOneWithoutRegistrationInput
 }
 
 export type EventRegistrationUncheckedCreateInput = {
@@ -361,6 +365,7 @@ export type EventRegistrationUncheckedCreateInput = {
   checkedInBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  attendance?: Prisma.AttendanceUncheckedCreateNestedOneWithoutRegistrationInput
 }
 
 export type EventRegistrationUpdateInput = {
@@ -377,6 +382,7 @@ export type EventRegistrationUpdateInput = {
   college?: Prisma.CollegeUpdateOneRequiredWithoutRegistrationsNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutRegistrationsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutRegistrationsNestedInput
+  attendance?: Prisma.AttendanceUpdateOneWithoutRegistrationNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateInput = {
@@ -393,6 +399,7 @@ export type EventRegistrationUncheckedUpdateInput = {
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendance?: Prisma.AttendanceUncheckedUpdateOneWithoutRegistrationNestedInput
 }
 
 export type EventRegistrationCreateManyInput = {
@@ -501,6 +508,11 @@ export type EventRegistrationMinOrderByAggregateInput = {
   checkedInBy?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
+}
+
+export type EventRegistrationScalarRelationFilter = {
+  is?: Prisma.EventRegistrationWhereInput
+  isNot?: Prisma.EventRegistrationWhereInput
 }
 
 export type EventRegistrationCreateNestedManyWithoutUserInput = {
@@ -633,6 +645,20 @@ export type EnumRegistrationStatusFieldUpdateOperationsInput = {
   set?: $Enums.RegistrationStatus
 }
 
+export type EventRegistrationCreateNestedOneWithoutAttendanceInput = {
+  create?: Prisma.XOR<Prisma.EventRegistrationCreateWithoutAttendanceInput, Prisma.EventRegistrationUncheckedCreateWithoutAttendanceInput>
+  connectOrCreate?: Prisma.EventRegistrationCreateOrConnectWithoutAttendanceInput
+  connect?: Prisma.EventRegistrationWhereUniqueInput
+}
+
+export type EventRegistrationUpdateOneRequiredWithoutAttendanceNestedInput = {
+  create?: Prisma.XOR<Prisma.EventRegistrationCreateWithoutAttendanceInput, Prisma.EventRegistrationUncheckedCreateWithoutAttendanceInput>
+  connectOrCreate?: Prisma.EventRegistrationCreateOrConnectWithoutAttendanceInput
+  upsert?: Prisma.EventRegistrationUpsertWithoutAttendanceInput
+  connect?: Prisma.EventRegistrationWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.EventRegistrationUpdateToOneWithWhereWithoutAttendanceInput, Prisma.EventRegistrationUpdateWithoutAttendanceInput>, Prisma.EventRegistrationUncheckedUpdateWithoutAttendanceInput>
+}
+
 export type EventRegistrationCreateWithoutUserInput = {
   id?: string
   status?: $Enums.RegistrationStatus
@@ -646,6 +672,7 @@ export type EventRegistrationCreateWithoutUserInput = {
   updatedAt?: Date | string
   college: Prisma.CollegeCreateNestedOneWithoutRegistrationsInput
   event: Prisma.EventCreateNestedOneWithoutRegistrationsInput
+  attendance?: Prisma.AttendanceCreateNestedOneWithoutRegistrationInput
 }
 
 export type EventRegistrationUncheckedCreateWithoutUserInput = {
@@ -661,6 +688,7 @@ export type EventRegistrationUncheckedCreateWithoutUserInput = {
   checkedInBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  attendance?: Prisma.AttendanceUncheckedCreateNestedOneWithoutRegistrationInput
 }
 
 export type EventRegistrationCreateOrConnectWithoutUserInput = {
@@ -721,6 +749,7 @@ export type EventRegistrationCreateWithoutCollegeInput = {
   updatedAt?: Date | string
   event: Prisma.EventCreateNestedOneWithoutRegistrationsInput
   user: Prisma.UserCreateNestedOneWithoutRegistrationsInput
+  attendance?: Prisma.AttendanceCreateNestedOneWithoutRegistrationInput
 }
 
 export type EventRegistrationUncheckedCreateWithoutCollegeInput = {
@@ -736,6 +765,7 @@ export type EventRegistrationUncheckedCreateWithoutCollegeInput = {
   checkedInBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  attendance?: Prisma.AttendanceUncheckedCreateNestedOneWithoutRegistrationInput
 }
 
 export type EventRegistrationCreateOrConnectWithoutCollegeInput = {
@@ -777,6 +807,7 @@ export type EventRegistrationCreateWithoutEventInput = {
   updatedAt?: Date | string
   college: Prisma.CollegeCreateNestedOneWithoutRegistrationsInput
   user: Prisma.UserCreateNestedOneWithoutRegistrationsInput
+  attendance?: Prisma.AttendanceCreateNestedOneWithoutRegistrationInput
 }
 
 export type EventRegistrationUncheckedCreateWithoutEventInput = {
@@ -792,6 +823,7 @@ export type EventRegistrationUncheckedCreateWithoutEventInput = {
   checkedInBy?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
+  attendance?: Prisma.AttendanceUncheckedCreateNestedOneWithoutRegistrationInput
 }
 
 export type EventRegistrationCreateOrConnectWithoutEventInput = {
@@ -818,6 +850,86 @@ export type EventRegistrationUpdateWithWhereUniqueWithoutEventInput = {
 export type EventRegistrationUpdateManyWithWhereWithoutEventInput = {
   where: Prisma.EventRegistrationScalarWhereInput
   data: Prisma.XOR<Prisma.EventRegistrationUpdateManyMutationInput, Prisma.EventRegistrationUncheckedUpdateManyWithoutEventInput>
+}
+
+export type EventRegistrationCreateWithoutAttendanceInput = {
+  id?: string
+  status?: $Enums.RegistrationStatus
+  registrationCode: string
+  qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
+  checkedInAt?: Date | string | null
+  checkedInBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  college: Prisma.CollegeCreateNestedOneWithoutRegistrationsInput
+  event: Prisma.EventCreateNestedOneWithoutRegistrationsInput
+  user: Prisma.UserCreateNestedOneWithoutRegistrationsInput
+}
+
+export type EventRegistrationUncheckedCreateWithoutAttendanceInput = {
+  id?: string
+  collegeId: string
+  eventId: string
+  userId: string
+  status?: $Enums.RegistrationStatus
+  registrationCode: string
+  qrToken?: string
+  registeredAt?: Date | string
+  cancelledAt?: Date | string | null
+  checkedInAt?: Date | string | null
+  checkedInBy?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type EventRegistrationCreateOrConnectWithoutAttendanceInput = {
+  where: Prisma.EventRegistrationWhereUniqueInput
+  create: Prisma.XOR<Prisma.EventRegistrationCreateWithoutAttendanceInput, Prisma.EventRegistrationUncheckedCreateWithoutAttendanceInput>
+}
+
+export type EventRegistrationUpsertWithoutAttendanceInput = {
+  update: Prisma.XOR<Prisma.EventRegistrationUpdateWithoutAttendanceInput, Prisma.EventRegistrationUncheckedUpdateWithoutAttendanceInput>
+  create: Prisma.XOR<Prisma.EventRegistrationCreateWithoutAttendanceInput, Prisma.EventRegistrationUncheckedCreateWithoutAttendanceInput>
+  where?: Prisma.EventRegistrationWhereInput
+}
+
+export type EventRegistrationUpdateToOneWithWhereWithoutAttendanceInput = {
+  where?: Prisma.EventRegistrationWhereInput
+  data: Prisma.XOR<Prisma.EventRegistrationUpdateWithoutAttendanceInput, Prisma.EventRegistrationUncheckedUpdateWithoutAttendanceInput>
+}
+
+export type EventRegistrationUpdateWithoutAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  college?: Prisma.CollegeUpdateOneRequiredWithoutRegistrationsNestedInput
+  event?: Prisma.EventUpdateOneRequiredWithoutRegistrationsNestedInput
+  user?: Prisma.UserUpdateOneRequiredWithoutRegistrationsNestedInput
+}
+
+export type EventRegistrationUncheckedUpdateWithoutAttendanceInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  collegeId?: Prisma.StringFieldUpdateOperationsInput | string
+  eventId?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumRegistrationStatusFieldUpdateOperationsInput | $Enums.RegistrationStatus
+  registrationCode?: Prisma.StringFieldUpdateOperationsInput | string
+  qrToken?: Prisma.StringFieldUpdateOperationsInput | string
+  registeredAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkedInAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type EventRegistrationCreateManyUserInput = {
@@ -848,6 +960,7 @@ export type EventRegistrationUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   college?: Prisma.CollegeUpdateOneRequiredWithoutRegistrationsNestedInput
   event?: Prisma.EventUpdateOneRequiredWithoutRegistrationsNestedInput
+  attendance?: Prisma.AttendanceUpdateOneWithoutRegistrationNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateWithoutUserInput = {
@@ -863,6 +976,7 @@ export type EventRegistrationUncheckedUpdateWithoutUserInput = {
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendance?: Prisma.AttendanceUncheckedUpdateOneWithoutRegistrationNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateManyWithoutUserInput = {
@@ -908,6 +1022,7 @@ export type EventRegistrationUpdateWithoutCollegeInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   event?: Prisma.EventUpdateOneRequiredWithoutRegistrationsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutRegistrationsNestedInput
+  attendance?: Prisma.AttendanceUpdateOneWithoutRegistrationNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateWithoutCollegeInput = {
@@ -923,6 +1038,7 @@ export type EventRegistrationUncheckedUpdateWithoutCollegeInput = {
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendance?: Prisma.AttendanceUncheckedUpdateOneWithoutRegistrationNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateManyWithoutCollegeInput = {
@@ -968,6 +1084,7 @@ export type EventRegistrationUpdateWithoutEventInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   college?: Prisma.CollegeUpdateOneRequiredWithoutRegistrationsNestedInput
   user?: Prisma.UserUpdateOneRequiredWithoutRegistrationsNestedInput
+  attendance?: Prisma.AttendanceUpdateOneWithoutRegistrationNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateWithoutEventInput = {
@@ -983,6 +1100,7 @@ export type EventRegistrationUncheckedUpdateWithoutEventInput = {
   checkedInBy?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  attendance?: Prisma.AttendanceUncheckedUpdateOneWithoutRegistrationNestedInput
 }
 
 export type EventRegistrationUncheckedUpdateManyWithoutEventInput = {
@@ -1019,6 +1137,7 @@ export type EventRegistrationSelect<ExtArgs extends runtime.Types.Extensions.Int
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  attendance?: boolean | Prisma.EventRegistration$attendanceArgs<ExtArgs>
 }, ExtArgs["result"]["eventRegistration"]>
 
 export type EventRegistrationSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1080,6 +1199,7 @@ export type EventRegistrationInclude<ExtArgs extends runtime.Types.Extensions.In
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
   event?: boolean | Prisma.EventDefaultArgs<ExtArgs>
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  attendance?: boolean | Prisma.EventRegistration$attendanceArgs<ExtArgs>
 }
 export type EventRegistrationIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   college?: boolean | Prisma.CollegeDefaultArgs<ExtArgs>
@@ -1098,6 +1218,7 @@ export type $EventRegistrationPayload<ExtArgs extends runtime.Types.Extensions.I
     college: Prisma.$CollegePayload<ExtArgs>
     event: Prisma.$EventPayload<ExtArgs>
     user: Prisma.$UserPayload<ExtArgs>
+    attendance: Prisma.$AttendancePayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1510,6 +1631,7 @@ export interface Prisma__EventRegistrationClient<T, Null = never, ExtArgs extend
   college<T extends Prisma.CollegeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CollegeDefaultArgs<ExtArgs>>): Prisma.Prisma__CollegeClient<runtime.Types.Result.GetResult<Prisma.$CollegePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   event<T extends Prisma.EventDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventDefaultArgs<ExtArgs>>): Prisma.Prisma__EventClient<runtime.Types.Result.GetResult<Prisma.$EventPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  attendance<T extends Prisma.EventRegistration$attendanceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EventRegistration$attendanceArgs<ExtArgs>>): Prisma.Prisma__AttendanceClient<runtime.Types.Result.GetResult<Prisma.$AttendancePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1950,6 +2072,25 @@ export type EventRegistrationDeleteManyArgs<ExtArgs extends runtime.Types.Extens
    * Limit how many EventRegistrations to delete.
    */
   limit?: number
+}
+
+/**
+ * EventRegistration.attendance
+ */
+export type EventRegistration$attendanceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Attendance
+   */
+  select?: Prisma.AttendanceSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Attendance
+   */
+  omit?: Prisma.AttendanceOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AttendanceInclude<ExtArgs> | null
+  where?: Prisma.AttendanceWhereInput
 }
 
 /**

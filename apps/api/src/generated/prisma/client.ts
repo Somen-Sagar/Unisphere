@@ -89,3 +89,33 @@ export type EventRegistration = Prisma.EventRegistrationModel
  * 
  */
 export type Notification = Prisma.NotificationModel
+/**
+ * Model ClubPermissionOverride
+ * 
+ */
+export type ClubPermissionOverride = Prisma.ClubPermissionOverrideModel
+/**
+ * Model EventOrganizer
+ * 
+ */
+export type EventOrganizer = Prisma.EventOrganizerModel
+/**
+ * Model Attendance
+ * 
+ */
+export type Attendance = Prisma.AttendanceModel
+/**
+ * Model ClubApplication
+ * 
+ */
+export type ClubApplication = Prisma.ClubApplicationModel
+/**
+ * Model ClubAnnouncement
+ * 
+ */
+export type ClubAnnouncement = Prisma.ClubAnnouncementModel
+/**
+ * Model ClubAuditLog
+ * 
+ */
+export type ClubAuditLog = Prisma.ClubAuditLogModel

@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 
 import { api } from "@/lib/api/client";
 import { dashboardRouteForUser } from "@/lib/auth/dashboard-route";
+import { reconcileActiveCollege } from "@/lib/auth/active-college";
 
 function errorMessage(error: unknown): string {
   if (error instanceof UniSphereApiError) {
@@ -56,6 +57,7 @@ export function LoginForm() {
         body: JSON.stringify(input),
       }),
     onSuccess: ({ user }) => {
+      reconcileActiveCollege(user, window.localStorage);
       const next = searchParams.get("next");
       router.replace(next?.startsWith("/") ? next : dashboardRouteForUser(user));
       router.refresh();
@@ -90,7 +92,15 @@ export function LoginForm() {
           <button
             type="button"
             className="demo-pill"
-            onClick={() => fillCredentials("student@unisphere.local", "UniSphere123!")}
+            onClick={() => fillCredentials("clubadmin@example.test", "UniSphere123!")}
+            title="Auto-fill club lead fixture credentials"
+          >
+            🛡️ Club Lead
+          </button>
+          <button
+            type="button"
+            className="demo-pill"
+            onClick={() => fillCredentials("student@example.test", "UniSphere123!")}
             title="Auto-fill student fixture credentials"
           >
             🎓 Student
@@ -98,10 +108,10 @@ export function LoginForm() {
           <button
             type="button"
             className="demo-pill"
-            onClick={() => fillCredentials("organizer@unisphere.local", "UniSphere123!")}
-            title="Auto-fill organizer fixture credentials"
+            onClick={() => fillCredentials("mentor@example.test", "UniSphere123!")}
+            title="Auto-fill faculty mentor fixture credentials"
           >
-            ⚡ Organizer
+            🧭 Faculty Mentor
           </button>
         </div>
       </div>

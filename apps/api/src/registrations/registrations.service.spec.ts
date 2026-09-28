@@ -36,7 +36,10 @@ describe('RegistrationsService tenant isolation', () => {
         callback(transaction),
       ),
     };
-    const service = new RegistrationsService(prisma as any);
+    const service = new RegistrationsService(
+      prisma as any,
+      { assertEvent: jest.fn() } as any,
+    );
 
     await expect(service.register(tenant, 'event-b')).rejects.toBeInstanceOf(
       NotFoundException,
@@ -57,7 +60,10 @@ describe('RegistrationsService tenant isolation', () => {
         findMany: jest.fn().mockResolvedValue([]),
       },
     };
-    const service = new RegistrationsService(prisma as any);
+    const service = new RegistrationsService(
+      prisma as any,
+      { assertEvent: jest.fn() } as any,
+    );
 
     await service.findMine(tenant);
 
@@ -119,10 +125,44 @@ describe('RegistrationsService tenant isolation', () => {
         callback(transaction),
       ),
     };
-    const service = new RegistrationsService(prisma as any);
+    const service = new RegistrationsService(
+      prisma as any,
+      { assertEvent: jest.fn() } as any,
+    );
 
     await expect(service.register(tenant, 'event-a')).rejects.toBeInstanceOf(
       ConflictException,
     );
+  });
+
+  it('returns a clean conflict when manual attendance loses a duplicate race', async () => {
+    const transaction = {
+      eventRegistration: {
+        updateMany: jest.fn().mockResolvedValue({ count: 0 }),
+      },
+      attendance: { create: jest.fn() },
+    };
+    const prisma = {
+      eventRegistration: {
+        findFirst: jest.fn().mockResolvedValue({
+          id: 'registration-a',
+          checkedInAt: null,
+        }),
+      },
+      $transaction: jest.fn((callback: (tx: typeof transaction) => unknown) =>
+        callback(transaction),
+      ),
+    };
+    const service = new RegistrationsService(
+      prisma as any,
+      {
+        assertEvent: jest.fn(),
+      } as any,
+    );
+
+    await expect(
+      service.manualCheckIn(tenant, 'event-a', 'registration-a'),
+    ).rejects.toBeInstanceOf(ConflictException);
+    expect(transaction.attendance.create).not.toHaveBeenCalled();
   });
 });
